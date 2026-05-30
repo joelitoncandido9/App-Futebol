@@ -1,4 +1,8 @@
 name: Predições Diárias
+
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 9 * * *'  # 06:00 BRT
@@ -20,7 +24,7 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install requests numpy
+          pip install requests
 
       - name: Gerar predições do dia
         run: python ml/src/predict.py
