@@ -316,7 +316,13 @@ export async function GET(
         gols_casa_total: h2h.home_goals,
         gols_fora_total: h2h.away_goals,
         media_gols: h2h.avg_total_goals,
-        ultimos_jogos: (h2h.recent_matches || []).slice(0, 10),
+        ultimos_jogos: (h2h.recent_matches || []).slice(0, 10).map((m: any) => ({
+          home_team: m.home || m.home_team,
+          away_team: m.away || m.away_team,
+          home_score: m.home_score ?? (m.score ? parseInt(String(m.score).split('-')[0]) : null),
+          away_score: m.away_score ?? (m.score ? parseInt(String(m.score).split('-')[1]) : null),
+          event_date: m.date || m.event_date,
+        })),
       },
       arbitro: {
         nome: referee.name,
