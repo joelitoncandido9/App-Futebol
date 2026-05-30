@@ -321,7 +321,7 @@ export async function GET(
         vitorias_fora: h2h.away_wins,
         gols_casa_total: h2h.home_goals,
         gols_fora_total: h2h.away_goals,
-        media_gols: h2h.avg_total_goals,
+        media_gols: h2h.avg_total_goals != null ? Math.round(h2h.avg_total_goals * 100) / 100 : null,
         ultimos_jogos: (h2h.recent_matches || []).slice(0, 10).map((m: any) => ({
           home_team: m.home || m.home_team,
           away_team: m.away || m.away_team,

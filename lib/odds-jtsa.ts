@@ -259,10 +259,12 @@ export function gerarCardsMercado(
     [6.5, 8.5, 10.5, 12.5, 14.5, 16.5, 18.5, 20.5, 22.5]
   );
 
-  // ── GOLS ESPERADOS (xG) ──
+  // ── GOLS ESPERADOS (xG) — com fallback para gols reais ──
+  const homeXgVal = homeForm?.avg_xg ?? (homeGols != null ? homeGols / homeJogos : null);
+  const awayXgVal = awayForm?.avg_xg ?? (awayGols != null ? awayGols / awayJogos : null);
   addCardContagemDupla(
     'GOLS ESPERADOS (xG)', homeNomeTime, awayNomeTime,
-    homeForm?.avg_xg, awayForm?.avg_xg,
+    homeXgVal, awayXgVal,
     homeJogos, awayJogos,
     [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
   );
@@ -363,27 +365,31 @@ export function gerarCardsMercado(
     [3.5, 5.5, 7.5, 9.5, 11.5, 13.5, 15.5]
   );
 
-  // ── 1X2 (Poisson bivariada com xG real) ──
-  const homeXg = homeForm?.avg_xg;
-  const awayXg = awayForm?.avg_xg;
-  if (homeXg != null && awayXg != null) {
+  // ── 1X2 (Poisson bivariada com xG ou fallback gols) ──
+  const homeXg1x2 = homeForm?.avg_xg ?? (homeGols != null ? homeGols / homeJogos : null);
+  const awayXg1x2 = awayForm?.avg_xg ?? (awayGols != null ? awayGols / awayJogos : null);
+  if (homeXg1x2 != null && awayXg1x2 != null) {
     cards.push({
       tipo: '1x2',
       titulo: '1X2',
       time_casa: homeNomeTime,
       time_fora: awayNomeTime,
-      odds_1x2: calcularOdds1X2(Math.max(0.3, homeXg), Math.max(0.3, awayXg)),
+      odds_1x2: calcularOdds1X2(Math.max(0.3, homeXg1x2), Math.max(0.3, awayXg1x2)),
       amostra_casa: homeJogos,
       amostra_fora: awayJogos,
     });
   }
 
-  // ── BTTS (proporção de clean sheets reais) ──
+  // ── BTTS (probabilidade de ambos marcarem) ──
   const csCasa = homeForm?.clean_sheets;
   const csFora = awayForm?.clean_sheets;
   if (csCasa != null && csFora != null) {
-    const total = homeJogos + awayJogos;
-    const bttsSim = Math.max(0, total - csCasa - csFora);
+    // Calcula BTTS como P(casa marca) × P(fora marca)
+    const probCasaMarca = homeJogos > 0 ? Math.min(0.99, Math.max(0.01, 1 - csCasa / homeJogos)) : 0.5;
+    const probForaMarca = awayJogos > 0 ? Math.min(0.99, Math.max(0.01, 1 - csFora / awayJogos)) : 0.5;
+    const probBTTS = probCasaMarca * probForaMarca;
+    const total = Math.min(homeJogos, awayJogos);
+    const bttsSim = Math.round(probBTTS * total);
     cards.push({
       tipo: 'btts',
       titulo: 'AMBOS MARCAM',

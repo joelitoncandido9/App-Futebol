@@ -59,13 +59,14 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   });
 
   // Separa jogos por status
+  const statusAoVivo = ['inprogress', '1st_half', 'halftime', '2nd_half', 'penalties', 'extratime'];
   const jogosAoVivo = filtrados.filter((j) =>
-    ['inprogress', 'halftime', '2nd_half', 'penalties', 'extratime'].includes(j.status || '')
+    statusAoVivo.includes(j.status || '')
   );
   const jogosFinalizados = filtrados.filter((j) => j.status === 'finished');
   const jogosNaoIniciados = filtrados.filter((j) => j.status === 'notstarted' || j.status === 'postponed');
   const outrosStatus = filtrados.filter((j) =>
-    !['inprogress', 'halftime', '2nd_half', 'penalties', 'extratime', 'finished', 'notstarted', 'postponed'].includes(j.status || '')
+    ![...statusAoVivo, 'finished', 'notstarted', 'postponed'].includes(j.status || '')
   );
 
   // Data de hoje pra exibição
@@ -200,7 +201,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
             {/* Gradient accent bar */}
             <div className={`h-0.5 w-full bg-gradient-to-r ${aoVivo ? 'from-green-500 via-green-400/50 to-transparent' : finalizado ? 'from-zinc-600/50 via-zinc-500/20 to-transparent' : 'from-orange-500/80 via-orange-400/40 to-transparent'}`} />
             <div className="p-3.5">
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center gap-2">
               <div className="flex-1 min-w-0 flex items-center gap-3">
                 {/* Horário ou Placar */}
                 {temPlacar ? (
@@ -245,7 +246,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
               </div>
               {/* Odds resumidas (só pra não-iniciados) */}
               {!aoVivo && !finalizado && (
-              <div className="ml-3 flex gap-2 text-xs shrink-0">
+              <div className="flex gap-1.5 sm:gap-2 text-[10px] sm:text-xs shrink-0 self-end sm:self-auto">
                 {jogo.odd_casa && (
                   <div className="bg-orange-500/10 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
                     <div className="text-muted-foreground mb-0.5 text-[9px] font-semibold">1</div>

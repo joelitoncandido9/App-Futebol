@@ -171,14 +171,12 @@ export async function buscarUltimosJogos(
   try {
     const hoje = new Date().toISOString().split('T')[0];
     const seisMeses = new Date(Date.now() - 180 * 86400000).toISOString().split('T')[0];
-    // Busca com limit maior pra garantir pegar os mais recentes
     const r = await fetch(
-      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_from=${seisMeses}&date_to=${hoje}&status=finished&limit=${limit + 20}`,
+      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_from=${seisMeses}&date_to=${hoje}&status=finished&limit=50`,
       { headers: { Authorization: `Token ${token}` }, signal: AbortSignal.timeout(8000) }
     );
     const d = await r.json();
     const fixtures = d.results || [];
-    // API retorna do mais antigo pro mais recente, pega os últimos 'limit'
     return fixtures.slice(-limit);
   } catch {
     return [];
@@ -203,8 +201,7 @@ export function formatarComoFormData(stats: TeamStatsAverages): Record<string, a
     avg_shots_on_target: stats.avg_shots_on_target,
     avg_fouls: stats.avg_fouls,
     avg_yellow_cards: stats.avg_yellow_cards,
-    avg_xg: stats.avg_xg,
-    avg_xg_conceded: stats.avg_xg_conceded,
+    // xG fica com v1 (mais confiável)
     // Campos estendidos
     avg_shots_inside_box: stats.avg_shots_inside_box,
     avg_shots_outside_box: stats.avg_shots_outside_box,
