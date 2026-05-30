@@ -45,6 +45,7 @@ interface CardData {
 
 interface MercadosAgrupadosProps {
   cards: CardData[];
+  oddsConsenso?: Record<string, number | null>;
 }
 
 const CATEGORIAS: Record<string, { label: string; icon: string; mercados: string[] }> = {
@@ -70,7 +71,7 @@ const CATEGORIAS: Record<string, { label: string; icon: string; mercados: string
   },
 };
 
-export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
+export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrupadosProps) {
   if (!cards || cards.length === 0) return null;
 
   const card1x2 = cards.find((c) => c.tipo === '1x2');

@@ -331,7 +331,7 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
 
       {/* ── 🎯 ODDS JUSTAS (agrupadas em abas) ── */}
       {cards_mercado.length > 0 ? (
-        <MercadosAgrupados cards={cards_mercado} />
+        <MercadosAgrupados cards={cards_mercado} oddsConsenso={odds_consenso} />
       ) : (
         <p className="text-muted-foreground text-sm py-4 text-center">
           Dados estatísticos insuficientes para calcular odds justas deste jogo.
