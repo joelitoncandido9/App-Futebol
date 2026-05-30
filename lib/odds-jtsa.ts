@@ -184,7 +184,7 @@ export function gerarCardsMercado(
   const awayNomeTime = awayNome || 'Fora';
 
   // Helper: cria card de contagem para um time
-  function addCardContagem(titulo: string, time: string, mediaPorJogo: number, jogos: number, amostraExtraOJ2: number = 50) {
+  function addCardContagem(titulo: string, time: string, mediaPorJogo: number, jogos: number, amostraExtraOJ2: number = 50, linhas?: number[]) {
     if (mediaPorJogo == null || jogos <= 0) return;
     const totalEventos = Math.round(mediaPorJogo * jogos);
     const d1: DadosAmostra = { total_jogos: jogos, total_eventos: totalEventos };
@@ -193,8 +193,8 @@ export function gerarCardsMercado(
       tipo: 'contagem',
       titulo,
       time,
-      oj1: calcularOddsContagem(d1),
-      oj2: calcularOddsContagem(d2),
+      oj1: calcularOddsContagem(d1, linhas),
+      oj2: calcularOddsContagem(d2, linhas),
       amostra_oj1: jogos,
       amostra_oj2: jogos + amostraExtraOJ2,
     });
@@ -215,28 +215,33 @@ export function gerarCardsMercado(
   }
 
   // ── FINALIZAÇÕES ──
-  addCardContagem('FINALIZAÇÕES', homeNomeTime, homeForm?.avg_shots, homeJogos);
-  addCardContagem('FINALIZAÇÕES', awayNomeTime, awayForm?.avg_shots, awayJogos);
+  addCardContagem('FINALIZAÇÕES', homeNomeTime, homeForm?.avg_shots, homeJogos, 50, [8.5, 10.5, 12.5, 14.5, 16.5]);
+  addCardContagem('FINALIZAÇÕES', awayNomeTime, awayForm?.avg_shots, awayJogos, 50, [8.5, 10.5, 12.5, 14.5, 16.5]);
 
   // ── CHUTES NO GOL ──
-  addCardContagem('CHUTES NO GOL', homeNomeTime, homeForm?.avg_shots_on_target, homeJogos);
-  addCardContagem('CHUTES NO GOL', awayNomeTime, awayForm?.avg_shots_on_target, awayJogos);
+  addCardContagem('CHUTES NO GOL', homeNomeTime, homeForm?.avg_shots_on_target, homeJogos, 50, [2.5, 3.5, 4.5, 5.5, 6.5]);
+  addCardContagem('CHUTES NO GOL', awayNomeTime, awayForm?.avg_shots_on_target, awayJogos, 50, [2.5, 3.5, 4.5, 5.5, 6.5]);
 
   // ── CARTÕES ──
-  addCardContagem('CARTÕES', homeNomeTime, homeForm?.avg_yellow_cards, homeJogos);
-  addCardContagem('CARTÕES', awayNomeTime, awayForm?.avg_yellow_cards, awayJogos);
+  addCardContagem('CARTÕES', homeNomeTime, homeForm?.avg_yellow_cards, homeJogos, 50, [1.5, 2.5, 3.5, 4.5]);
+  addCardContagem('CARTÕES', awayNomeTime, awayForm?.avg_yellow_cards, awayJogos, 50, [1.5, 2.5, 3.5, 4.5]);
 
   // ── FALTAS ──
-  addCardContagem('FALTAS', homeNomeTime, homeForm?.avg_fouls, homeJogos);
-  addCardContagem('FALTAS', awayNomeTime, awayForm?.avg_fouls, awayJogos);
+  addCardContagem('FALTAS', homeNomeTime, homeForm?.avg_fouls, homeJogos, 50, [8.5, 10.5, 12.5, 14.5, 16.5]);
+  addCardContagem('FALTAS', awayNomeTime, awayForm?.avg_fouls, awayJogos, 50, [8.5, 10.5, 12.5, 14.5, 16.5]);
 
   // ── 1X2 ──
-  const homeGolsMedia = homeGols != null
-    ? homeGols / Math.max(1, homeForm?.home_ppg || 10)
-    : 1.5;
-  const awayGolsMedia = awayGols != null
-    ? awayGols / Math.max(1, awayForm?.away_ppg || 10)
-    : 1.2;
+  // Usa avg_xg ou goals_scored como média de gols, com fallback seguro
+  const homeGolsMedia = homeForm?.avg_xg != null
+    ? homeForm.avg_xg
+    : homeGols != null
+      ? homeGols / Math.max(1, homeForm?.matches_played || 10)
+      : 1.5;
+  const awayGolsMedia = awayForm?.avg_xg != null
+    ? awayForm.avg_xg
+    : awayGols != null
+      ? awayGols / Math.max(1, awayForm?.matches_played || 10)
+      : 1.2;
   cards.push({
     tipo: '1x2',
     titulo: '1X2',
@@ -267,8 +272,8 @@ export function gerarCardsMercado(
   }
 
   // ── xG ──
-  addCardContagem('xG', homeNomeTime, homeForm?.avg_xg, homeJogos);
-  addCardContagem('xG', awayNomeTime, awayForm?.avg_xg, awayJogos);
+  addCardContagem('xG', homeNomeTime, homeForm?.avg_xg, homeJogos, 50, [0.5, 1.0, 1.5, 2.0, 2.5]);
+  addCardContagem('xG', awayNomeTime, awayForm?.avg_xg, awayJogos, 50, [0.5, 1.0, 1.5, 2.0, 2.5]);
 
   return cards;
 }

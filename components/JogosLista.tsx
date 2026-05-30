@@ -52,7 +52,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     : jogos;
 
   // Separa jogos de hoje do restante
-  const hoje = new Date().toISOString().split('T')[0];
+  const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
   const jogosHoje = filtrados.filter((j) => j.data?.startsWith(hoje));
   const jogosOutros = filtrados.filter((j) => !j.data?.startsWith(hoje));
 

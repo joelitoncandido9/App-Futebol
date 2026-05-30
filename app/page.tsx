@@ -28,7 +28,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-full max-w-5xl mx-auto px-4 py-6">
+    <div className="min-h-full max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <header className="mb-8">
         <div className="flex items-center justify-between">

@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const liga = searchParams.get('liga');
 
-  const hoje = new Date().toISOString().split('T')[0];
-  const semana = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+  const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+  const semana = new Date(Date.now() + 7 * 86400000).toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
 
   const params = new URLSearchParams({
     date_from: hoje,
