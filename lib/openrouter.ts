@@ -35,7 +35,7 @@ export function chatStream(messages: { role: string; content: string }[], eventI
     { role: 'system', content: SYSTEM_PROMPT },
     // Se tiver eventId, adiciona contexto do jogo
     ...(eventId
-      ? [{ role: 'system' as const, content: `Contexto: analisando jogo com event_id=${eventId}. Use buscar_jogo(event_id=${eventId}) para começar.` }]
+      ? [{ role: 'system' as const, content: `Contexto: o usuário está vendo o jogo event_id=${eventId} no dashboard. Use as tools BSD se precisar de dados complementares.` }]
       : []),
     ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
   ];
