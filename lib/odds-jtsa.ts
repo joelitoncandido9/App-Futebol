@@ -176,23 +176,22 @@ export function gerarCardsMercado(
 ): CardMercadoData[] {
   const cards: CardMercadoData[] = [];
 
-  // Helper: amostra OJ1 = ultimo + ult5 + ult10
-  // Total de jogos no form pode ser a soma das janelas
-  // Simplificação: usamos os campos de PPG que indicam qtde de jogos
-  const homeJogos = homeForm?.ppg_em_casa ? 10 : 0; // aproximação
-  const awayJogos = awayForm?.ppg_fora ? 10 : 0;
+  const homeJogos = homeForm?.matches_played || 10;
+  const awayJogos = awayForm?.matches_played || 10;
 
   // ── GOLS ──
-  if (homeForm?.gols_em_casa != null) {
-    const totalGolsCasa = (homeForm.gols_em_casa || 0) + (homeForm.gols_marcados_recentes || 0);
-    const totalJogosCasa = (homeForm.ppg_em_casa ? 10 : 5) + 5;
-    const d: DadosAmostra = { total_jogos: totalJogosCasa, total_eventos: totalGolsCasa };
+  const homeGolsCasa = homeForm?.home_goals_scored;
+  const awayGolsFora = awayForm?.away_goals_scored;
+  if (homeGolsCasa != null) {
+    const totalJogosCasa = Math.max(1, homeForm?.home_ppg ? 10 : 5) + 5;
+    const d: DadosAmostra = { total_jogos: totalJogosCasa, total_eventos: Math.round(homeGolsCasa) };
+    const d2: DadosAmostra = { total_jogos: totalJogosCasa + 50, total_eventos: Math.round(homeGolsCasa * 1.1) };
     cards.push({
       tipo: 'contagem',
       titulo: 'GOLS',
-      time: homeForm.time_casa || 'Casa',
+      time: 'Casa',
       oj1: calcularOddsContagem(d),
-      oj2: calcularOddsContagem(d),
+      oj2: calcularOddsContagem(d2),
       amostra_oj1: totalJogosCasa,
       amostra_oj2: totalJogosCasa + 50,
       odd_mercado: oddsMercado?.over_25,
@@ -200,14 +199,35 @@ export function gerarCardsMercado(
     });
   }
 
+  // ── FINALIZAÇÕES ──
+  const homeShots = homeForm?.avg_shots;
+  const awayShots = awayForm?.avg_shots;
+  if (homeShots != null) {
+    const d: DadosAmostra = { total_jogos: homeJogos, total_eventos: Math.round(homeShots * homeJogos) };
+    const d2: DadosAmostra = { total_jogos: homeJogos + 50, total_eventos: Math.round(homeShots * (homeJogos + 50)) };
+    cards.push({
+      tipo: 'contagem',
+      titulo: 'FINALIZAÇÕES',
+      time: 'Casa',
+      oj1: calcularOddsContagem(d),
+      oj2: calcularOddsContagem(d2),
+      amostra_oj1: homeJogos,
+      amostra_oj2: homeJogos + 50,
+    });
+  }
+
   // ── 1X2 ──
-  const lambdaCasa = homeForm?.gols_em_casa != null ? (homeForm.gols_em_casa || 0) / Math.max(1, homeForm.ppg_em_casa || 10) : 1.5;
-  const lambdaFora = awayForm?.gols_fora != null ? (awayForm.gols_fora || 0) / Math.max(1, awayForm.ppg_fora || 10) : 1.2;
+  const lambdaCasa = homeGolsCasa != null
+    ? (homeGolsCasa || 0) / Math.max(1, homeForm?.home_ppg || 10)
+    : 1.5;
+  const lambdaFora = awayGolsFora != null
+    ? (awayGolsFora || 0) / Math.max(1, awayForm?.away_ppg || 10)
+    : 1.2;
   cards.push({
     tipo: '1x2',
     titulo: '1X2',
-    oj1: calcularOdds1X2(lambdaCasa, lambdaFora),
-    oj2: calcularOdds1X2(lambdaCasa * 1.05, lambdaFora * 1.05),
+    oj1: calcularOdds1X2(Math.max(0.5, lambdaCasa), Math.max(0.3, lambdaFora)),
+    oj2: calcularOdds1X2(Math.max(0.5, lambdaCasa * 1.05), Math.max(0.3, lambdaFora * 1.05)),
     amostra_oj1: homeJogos + awayJogos,
     amostra_oj2: homeJogos + awayJogos + 100,
     odd_mercado: oddsMercado?.vitoria_casa,
@@ -215,18 +235,37 @@ export function gerarCardsMercado(
   });
 
   // ── BTTS ──
-  if (homeForm?.clean_sheets != null && awayForm?.clean_sheets != null) {
-    const totalJogos = homeJogos + awayJogos;
-    const bttsSim = totalJogos - (homeForm.clean_sheets || 0) - (awayForm.clean_sheets || 0);
+  const csCasa = homeForm?.clean_sheets;
+  const csFora = awayForm?.clean_sheets;
+  if (csCasa != null && csFora != null) {
+    const total = homeJogos + awayJogos;
+    const bttsSim = Math.max(0, total - csCasa - csFora);
     cards.push({
       tipo: 'btts',
       titulo: 'BTTS',
-      oj1: calcularOddsBTTS(homeJogos, bttsSim),
-      oj2: calcularOddsBTTS(totalJogos + 100, bttsSim + 50),
-      amostra_oj1: homeJogos,
-      amostra_oj2: totalJogos + 100,
+      oj1: calcularOddsBTTS(homeJogos + awayJogos, bttsSim),
+      oj2: calcularOddsBTTS(total + 100, bttsSim + 40),
+      amostra_oj1: homeJogos + awayJogos,
+      amostra_oj2: total + 100,
       odd_mercado: oddsMercado?.btts_sim,
       nome_mercado: 'BTTS Sim',
+    });
+  }
+
+  // ── CARTÕES ──
+  const homeCards = homeForm?.avg_yellow_cards;
+  const awayCards = awayForm?.avg_yellow_cards;
+  if (homeCards != null) {
+    const totalCards = (homeCards || 0) + (awayCards || 0);
+    const d: DadosAmostra = { total_jogos: homeJogos + awayJogos, total_eventos: Math.round(totalCards * (homeJogos + awayJogos)) };
+    cards.push({
+      tipo: 'contagem',
+      titulo: 'CARTÕES',
+      time: 'Total',
+      oj1: calcularOddsContagem(d),
+      oj2: calcularOddsContagem({ total_jogos: (homeJogos + awayJogos + 100), total_eventos: Math.round(totalCards * (homeJogos + awayJogos + 100)) }),
+      amostra_oj1: homeJogos + awayJogos,
+      amostra_oj2: homeJogos + awayJogos + 100,
     });
   }
 

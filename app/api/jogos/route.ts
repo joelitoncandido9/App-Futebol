@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json();
     const jogos = (data.results || [])
-      .filter((ev: any) => ev.status === 'not_started' || ev.status === 'in_progress')
+      .filter((ev: any) => ev.status === 'notstarted' || ev.status === 'halftime')
       .map((ev: any) => ({
         event_id: ev.id,
         data: ev.event_date,
