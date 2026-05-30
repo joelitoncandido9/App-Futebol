@@ -135,19 +135,19 @@ function SectionWrapper({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden glow-accent transition-all duration-200">
+    <div className="bg-card border border-border rounded-xl overflow-hidden glow-accent transition-all duration-200">
       {/* Gradient accent bar on top */}
       <div className="h-0.5 bg-gradient-to-r from-orange-500/80 via-orange-400/40 to-transparent" />
 
       <button
         onClick={() => setOpen(!open)}
-        className="w-full px-5 py-3.5 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
+        className="w-full px-5 py-3.5 flex items-center justify-between hover:bg-muted/50/50 transition-colors"
       >
-        <h3 className="text-zinc-400 text-[11px] font-semibold uppercase tracking-[0.08em]">
+        <h3 className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.08em]">
           {emoji && <span className="mr-2">{emoji}</span>}
           {titulo}
         </h3>
-        <span className={`text-zinc-600 text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+        <span className={`text-muted-foreground text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
           ▼
         </span>
       </button>
@@ -274,9 +274,9 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
           <div className="flex flex-wrap gap-2">
             {transmissoes.map((tv, idx) => (
               <div key={idx} className="bg-zinc-800/40 rounded-lg px-3 py-1.5 text-xs">
-                <span className="text-gray-700 font-medium">{tv.canal}</span>
+                <span className="text-foreground/80 font-medium">{tv.canal}</span>
                 {tv.pais && (
-                  <span className="text-zinc-600 ml-1.5">• {tv.pais}</span>
+                  <span className="text-muted-foreground ml-1.5">• {tv.pais}</span>
                 )}
               </div>
             ))}
@@ -322,7 +322,7 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
       {cards_mercado.length > 0 ? (
         <MercadosAgrupados cards={cards_mercado} />
       ) : (
-        <p className="text-gray-500 text-sm py-4 text-center">
+        <p className="text-muted-foreground text-sm py-4 text-center">
           Dados estatísticos insuficientes para calcular odds justas deste jogo.
         </p>
       )}
@@ -354,7 +354,7 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
 
 function SectionTitle({ titulo }: { titulo: string }) {
   return (
-    <h3 className="text-zinc-400 text-xs font-semibold uppercase tracking-wider mb-3">
+    <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-3">
       {titulo}
     </h3>
   );
@@ -400,8 +400,8 @@ function LineupCard({
 }) {
   if (!lineup) {
     return (
-      <div className="bg-gray-50 rounded-lg p-3">
-        <p className="text-zinc-500 text-xs">Escalação não disponível para {time}</p>
+      <div className="bg-muted/50 rounded-lg p-3">
+        <p className="text-muted-foreground text-xs">Escalação não disponível para {time}</p>
       </div>
     );
   }
@@ -411,9 +411,9 @@ function LineupCard({
   const substitutes = lineup.substitutes || lineup.reservas || [];
 
   return (
-    <div className="bg-gray-50 rounded-lg p-3">
+    <div className="bg-muted/50 rounded-lg p-3">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-gray-800 text-sm font-medium">{time}</span>
+        <span className="text-foreground text-sm font-medium">{time}</span>
         {formation && (
           <span className="text-orange-400 text-xs font-mono font-bold">
             {formation}
@@ -423,15 +423,15 @@ function LineupCard({
 
       {players.length > 0 && (
         <div className="space-y-1 mb-3">
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-1">Titulares</p>
+          <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">Titulares</p>
           {players.map((p: any, idx: number) => (
             <div key={idx} className="flex items-center gap-2 text-xs">
-              <span className="text-zinc-600 font-mono w-5 text-right">
+              <span className="text-muted-foreground font-mono w-5 text-right">
                 {p.jersey_number || p.numero || ''}
               </span>
-              <span className="text-gray-700">{p.name || p.nome || `#${p.id || ''}`}</span>
+              <span className="text-foreground/80">{p.name || p.nome || `#${p.id || ''}`}</span>
               {p.position && (
-                <span className="text-zinc-600 text-[10px] uppercase">{p.position}</span>
+                <span className="text-muted-foreground text-[10px] uppercase">{p.position}</span>
               )}
               {p.ai_score != null && p.ai_score > 0 && (
                 <span className="text-green-500/60 text-[10px] ml-auto">
@@ -444,11 +444,11 @@ function LineupCard({
       )}
 
       {substitutes.length > 0 && (
-        <div className="pt-2 border-t border-gray-200/50">
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-1">Reservas</p>
+        <div className="pt-2 border-t border-border/50">
+          <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">Reservas</p>
           <div className="flex flex-wrap gap-1">
             {substitutes.map((p: any, idx: number) => (
-              <span key={idx} className="text-xs text-zinc-500 bg-zinc-800/40 rounded px-1.5 py-0.5">
+              <span key={idx} className="text-xs text-muted-foreground bg-zinc-800/40 rounded px-1.5 py-0.5">
                 {p.name || p.nome || `#${p.id || ''}`}
               </span>
             ))}
@@ -516,7 +516,7 @@ function MatchHeader({
               {jogo.liga}
             </span>
             {jogo.rodada != null && (
-              <span className="text-zinc-600 text-[10px] font-mono">
+              <span className="text-muted-foreground text-[10px] font-mono">
                 {jogo.rodada}ª rodada
               </span>
             )}
@@ -524,11 +524,11 @@ function MatchHeader({
               <span className="badge-moderno bg-yellow-500/10 text-yellow-500">🏙️ Clássico!</span>
             )}
             {contexto?.campo_neutro && (
-              <span className="badge-moderno bg-zinc-700/30 text-zinc-500">Neutro</span>
+              <span className="badge-moderno bg-zinc-700/30 text-muted-foreground">Neutro</span>
             )}
           </div>
           {jogo.pais && (
-            <span className="text-zinc-600 text-[10px]">{jogo.pais}</span>
+            <span className="text-muted-foreground text-[10px]">{jogo.pais}</span>
           )}
         </div>
 
@@ -540,7 +540,7 @@ function MatchHeader({
               {escudoCasa && (
                 <img src={escudoCasa} alt={jogo.time_casa} className="w-8 h-8 object-contain" />
               )}
-              <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_casa}</div>
+              <div className="text-lg md:text-xl font-bold text-foreground leading-tight">{jogo.time_casa}</div>
             </div>
             {oddsConsenso?.vitoria_casa && !isAoVivo && !isFinalizado && (
               <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
@@ -554,11 +554,11 @@ function MatchHeader({
             {(isAoVivo || isFinalizado) && temPlacar ? (
               <div className="flex flex-col items-center">
                 <div className="flex items-center justify-center gap-3">
-                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.casa! > placar!.fora! ? 'text-white' : placar!.casa! < placar!.fora! ? 'text-zinc-500' : 'text-gray-800'}`}>
+                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.casa! > placar!.fora! ? 'text-white' : placar!.casa! < placar!.fora! ? 'text-muted-foreground' : 'text-foreground'}`}>
                     {placar!.casa}
                   </span>
-                  <span className="text-zinc-600 text-2xl font-bold">:</span>
-                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.fora! > placar!.casa! ? 'text-white' : placar!.fora! < placar!.casa! ? 'text-zinc-500' : 'text-gray-800'}`}>
+                  <span className="text-muted-foreground text-2xl font-bold">:</span>
+                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.fora! > placar!.casa! ? 'text-white' : placar!.fora! < placar!.casa! ? 'text-muted-foreground' : 'text-foreground'}`}>
                     {placar!.fora}
                   </span>
                 </div>
@@ -571,18 +571,18 @@ function MatchHeader({
                   </div>
                 )}
                 {isFinalizado && (
-                  <span className="text-zinc-600 text-[10px] font-medium mt-1">Final</span>
+                  <span className="text-muted-foreground text-[10px] font-medium mt-1">Final</span>
                 )}
                 {placar?.casa_ht != null && (
-                  <span className="text-zinc-600 text-[9px] mt-1 font-mono">HT {placar.casa_ht}-{placar.fora_ht}</span>
+                  <span className="text-muted-foreground text-[9px] mt-1 font-mono">HT {placar.casa_ht}-{placar.fora_ht}</span>
                 )}
               </div>
             ) : (
               <div className="flex flex-col items-center">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/20 flex items-center justify-center">
-                  <span className="text-zinc-400 text-xs font-bold">VS</span>
+                  <span className="text-muted-foreground text-xs font-bold">VS</span>
                 </div>
-                <span className="text-zinc-600 text-[10px] mt-1.5 font-mono">{formatarHoraCurta(jogo.data)}</span>
+                <span className="text-muted-foreground text-[10px] mt-1.5 font-mono">{formatarHoraCurta(jogo.data)}</span>
               </div>
             )}
           </div>
@@ -593,7 +593,7 @@ function MatchHeader({
               {escudoFora && (
                 <img src={escudoFora} alt={jogo.time_fora} className="w-8 h-8 object-contain" />
               )}
-              <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_fora}</div>
+              <div className="text-lg md:text-xl font-bold text-foreground leading-tight">{jogo.time_fora}</div>
             </div>
             {oddsConsenso?.vitoria_fora && !isAoVivo && !isFinalizado && (
               <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
@@ -604,18 +604,18 @@ function MatchHeader({
         </div>
 
         {/* Info bar */}
-        <div className="flex items-center justify-center gap-3 text-[11px] text-zinc-600 mt-2 flex-wrap">
-          <span className="text-zinc-500">{formatarDataCompleta(jogo.data)}</span>
+        <div className="flex items-center justify-center gap-3 text-[11px] text-muted-foreground mt-2 flex-wrap">
+          <span className="text-muted-foreground">{formatarDataCompleta(jogo.data)}</span>
           {xgPosJogo?.xg_casa != null && (
             <>
               <span className="text-zinc-700">·</span>
-              <span className="text-zinc-500">Gols Esperados <span className="text-green-400/80">{xgPosJogo.xg_casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgPosJogo.xg_fora?.toFixed(2)}</span></span>
+              <span className="text-muted-foreground">Gols Esperados <span className="text-green-400/80">{xgPosJogo.xg_casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgPosJogo.xg_fora?.toFixed(2)}</span></span>
             </>
           )}
           {xgAoVivo?.casa != null && (
             <>
               <span className="text-zinc-700">·</span>
-              <span className="text-zinc-500">GE⏳ <span className="text-green-400/80">{xgAoVivo.casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgAoVivo.fora?.toFixed(2)}</span></span>
+              <span className="text-muted-foreground">GE⏳ <span className="text-green-400/80">{xgAoVivo.casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgAoVivo.fora?.toFixed(2)}</span></span>
             </>
           )}
           {!isAoVivo && !isFinalizado && (
@@ -632,41 +632,41 @@ function MatchHeader({
 
         {/* Consensus odds (não iniciados) */}
         {!isAoVivo && !isFinalizado && (
-          <div className="flex justify-center gap-5 mt-3 pt-3 border-t border-gray-200/60 text-[11px] text-zinc-600">
+          <div className="flex justify-center gap-5 mt-3 pt-3 border-t border-border/60 text-[11px] text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <span className="text-zinc-500">1</span>
-              <span className="text-gray-700 font-mono font-bold">{Number(oddsConsenso?.vitoria_casa ?? '-').toFixed(2)}</span>
+              <span className="text-muted-foreground">1</span>
+              <span className="text-foreground/80 font-mono font-bold">{Number(oddsConsenso?.vitoria_casa ?? '-').toFixed(2)}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-zinc-500">X</span>
-              <span className="text-gray-700 font-mono">{Number(oddsConsenso?.empate ?? '-').toFixed(2)}</span>
+              <span className="text-muted-foreground">X</span>
+              <span className="text-foreground/80 font-mono">{Number(oddsConsenso?.empate ?? '-').toFixed(2)}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-zinc-500">2</span>
-              <span className="text-gray-700 font-mono font-bold">{Number(oddsConsenso?.vitoria_fora ?? '-').toFixed(2)}</span>
+              <span className="text-muted-foreground">2</span>
+              <span className="text-foreground/80 font-mono font-bold">{Number(oddsConsenso?.vitoria_fora ?? '-').toFixed(2)}</span>
             </span>
           </div>
         )}
 
         {/* Venue + Clima + Contexto */}
         {(estadio || clima || contexto?.distancia_km) && (
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 mt-3 pt-3 border-t border-gray-200/60 text-[11px] text-zinc-600">
-            {estadio && <span>🏟️ <span className="text-zinc-500">{estadio.nome}</span>{estadio.cidade ? <span className="text-zinc-600">, {estadio.cidade}</span> : ''}</span>}
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 mt-3 pt-3 border-t border-border/60 text-[11px] text-muted-foreground">
+            {estadio && <span>🏟️ <span className="text-muted-foreground">{estadio.nome}</span>{estadio.cidade ? <span className="text-muted-foreground">, {estadio.cidade}</span> : ''}</span>}
             {clima && (
               <span>
                 🌤️ {clima.descricao}{clima.temperatura_c != null ? ` ${clima.temperatura_c}°C` : ''}{clima.vento_kmh ? ` 🌬️${clima.vento_kmh}km/h` : ''}
               </span>
             )}
-            {gramado != null && <span>🌱 <span className="text-zinc-500 capitalize">{descricaoGramado(gramado)}</span></span>}
-            {contexto?.distancia_km != null && contexto.distancia_km > 0 && <span>✈️ <span className="text-zinc-500">{contexto.distancia_km}km</span></span>}
+            {gramado != null && <span>🌱 <span className="text-muted-foreground capitalize">{descricaoGramado(gramado)}</span></span>}
+            {contexto?.distancia_km != null && contexto.distancia_km > 0 && <span>✈️ <span className="text-muted-foreground">{contexto.distancia_km}km</span></span>}
           </div>
         )}
 
         {/* Predição ML */}
         {pred && (
-          <div className="mt-3 pt-3 border-t border-gray-200/60">
+          <div className="mt-3 pt-3 border-t border-border/60">
             <div className="flex items-center justify-center gap-4 text-xs flex-wrap">
-              <span className="text-zinc-600 text-[10px] uppercase tracking-wider font-semibold">🤖 ML</span>
+              <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">🤖 ML</span>
               {pred.probabilidades && (
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1">
@@ -684,12 +684,12 @@ function MatchHeader({
                 </div>
               )}
               {pred.placar_provavel && (
-                <span className="text-zinc-500 text-[11px]">
-                  Placar: <span className="text-gray-700 font-mono font-bold">{pred.placar_provavel}</span>
+                <span className="text-muted-foreground text-[11px]">
+                  Placar: <span className="text-foreground/80 font-mono font-bold">{pred.placar_provavel}</span>
                 </span>
               )}
               {pred.confianca != null && (
-                <span className="text-zinc-500 text-[11px]">
+                <span className="text-muted-foreground text-[11px]">
                   Confiança: <span className="text-orange-400 font-mono font-bold">{Math.round(pred.confianca * 100)}%</span>
                 </span>
               )}
@@ -699,9 +699,9 @@ function MatchHeader({
 
         {/* Fatos curiosos */}
         {metadados?.fatos_curiosos && metadados.fatos_curiosos.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-gray-200/60">
+          <div className="mt-3 pt-3 border-t border-border/60">
             {metadados.fatos_curiosos.slice(0, 2).map((fato: string, idx: number) => (
-              <p key={idx} className="text-xs text-zinc-600 italic leading-relaxed">💡 {fato}</p>
+              <p key={idx} className="text-xs text-muted-foreground italic leading-relaxed">💡 {fato}</p>
             ))}
           </div>
         )}
@@ -748,9 +748,9 @@ function FormCard({
   const ppg = lado === 'casa' ? forma.ppg_casa : forma.ppg_fora;
 
   return (
-    <div className="bg-gray-50 rounded-lg p-4">
+    <div className="bg-muted/50 rounded-lg p-4">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-gray-800 text-sm font-semibold">{time}</h4>
+        <h4 className="text-foreground text-sm font-semibold">{time}</h4>
         {forma.ultimos_jogos && (
           <span className="text-xs font-mono tracking-wider">
             {forma.ultimos_jogos.split('').map((c: string, i: number) => (
@@ -759,7 +759,7 @@ function FormCard({
                 className={
                   c === 'W' ? 'text-green-500' :
                   c === 'D' ? 'text-yellow-500' :
-                  c === 'L' ? 'text-red-500' : 'text-zinc-600'
+                  c === 'L' ? 'text-red-500' : 'text-muted-foreground'
                 }
               >
                 {c}
@@ -770,18 +770,18 @@ function FormCard({
       </div>
 
       <div className="grid grid-cols-3 gap-2 text-xs">
-        <div className="bg-white rounded p-2 text-center">
-          <div className="text-zinc-500">{ppgLabel}</div>
-          <div className="text-gray-800 font-mono font-bold">{ppg ?? '-'}</div>
+        <div className="bg-card rounded p-2 text-center">
+          <div className="text-muted-foreground">{ppgLabel}</div>
+          <div className="text-foreground font-mono font-bold">{ppg ?? '-'}</div>
         </div>
-        <div className="bg-white rounded p-2 text-center">
-          <div className="text-zinc-500">Gols marcados</div>
+        <div className="bg-card rounded p-2 text-center">
+          <div className="text-muted-foreground">Gols marcados</div>
           <div className="text-green-400 font-mono font-bold">
             {lado === 'casa' ? forma.gols_marcados_casa ?? forma.gols_marcados_fora ?? '-' : forma.gols_marcados_fora ?? forma.gols_marcados_casa ?? '-'}
           </div>
         </div>
-        <div className="bg-white rounded p-2 text-center">
-          <div className="text-zinc-500">Gols sofridos</div>
+        <div className="bg-card rounded p-2 text-center">
+          <div className="text-muted-foreground">Gols sofridos</div>
           <div className="text-red-400 font-mono font-bold">
             {lado === 'casa' ? forma.gols_sofridos_casa ?? forma.gols_sofridos_fora ?? '-' : forma.gols_sofridos_fora ?? forma.gols_sofridos_casa ?? '-'}
           </div>
@@ -789,15 +789,15 @@ function FormCard({
       </div>
 
       {forma.clean_sheets != null && (
-        <div className="mt-2 text-xs text-zinc-500">
-          Jogos sem sofrer gols: <span className="text-gray-700 font-mono">{forma.clean_sheets}</span>
+        <div className="mt-2 text-xs text-muted-foreground">
+          Jogos sem sofrer gols: <span className="text-foreground/80 font-mono">{forma.clean_sheets}</span>
         </div>
       )}
 
       {desfalques.length > 0 && (
-        <div className="mt-2 pt-2 border-t border-gray-200/50 text-xs">
+        <div className="mt-2 pt-2 border-t border-border/50 text-xs">
           <span className="text-red-400">Desfalques:</span>{' '}
-          <span className="text-zinc-500">{desfalques.join(', ')}</span>
+          <span className="text-muted-foreground">{desfalques.join(', ')}</span>
         </div>
       )}
     </div>
@@ -838,25 +838,25 @@ function StatsTable({
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-gray-200/50">
-              <th className="text-left text-zinc-600 font-medium px-4 py-2">{timeCasa}</th>
-              <th className="text-center text-zinc-600 font-medium px-3 py-2 w-16">Média</th>
-              <th className="text-right text-zinc-600 font-medium px-4 py-2">{timeFora}</th>
+            <tr className="border-b border-border/50">
+              <th className="text-left text-muted-foreground font-medium px-4 py-2">{timeCasa}</th>
+              <th className="text-center text-muted-foreground font-medium px-3 py-2 w-16">Média</th>
+              <th className="text-right text-muted-foreground font-medium px-4 py-2">{timeFora}</th>
             </tr>
           </thead>
           <tbody>
             {stats.map((s) => {
               if (s.casa == null && s.fora == null) return null;
               return (
-                <tr key={s.label} className="border-b border-gray-200/30 hover:bg-gray-100">
+                <tr key={s.label} className="border-b border-border/30 hover:bg-muted/80">
                   <td className="px-4 py-2.5">
-                    <span className="text-gray-700">{formatStat(s.casa, s.format)}</span>
+                    <span className="text-foreground/80">{formatStat(s.casa, s.format)}</span>
                   </td>
                   <td className="px-3 py-2.5 text-center">
-                    <span className="text-zinc-500">{s.label}</span>
+                    <span className="text-muted-foreground">{s.label}</span>
                   </td>
                   <td className="px-4 py-2.5 text-right">
-                    <span className="text-gray-700">{formatStat(s.fora, s.format)}</span>
+                    <span className="text-foreground/80">{formatStat(s.fora, s.format)}</span>
                   </td>
                 </tr>
               );
@@ -890,8 +890,8 @@ function H2HSection({
     <SectionWrapper titulo="Confronto Direto" emoji="🤝">
       <div className="grid grid-cols-4 gap-3 mb-4 text-center text-xs">
         <div className="bg-zinc-800/40 rounded p-2">
-          <div className="text-zinc-500">Total</div>
-          <div className="text-gray-800 font-mono font-bold">{h2h.total_jogos}</div>
+          <div className="text-muted-foreground">Total</div>
+          <div className="text-foreground font-mono font-bold">{h2h.total_jogos}</div>
         </div>
         <div className="bg-green-900/20 rounded p-2">
           <div className="text-green-500">{timeCasa}</div>
@@ -908,22 +908,22 @@ function H2HSection({
       </div>
 
       {h2h.media_gols != null && (
-        <div className="text-xs text-zinc-500 mb-3">
-          Média de gols no confronto: <span className="text-gray-700 font-mono">{h2h.media_gols}</span>
+        <div className="text-xs text-muted-foreground mb-3">
+          Média de gols no confronto: <span className="text-foreground/80 font-mono">{h2h.media_gols}</span>
         </div>
       )}
 
       {ultimos.length > 0 && (
         <div>
-          <div className="text-xs text-zinc-600 font-semibold mb-2">Últimos confrontos:</div>
+          <div className="text-xs text-muted-foreground font-semibold mb-2">Últimos confrontos:</div>
           <div className="space-y-1">
             {ultimos.map((m: H2HMatch, i: number) => (
-              <div key={i} className="flex items-center justify-between text-xs bg-gray-50 rounded px-3 py-1.5">
-                <span className="text-gray-700">
+              <div key={i} className="flex items-center justify-between text-xs bg-muted/50 rounded px-3 py-1.5">
+                <span className="text-foreground/80">
                   {m.home_team} {m.home_score ?? '?'} - {m.away_score ?? '?'} {m.away_team}
                 </span>
                 {m.event_date && (
-                  <span className="text-zinc-600">{formatarDataCurta(m.event_date)}</span>
+                  <span className="text-muted-foreground">{formatarDataCurta(m.event_date)}</span>
                 )}
               </div>
             ))}
@@ -959,16 +959,16 @@ function StandingsTable({
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-gray-200/50">
-              <th className="text-left text-zinc-600 font-medium px-3 py-2 w-8">#</th>
-              <th className="text-left text-zinc-600 font-medium px-3 py-2">Time</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-8">P</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-8">J</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-8">V</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-8">E</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-8">D</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-10">SG</th>
-              <th className="text-center text-zinc-600 font-medium px-2 py-2 w-12">F. Rec</th>
+            <tr className="border-b border-border/50">
+              <th className="text-left text-muted-foreground font-medium px-3 py-2 w-8">#</th>
+              <th className="text-left text-muted-foreground font-medium px-3 py-2">Time</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">P</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">J</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">V</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">E</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">D</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-10">SG</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-12">F. Rec</th>
             </tr>
           </thead>
           <tbody>
@@ -979,18 +979,18 @@ function StandingsTable({
               return (
                 <tr
                   key={row.posicao}
-                  className={`border-b border-gray-200/30 hover:bg-gray-100 ${
+                  className={`border-b border-border/30 hover:bg-muted/80 ${
                     destaque ? 'bg-orange-500/5' : ''
                   }`}
                 >
-                  <td className={`px-3 py-2 font-mono ${destaque ? 'text-orange-400' : 'text-zinc-500'}`}>
+                  <td className={`px-3 py-2 font-mono ${destaque ? 'text-orange-400' : 'text-muted-foreground'}`}>
                     {row.posicao}
                   </td>
-                  <td className={`px-3 py-2 ${destaque ? 'text-orange-300 font-medium' : 'text-gray-700'}`}>
+                  <td className={`px-3 py-2 ${destaque ? 'text-orange-300 font-medium' : 'text-foreground/80'}`}>
                     {row.time}
                   </td>
-                  <td className="text-center px-2 py-2 font-mono font-bold text-gray-800">{row.pontos}</td>
-                  <td className="text-center px-2 py-2 font-mono text-zinc-400">{row.jogos}</td>
+                  <td className="text-center px-2 py-2 font-mono font-bold text-foreground">{row.pontos}</td>
+                  <td className="text-center px-2 py-2 font-mono text-muted-foreground">{row.jogos}</td>
                   <td className="text-center px-2 py-2 font-mono text-green-500">{row.vitorias}</td>
                   <td className="text-center px-2 py-2 font-mono text-yellow-500">{row.empates}</td>
                   <td className="text-center px-2 py-2 font-mono text-red-500">{row.derrotas}</td>
@@ -1006,7 +1006,7 @@ function StandingsTable({
                           <span key={i} className={
                             c === 'W' ? 'text-green-500' :
                             c === 'D' ? 'text-yellow-500' :
-                            c === 'L' ? 'text-red-500' : 'text-zinc-600'
+                            c === 'L' ? 'text-red-500' : 'text-muted-foreground'
                           }>{c}</span>
                         ))}
                       </span>
@@ -1042,31 +1042,31 @@ function CoachCard({ time, coach }: { time: string; coach: CoachData }) {
   if (!coach?.nome) return null;
 
   return (
-    <div className="bg-gray-50 rounded-lg p-3">
-      <div className="text-gray-800 text-sm font-medium mb-2">{coach.nome}</div>
+    <div className="bg-muted/50 rounded-lg p-3">
+      <div className="text-foreground text-sm font-medium mb-2">{coach.nome}</div>
       <div className="space-y-1 text-xs">
         {coach.formacao_preferida && (
           <div className="flex justify-between">
-            <span className="text-zinc-600">Formação</span>
-            <span className="text-gray-700 font-mono">{coach.formacao_preferida}</span>
+            <span className="text-muted-foreground">Formação</span>
+            <span className="text-foreground/80 font-mono">{coach.formacao_preferida}</span>
           </div>
         )}
         {coach.pressing_intensity != null && (
           <div className="flex justify-between">
-            <span className="text-zinc-600">Pressão</span>
-            <span className="text-gray-700 font-mono">{(coach.pressing_intensity * 100).toFixed(0)}%</span>
+            <span className="text-muted-foreground">Pressão</span>
+            <span className="text-foreground/80 font-mono">{(coach.pressing_intensity * 100).toFixed(0)}%</span>
           </div>
         )}
         {coach.defensive_line && (
           <div className="flex justify-between">
-            <span className="text-zinc-600">Linha defensiva</span>
-            <span className="text-gray-700">{coach.defensive_line}</span>
+            <span className="text-muted-foreground">Linha defensiva</span>
+            <span className="text-foreground/80">{coach.defensive_line}</span>
           </div>
         )}
         {coach.top_styles && coach.top_styles.length > 0 && (
           <div className="flex justify-between">
-            <span className="text-zinc-600">Estilo</span>
-            <span className="text-gray-700 text-right max-w-[200px]">{coach.top_styles.slice(0, 3).join(', ')}</span>
+            <span className="text-muted-foreground">Estilo</span>
+            <span className="text-foreground/80 text-right max-w-[200px]">{coach.top_styles.slice(0, 3).join(', ')}</span>
           </div>
         )}
       </div>
@@ -1079,7 +1079,7 @@ function CoachCard({ time, coach }: { time: string; coach: CoachData }) {
 function RefereeSection({ arbitro }: { arbitro: Record<string, any> }) {
   return (
     <div className="flex items-center gap-4 text-xs flex-wrap">
-      <span className="text-gray-700 font-medium">{arbitro.nome}</span>
+      <span className="text-foreground/80 font-medium">{arbitro.nome}</span>
       {arbitro.amarelos_jogo != null && (
         <>
           <span className="text-zinc-700">|</span>
@@ -1118,13 +1118,13 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
         <TableBody>
           {mercados.flatMap(([mercado, outcomes]) =>
             Object.entries(outcomes).map(([outcome, data]: [string, any]) => (
-              <TableRow key={`${mercado}-${outcome}`} className="border-gray-100 hover:bg-gray-50">
-                <TableCell className="py-2 text-[11px] text-gray-500 font-medium">{mercado}</TableCell>
-                <TableCell className="py-2 text-[11px] text-gray-700">{outcome}</TableCell>
+              <TableRow key={`${mercado}-${outcome}`} className="border-gray-100 hover:bg-muted/50">
+                <TableCell className="py-2 text-[11px] text-muted-foreground font-medium">{mercado}</TableCell>
+                <TableCell className="py-2 text-[11px] text-foreground/80">{outcome}</TableCell>
                 <TableCell className="py-2 text-[11px] text-right font-mono font-bold text-orange-600">
                   {data.melhor_odd ?? '-'}
                 </TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono text-gray-400">
+                <TableCell className="py-2 text-[11px] text-right font-mono text-muted-foreground">
                   {data.melhor_casa ?? '-'}
                 </TableCell>
                 <TableCell className="py-2 text-[11px] text-right font-mono text-gray-600">

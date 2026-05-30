@@ -114,12 +114,12 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
           placeholder="Buscar por time ou liga..."
           value={pesquisa}
           onChange={(e) => setPesquisa(e.target.value)}
-          className="flex-1 bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 placeholder-gray-400 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
+          className="flex-1 bg-card border border-border rounded-lg px-4 py-2.5 text-foreground/80 placeholder-gray-400 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
         />
         <select
           value={ligaFiltro}
           onChange={(e) => setLigaFiltro(e.target.value)}
-          className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm focus:outline-none focus:border-orange-500/50 transition-colors sm:max-w-[180px] w-full"
+          className="bg-card border border-border rounded-lg px-3 py-2.5 text-foreground/80 text-sm focus:outline-none focus:border-orange-500/50 transition-colors sm:max-w-[180px] w-full"
         >
           <option value="">Todas ligas</option>
           {ligas.map((liga) => (
@@ -130,7 +130,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
       {filtrados.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-zinc-500">Nenhum jogo encontrado nos próximos 7 dias.</p>
+          <p className="text-muted-foreground">Nenhum jogo encontrado nos próximos 7 dias.</p>
         </div>
       )}
 
@@ -140,7 +140,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
           <h2 className="text-green-500 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             ⏳ Ao Vivo
-            <span className="text-zinc-600 font-normal">({jogosAoVivo.length})</span>
+            <span className="text-muted-foreground font-normal">({jogosAoVivo.length})</span>
           </h2>
           {renderGrupos(agruparPorLiga(jogosAoVivo), onSelectJogo, true)}
         </div>
@@ -149,9 +149,9 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
       {/* ── FINALIZADOS (só hoje) ── */}
       {jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length > 0 && (
         <div className="mb-10">
-          <h2 className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+          <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             ✅ Finalizados Hoje
-            <span className="text-zinc-600 font-normal">({jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length})</span>
+            <span className="text-muted-foreground font-normal">({jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length})</span>
           </h2>
           {renderGrupos(agruparPorLiga(jogosFinalizados.filter(j => j.data?.startsWith(hoje))), onSelectJogo, false, true)}
         </div>
@@ -160,13 +160,13 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
       {/* ── PRÓXIMOS JOGOS (não iniciados, por data) ── */}
       {jogosNaoIniciados.length > 0 && (
         <div className="mb-10">
-          <h2 className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-4">
+          <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4">
             📅 Próximos Jogos ({jogosNaoIniciados.length})
           </h2>
           <div className="space-y-8">
             {Array.from(gruposData.entries()).map(([data, jogosData]) => (
               <div key={data}>
-                <h3 className="text-zinc-600 text-xs font-semibold mb-3">
+                <h3 className="text-muted-foreground text-xs font-semibold mb-3">
                   {data === hoje ? 'Hoje' : formatarData(data)}
                   <span className="text-zinc-700 ml-1">({jogosData.length})</span>
                 </h3>
@@ -184,8 +184,8 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
   return Array.from(grupos.entries()).map(([liga, jogos]) => (
     <div key={liga} className="mb-5">
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-zinc-600">🏆</span>
-        <h4 className="text-zinc-500 text-xs font-semibold">{liga}</h4>
+        <span className="text-muted-foreground">🏆</span>
+        <h4 className="text-muted-foreground text-xs font-semibold">{liga}</h4>
         <span className="text-zinc-700 text-xs">({jogos.length})</span>
       </div>
       <div className="space-y-1.5">
@@ -195,7 +195,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
           <button
             key={jogo.event_id}
             onClick={() => onSelectJogo(jogo.event_id)}
-            className="w-full bg-white border border-gray-200 hover:border-gray-300 rounded-xl overflow-hidden transition-all duration-200 group cursor-pointer glow-accent"
+            className="w-full bg-card border border-border hover:border-gray-300 rounded-xl overflow-hidden transition-all duration-200 group cursor-pointer glow-accent"
           >
             {/* Gradient accent bar */}
             <div className={`h-0.5 w-full bg-gradient-to-r ${aoVivo ? 'from-green-500 via-green-400/50 to-transparent' : finalizado ? 'from-zinc-600/50 via-zinc-500/20 to-transparent' : 'from-orange-500/80 via-orange-400/40 to-transparent'}`} />
@@ -205,7 +205,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
                 {/* Horário ou Placar */}
                 {temPlacar ? (
                   <div className="shrink-0 text-center w-14">
-                    <div className={`text-xl font-black ${aoVivo ? 'text-green-400' : 'text-zinc-400'}`}>
+                    <div className={`text-xl font-black ${aoVivo ? 'text-green-400' : 'text-muted-foreground'}`}>
                       {jogo.score_casa}-{jogo.score_fora}
                     </div>
                     {aoVivo && (
@@ -217,19 +217,19 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
                   </div>
                 ) : (
                   <div className="shrink-0 text-center w-12">
-                    <div className="text-zinc-500 text-[11px] font-mono font-bold tracking-tight">
+                    <div className="text-muted-foreground text-[11px] font-mono font-bold tracking-tight">
                       {formatarHora(jogo.data)}
                     </div>
                   </div>
                 )}
                 <div className="flex-1">
                   <div className="flex items-center justify-center gap-2.5">
-                    <span className={`text-sm font-semibold leading-tight transition-colors group-hover:text-orange-400 ${temPlacar && aoVivo ? 'text-gray-900' : 'text-gray-900'}`}>
+                    <span className={`text-sm font-semibold leading-tight transition-colors group-hover:text-orange-400 ${temPlacar && aoVivo ? 'text-foreground' : 'text-foreground'}`}>
                       {jogo.time_casa}
                     </span>
                     {!temPlacar && (
                       <>
-                        <span className="text-zinc-600 text-[10px] font-medium px-2 py-0.5 bg-gray-50 rounded-md">VS</span>
+                        <span className="text-muted-foreground text-[10px] font-medium px-2 py-0.5 bg-muted/50 rounded-md">VS</span>
                         <span className="text-sm font-semibold leading-tight group-hover:text-orange-400 transition-colors">
                           {jogo.time_fora}
                         </span>
@@ -237,7 +237,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
                     )}
                   </div>
                   {temPlacar && (
-                    <div className="text-[11px] text-zinc-600 mt-0.5 text-center">
+                    <div className="text-[11px] text-muted-foreground mt-0.5 text-center">
                       {jogo.time_casa} · {jogo.time_fora}
                     </div>
                   )}
@@ -248,19 +248,19 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
               <div className="ml-3 flex gap-2 text-xs shrink-0">
                 {jogo.odd_casa && (
                   <div className="bg-orange-500/10 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
-                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">1</div>
+                    <div className="text-muted-foreground mb-0.5 text-[9px] font-semibold">1</div>
                     <div className="text-orange-400 font-mono text-[12px] font-bold">{Number(jogo.odd_casa).toFixed(2)}</div>
                   </div>
                 )}
                 {jogo.odd_empate && (
                   <div className="bg-zinc-700/30 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
-                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">X</div>
-                    <div className="text-gray-700 font-mono text-[12px]">{Number(jogo.odd_empate).toFixed(2)}</div>
+                    <div className="text-muted-foreground mb-0.5 text-[9px] font-semibold">X</div>
+                    <div className="text-foreground/80 font-mono text-[12px]">{Number(jogo.odd_empate).toFixed(2)}</div>
                   </div>
                 )}
                 {jogo.odd_fora && (
                   <div className="bg-blue-500/10 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
-                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">2</div>
+                    <div className="text-muted-foreground mb-0.5 text-[9px] font-semibold">2</div>
                     <div className="text-blue-400 font-mono text-[12px] font-bold">{Number(jogo.odd_fora).toFixed(2)}</div>
                   </div>
                 )}

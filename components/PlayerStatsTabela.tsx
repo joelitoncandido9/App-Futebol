@@ -51,20 +51,20 @@ export default function PlayerStatsTabela({
   );
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-200">
-        <h3 className="text-zinc-400 text-xs font-semibold uppercase tracking-wider">
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div className="px-4 py-3 border-b border-border">
+        <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
           🌟 Rating dos Jogadores
         </h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 p-4">
         <div>
-          <h4 className="text-gray-700 text-xs font-semibold mb-2 px-1">{timeCasa}</h4>
+          <h4 className="text-foreground/80 text-xs font-semibold mb-2 px-1">{timeCasa}</h4>
           {renderTabela(casaPlayers)}
         </div>
         <div>
-          <h4 className="text-gray-700 text-xs font-semibold mb-2 px-1 mt-4 md:mt-0">{timeFora}</h4>
+          <h4 className="text-foreground/80 text-xs font-semibold mb-2 px-1 mt-4 md:mt-0">{timeFora}</h4>
           {renderTabela(foraPlayers)}
         </div>
       </div>
@@ -74,7 +74,7 @@ export default function PlayerStatsTabela({
 
 function renderTabela(players: PlayerStat[]) {
   if (players.length === 0) {
-    return <p className="text-zinc-600 text-xs py-4 text-center">Sem dados disponíveis</p>;
+    return <p className="text-muted-foreground text-xs py-4 text-center">Sem dados disponíveis</p>;
   }
 
   const maxRating = Math.max(...players.map((p) => p.rating || 0));
@@ -92,14 +92,14 @@ function renderTabela(players: PlayerStat[]) {
     <div className="overflow-x-auto">
       <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-gray-200/50">
-            <th className="text-left text-zinc-600 font-medium px-2 py-1.5">Jogador</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-8">Min</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-8">⭐</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-8">G</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-8">A</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-10">xG</th>
-            <th className="text-center text-zinc-600 font-medium px-1.5 py-1.5 w-8">🟨</th>
+          <tr className="border-b border-border/50">
+            <th className="text-left text-muted-foreground font-medium px-2 py-1.5">Jogador</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">Min</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">⭐</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">G</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">A</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-10">xG</th>
+            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">🟨</th>
           </tr>
         </thead>
         <tbody>
@@ -111,21 +111,21 @@ function renderTabela(players: PlayerStat[]) {
             return (
               <tr
                 key={p.jogador_id || idx}
-                className={`border-b border-gray-200/20 hover:bg-gray-100 ${
+                className={`border-b border-border/20 hover:bg-muted/80 ${
                   isTop ? 'bg-green-900/10' : ''
                 } ${isBottom ? 'bg-red-900/10' : ''}`}
               >
                 <td className="px-2 py-1.5">
-                  <span className={`text-gray-700 ${isTop ? 'text-green-400 font-medium' : ''} ${isBottom ? 'text-red-400' : ''}`}>
+                  <span className={`text-foreground/80 ${isTop ? 'text-green-400 font-medium' : ''} ${isBottom ? 'text-red-400' : ''}`}>
                     {p.nome || `#${p.jogador_id || idx + 1}`}
                   </span>
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-zinc-400">
+                <td className="text-center px-1.5 py-1.5 font-mono text-muted-foreground">
                   {p.minutos || p.minutes_played || '-'}
                 </td>
                 <td className="text-center px-1.5 py-1.5 font-mono">
                   {rating != null ? (
-                    <span className={`${rating >= 8 ? 'text-green-400 font-bold' : rating >= 6.5 ? 'text-gray-700' : 'text-red-400'}`}>
+                    <span className={`${rating >= 8 ? 'text-green-400 font-bold' : rating >= 6.5 ? 'text-foreground/80' : 'text-red-400'}`}>
                       {rating.toFixed(1)}
                     </span>
                   ) : '-'}
@@ -136,7 +136,7 @@ function renderTabela(players: PlayerStat[]) {
                 <td className="text-center px-1.5 py-1.5 font-mono text-blue-400">
                   {p.assistencias || '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-zinc-400">
+                <td className="text-center px-1.5 py-1.5 font-mono text-muted-foreground">
                   {p.xg != null ? p.xg.toFixed(2) : '-'}
                 </td>
                 <td className="text-center px-1.5 py-1.5">

@@ -54,8 +54,8 @@ export default function MatchAnalytics({
   if (tabs.length === 0) return null;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-      <div className="flex border-b border-gray-200 overflow-x-auto">
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div className="flex border-b border-border overflow-x-auto">
         {tabs.map((t) => (
           <button
             key={t.key}
@@ -63,7 +63,7 @@ export default function MatchAnalytics({
             className={`px-4 py-2.5 text-xs font-medium whitespace-nowrap transition-colors ${
               tab === t.key
                 ? 'text-orange-500 border-b-2 border-orange-500 bg-orange-50'
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                : 'text-muted-foreground hover:text-foreground/80 hover:bg-muted/50'
             }`}
           >
             {t.label}
@@ -110,12 +110,12 @@ function XgTimelineChart({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload) return null;
     return (
-      <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs shadow-sm">
-        <div className="text-gray-500 font-medium mb-1">{label}&apos;</div>
+      <div className="bg-card border border-border rounded-lg px-3 py-2 text-xs shadow-sm">
+        <div className="text-muted-foreground font-medium mb-1">{label}&apos;</div>
         {payload.map((p: any) => (
           <div key={p.dataKey} className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-            <span className="text-gray-700">{p.name}: <span className="font-mono font-bold">{Number(p.value).toFixed(2)}</span></span>
+            <span className="text-foreground/80">{p.name}: <span className="font-mono font-bold">{Number(p.value).toFixed(2)}</span></span>
           </div>
         ))}
       </div>
@@ -124,16 +124,16 @@ function XgTimelineChart({
 
   return (
     <div>
-      <h4 className="text-gray-500 text-xs font-semibold mb-3">Gols Esperados por Minuto</h4>
+      <h4 className="text-muted-foreground text-xs font-semibold mb-3">Gols Esperados por Minuto</h4>
       <div className="flex justify-center gap-6 text-xs mb-4">
         <div className="text-center">
           <div className="text-green-500 font-bold text-lg">{last?.cum_home.toFixed(2)}</div>
-          <div className="text-gray-500">{timeCasa}</div>
+          <div className="text-muted-foreground">{timeCasa}</div>
         </div>
-        <div className="flex items-center text-gray-400">x</div>
+        <div className="flex items-center text-muted-foreground">x</div>
         <div className="text-center">
           <div className="text-blue-500 font-bold text-lg">{last?.cum_away.toFixed(2)}</div>
-          <div className="text-gray-500">{timeFora}</div>
+          <div className="text-muted-foreground">{timeFora}</div>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={200}>
@@ -147,15 +147,15 @@ function XgTimelineChart({
         </LineChart>
       </ResponsiveContainer>
       <div className="mt-4">
-        <h5 className="text-gray-400 text-[10px] uppercase tracking-wider mb-2">Detalhamento por minuto</h5>
+        <h5 className="text-muted-foreground text-[10px] uppercase tracking-wider mb-2">Detalhamento por minuto</h5>
         <ResponsiveContainer width="100%" height={80}>
           <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <XAxis dataKey="m" hide />
             <Tooltip content={({ active, payload, label }: any) => {
               if (!active || !payload) return null;
               return (
-                <div className="bg-white border border-gray-200 rounded-lg px-2 py-1.5 text-xs shadow-sm">
-                  <div className="text-gray-500 font-medium mb-0.5">{label}&apos;</div>
+                <div className="bg-card border border-border rounded-lg px-2 py-1.5 text-xs shadow-sm">
+                  <div className="text-muted-foreground font-medium mb-0.5">{label}&apos;</div>
                   {payload.map((p: any) => (
                     <div key={p.dataKey} className="flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: p.color }} />
@@ -202,8 +202,8 @@ function MomentumChart({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload || !payload[0]) return null;
     return (
-      <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs shadow-sm">
-        <div className="text-gray-500 font-medium mb-1">{label}&apos;</div>
+      <div className="bg-card border border-border rounded-lg px-3 py-2 text-xs shadow-sm">
+        <div className="text-muted-foreground font-medium mb-1">{label}&apos;</div>
         <div className="text-orange-600 font-mono font-bold">{payload[0].value > 0 ? '+' : ''}{Number(payload[0].value).toFixed(0)}</div>
       </div>
     );
@@ -211,8 +211,8 @@ function MomentumChart({
 
   return (
     <div>
-      <h4 className="text-gray-500 text-xs font-semibold mb-2">Índice de Pressão</h4>
-      <p className="text-gray-400 text-[10px] mb-3 italic">
+      <h4 className="text-muted-foreground text-xs font-semibold mb-2">Índice de Pressão</h4>
+      <p className="text-muted-foreground text-[10px] mb-3 italic">
         {interpretarMomentum(avgMomentum)} (média: {avgMomentum > 0 ? '+' : ''}{avgMomentum.toFixed(0)})
       </p>
       <ResponsiveContainer width="100%" height={200}>
@@ -234,15 +234,15 @@ function MomentumChart({
       <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
         <div className="bg-green-50 border border-green-200/50 rounded-lg p-2 text-center">
           <div className="text-green-600 font-mono font-bold">+{Math.round(Math.max(...data.map((d) => d.v)))}</div>
-          <div className="text-gray-400 text-[10px]">Pico {timeCasa}</div>
+          <div className="text-muted-foreground text-[10px]">Pico {timeCasa}</div>
         </div>
-        <div className="bg-gray-50 border border-gray-200/50 rounded-lg p-2 text-center">
-          <div className="text-gray-700 font-mono font-bold">{Math.round(avgMomentum)}</div>
-          <div className="text-gray-400 text-[10px]">Média</div>
+        <div className="bg-muted/50 border border-border/50 rounded-lg p-2 text-center">
+          <div className="text-foreground/80 font-mono font-bold">{Math.round(avgMomentum)}</div>
+          <div className="text-muted-foreground text-[10px]">Média</div>
         </div>
         <div className="bg-blue-50 border border-blue-200/50 rounded-lg p-2 text-center">
           <div className="text-blue-600 font-mono font-bold">{Math.round(Math.abs(Math.min(...data.map((d) => d.v))))}</div>
-          <div className="text-gray-400 text-[10px]">Pico {timeFora}</div>
+          <div className="text-muted-foreground text-[10px]">Pico {timeFora}</div>
         </div>
       </div>
     </div>

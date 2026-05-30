@@ -75,9 +75,9 @@ export default function StatsAvancadas({ home, away, timeCasa, timeFora }: Stats
   if (!hasSimpleStats && !hasRatioStats) return null;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-200">
-        <h3 className="text-zinc-400 text-xs font-semibold uppercase tracking-wider">
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div className="px-4 py-3 border-b border-border">
+        <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
           📊 Estatísticas Avançadas da Partida
         </h3>
       </div>
@@ -85,21 +85,21 @@ export default function StatsAvancadas({ home, away, timeCasa, timeFora }: Stats
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-gray-200/50">
-              <th className="text-left text-zinc-600 font-medium px-4 py-2 w-[120px]">{timeCasa}</th>
-              <th className="text-center text-zinc-600 font-medium px-3 py-2">Métrica</th>
-              <th className="text-right text-zinc-600 font-medium px-4 py-2 w-[120px]">{timeFora}</th>
+            <tr className="border-b border-border/50">
+              <th className="text-left text-muted-foreground font-medium px-4 py-2 w-[120px]">{timeCasa}</th>
+              <th className="text-center text-muted-foreground font-medium px-3 py-2">Métrica</th>
+              <th className="text-right text-muted-foreground font-medium px-4 py-2 w-[120px]">{timeFora}</th>
             </tr>
           </thead>
           <tbody>
             {stats.map((s) => {
               if (s.casa == null && s.fora == null) return null;
               return (
-                <tr key={s.label} className="border-b border-gray-200/30 hover:bg-gray-100">
+                <tr key={s.label} className="border-b border-border/30 hover:bg-muted/80">
                   <td className={`px-4 py-2.5 font-mono ${getColor(s.casa, s.fora, 'left', s.invert)}`}>
                     {formatStat(s.casa, s.format)}
                   </td>
-                  <td className="px-3 py-2.5 text-center text-zinc-500">{s.label}</td>
+                  <td className="px-3 py-2.5 text-center text-muted-foreground">{s.label}</td>
                   <td className={`px-4 py-2.5 text-right font-mono ${getColor(s.fora, s.casa, 'right', s.invert)}`}>
                     {formatStat(s.fora, s.format)}
                   </td>
@@ -112,9 +112,9 @@ export default function StatsAvancadas({ home, away, timeCasa, timeFora }: Stats
               const h = r.homeData;
               const a = r.awayData;
               return (
-                <tr key={r.label} className="border-b border-gray-200/30 hover:bg-gray-100">
+                <tr key={r.label} className="border-b border-border/30 hover:bg-muted/80">
                   <td className="px-4 py-2.5">
-                    <div className="text-gray-700 font-mono text-xs">
+                    <div className="text-foreground/80 font-mono text-xs">
                       {h ? `${h.value}/${h.total} (${h.pct}%)` : '-'}
                     </div>
                     {/* Barra de progresso */}
@@ -127,9 +127,9 @@ export default function StatsAvancadas({ home, away, timeCasa, timeFora }: Stats
                       </div>
                     )}
                   </td>
-                  <td className="px-3 py-2.5 text-center text-zinc-500 text-xs">{r.label}</td>
+                  <td className="px-3 py-2.5 text-center text-muted-foreground text-xs">{r.label}</td>
                   <td className="px-4 py-2.5 text-right">
-                    <div className="text-gray-700 font-mono text-xs">
+                    <div className="text-foreground/80 font-mono text-xs">
                       {a ? `${a.value}/${a.total} (${a.pct}%)` : '-'}
                     </div>
                     {a && a.total > 0 && (
@@ -165,12 +165,12 @@ function getColor(
   side: 'left' | 'right',
   invert?: boolean
 ): string {
-  if (val == null || other == null) return 'text-zinc-400';
+  if (val == null || other == null) return 'text-muted-foreground';
   const v = typeof val === 'number' ? val : parseFloat(String(val));
   const o = typeof other === 'number' ? other : parseFloat(String(other));
-  if (isNaN(v) || isNaN(o)) return 'text-zinc-400';
-  if (v === o) return 'text-gray-700';
+  if (isNaN(v) || isNaN(o)) return 'text-muted-foreground';
+  if (v === o) return 'text-foreground/80';
   const better = invert ? v < o : v > o;
   if (better) return 'text-orange-400 font-bold';
-  return 'text-zinc-400';
+  return 'text-muted-foreground';
 }

@@ -31,19 +31,19 @@ export default function ShotmapDisplay({ shotmap, timeCasa, timeFora }: ShotmapD
   const maxXg = Math.max(...shotmap.map((s) => s.xg), 0.1);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4">
-      <h3 className="text-zinc-400 text-xs font-semibold uppercase tracking-wider mb-4">
+    <div className="bg-card border border-border rounded-lg p-4">
+      <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-4">
         🎯 Mapa de Chutes
       </h3>
 
       {/* Summary stats */}
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="bg-gray-50 rounded-lg p-2.5 text-xs">
+        <div className="bg-muted/50 rounded-lg p-2.5 text-xs">
           <div className="flex items-center justify-between">
-            <span className="text-gray-700 font-medium">{timeCasa}</span>
+            <span className="text-foreground/80 font-medium">{timeCasa}</span>
             <span className="text-green-500 font-bold">{homeGoals} gol{homeGoals !== 1 ? 's' : ''}</span>
           </div>
-          <div className="text-zinc-500 mt-1">{homeShots.length} chutes ({homeShots.filter((s) => s.is_on_target).length} no gol)</div>
+          <div className="text-muted-foreground mt-1">{homeShots.length} chutes ({homeShots.filter((s) => s.is_on_target).length} no gol)</div>
           <div className="flex gap-1 mt-1">
             {homeShots.map((s, i) => (
               <span
@@ -54,12 +54,12 @@ export default function ShotmapDisplay({ shotmap, timeCasa, timeFora }: ShotmapD
             ))}
           </div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-2.5 text-xs">
+        <div className="bg-muted/50 rounded-lg p-2.5 text-xs">
           <div className="flex items-center justify-between">
-            <span className="text-gray-700 font-medium">{timeFora}</span>
+            <span className="text-foreground/80 font-medium">{timeFora}</span>
             <span className="text-blue-500 font-bold">{awayGoals} gol{awayGoals !== 1 ? 's' : ''}</span>
           </div>
-          <div className="text-zinc-500 mt-1">{awayShots.length} chutes ({awayShots.filter((s) => s.is_on_target).length} no gol)</div>
+          <div className="text-muted-foreground mt-1">{awayShots.length} chutes ({awayShots.filter((s) => s.is_on_target).length} no gol)</div>
           <div className="flex gap-1 mt-1">
             {awayShots.map((s, i) => (
               <span
@@ -159,7 +159,7 @@ export default function ShotmapDisplay({ shotmap, timeCasa, timeFora }: ShotmapD
       </div>
 
       {/* Legenda */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mt-3 text-[10px] text-zinc-500">
+      <div className="flex flex-wrap items-center justify-center gap-3 mt-3 text-[10px] text-muted-foreground">
         <span className="flex items-center gap-1">
           <span className="w-2.5 h-2.5 rounded-full bg-green-500" /> Gol
         </span>

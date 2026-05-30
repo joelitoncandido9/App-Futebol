@@ -97,14 +97,14 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
   }
 
   return (
-    <Card className="border-gray-200">
+    <Card className="border-border">
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm text-gray-700 font-semibold">🎯 Odds Justas por Mercado</CardTitle>
+        <CardTitle className="text-sm text-foreground/80 font-semibold">🎯 Odds Justas por Mercado</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <Tabs defaultValue="ataque">
           <div className="overflow-x-auto mx-4 mb-2">
-            <TabsList className="bg-gray-100 w-max">
+            <TabsList className="bg-muted/80 w-max">
               {Object.entries(CATEGORIAS).map(([key, cat]) => (
                 <TabsTrigger key={key} value={key} className="text-xs whitespace-nowrap">
                   {cat.icon} {cat.label}
@@ -119,7 +119,7 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* 1X2 */}
                   {card1x2 && card1x2.odds_1x2 && (
-                    <Card className="border-gray-200">
+                    <Card className="border-border">
                       <CardHeader className="py-3 px-4">
                         <CardTitle className="text-xs text-orange-600 font-bold uppercase tracking-wider">1X2</CardTitle>
                       </CardHeader>
@@ -127,20 +127,20 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                         <div className="grid grid-cols-3 gap-2">
                           <div className="bg-green-50 border border-green-200/50 rounded-lg p-3 text-center">
                             <div className="text-green-600 text-[10px] font-semibold mb-1">{cat.mercados[0]?.includes('1X2') ? '' : card1x2.time_casa}</div>
-                            <div className="font-mono text-sm font-black text-gray-800">{card1x2.odds_1x2.casa_prob}%</div>
+                            <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.casa_prob}%</div>
                             <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.casa_odd}</div>
-                            <div className="text-gray-400 text-[9px] mt-1">{card1x2.time_casa}</div>
+                            <div className="text-muted-foreground text-[9px] mt-1">{card1x2.time_casa}</div>
                           </div>
                           <div className="bg-yellow-50 border border-yellow-200/50 rounded-lg p-3 text-center">
                             <div className="text-yellow-600 text-[10px] font-semibold mb-1">Empate</div>
-                            <div className="font-mono text-sm font-black text-gray-800">{card1x2.odds_1x2.empate_prob}%</div>
+                            <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.empate_prob}%</div>
                             <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.empate_odd}</div>
                           </div>
                           <div className="bg-blue-50 border border-blue-200/50 rounded-lg p-3 text-center">
                             <div className="text-blue-600 text-[10px] font-semibold mb-1">{cat.mercados[0]?.includes('1X2') ? '' : card1x2.time_fora}</div>
-                            <div className="font-mono text-sm font-black text-gray-800">{card1x2.odds_1x2.fora_prob}%</div>
+                            <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.fora_prob}%</div>
                             <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.fora_odd}</div>
-                            <div className="text-gray-400 text-[9px] mt-1">{card1x2.time_fora}</div>
+                            <div className="text-muted-foreground text-[9px] mt-1">{card1x2.time_fora}</div>
                           </div>
                         </div>
                       </CardContent>
@@ -148,7 +148,7 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                   )}
                   {/* Ambos Marcam */}
                   {cardBtts && cardBtts.odds_btts && (
-                    <Card className="border-gray-200">
+                    <Card className="border-border">
                       <CardHeader className="py-3 px-4">
                         <CardTitle className="text-xs text-orange-600 font-bold uppercase tracking-wider">Ambos Marcam</CardTitle>
                       </CardHeader>
@@ -156,12 +156,12 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                         <div className="grid grid-cols-2 gap-2">
                           <div className="bg-green-50 border border-green-200/50 rounded-lg p-3 text-center">
                             <div className="text-green-600 text-[10px] font-semibold mb-1">Sim</div>
-                            <div className="font-mono text-sm font-black text-gray-800">{cardBtts.odds_btts.prob_sim}%</div>
+                            <div className="font-mono text-sm font-black text-foreground">{cardBtts.odds_btts.prob_sim}%</div>
                             <div className="text-orange-600 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_sim}</div>
                           </div>
                           <div className="bg-red-50 border border-red-200/50 rounded-lg p-3 text-center">
                             <div className="text-red-600 text-[10px] font-semibold mb-1">Não</div>
-                            <div className="font-mono text-sm font-black text-gray-800">{cardBtts.odds_btts.prob_nao}%</div>
+                            <div className="font-mono text-sm font-black text-foreground">{cardBtts.odds_btts.prob_nao}%</div>
                             <div className="text-orange-600 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_nao}</div>
                           </div>
                         </div>
@@ -178,12 +178,12 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                   const mediaTotal = (oc?.lambda ?? 0) + (of?.lambda ?? 0);
 
                   return (
-                    <Card key={card.titulo} className="border-gray-200">
+                    <Card key={card.titulo} className="border-border">
                       <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
                         <CardTitle className="text-xs font-bold uppercase tracking-wider text-orange-600">
                           {card.titulo}
                         </CardTitle>
-                        <div className="flex items-center gap-3 text-[10px] text-gray-500">
+                        <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
                           <span>{card.time_casa}: <span className="font-mono font-bold text-orange-500">{oc?.lambda ?? '-'}</span></span>
                           <Badge variant="outline" className="text-[9px] py-0 h-4 border-orange-200 text-orange-700 font-bold bg-orange-50">
                             Total: {mediaTotal.toFixed(1)}
@@ -222,13 +222,13 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">
                                     {lc?.odd_over}
                                   </TableCell>
-                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">
                                     {lc?.prob_over}%
                                   </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">
                                     {lf?.odd_over}
                                   </TableCell>
-                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">
                                     {lf?.prob_over}%
                                   </TableCell>
                                 </TableRow>
@@ -251,13 +251,13 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">
                                     {lc?.odd_under}
                                   </TableCell>
-                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">
                                     {lc?.prob_under}%
                                   </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">
                                     {lf?.odd_under}
                                   </TableCell>
-                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">
                                     {lf?.prob_under}%
                                   </TableCell>
                                 </TableRow>
