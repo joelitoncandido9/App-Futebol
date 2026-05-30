@@ -8,12 +8,13 @@
  */
 
 import { gerarCardsMercado } from '@/lib/odds-jtsa';
+import { buscarHistoricoTime, formatarComoFormData } from '@/lib/bsd-stats';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
 const BASE_URL = 'https://sports.bzzoiro.com/api';
 const BASE_URL_V2 = 'https://sports.bzzoiro.com/api/v2';
 
-export const maxDuration = 30;
+export const maxDuration = 60; // pipeline v2 pode levar mais tempo
 
 async function fetchBSD(endpoint: string) {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
@@ -73,8 +74,26 @@ export async function GET(
       : null;
 
     // Extrai dados do jogo
-    const homeForm = jogoData.home_form || {};
-    const awayForm = jogoData.away_form || {};
+    let homeForm = { ...(jogoData.home_form || {}) };
+    let awayForm = { ...(jogoData.away_form || {}) };
+
+    // Pipeline v2: tenta enriquecer com histórico ampliado (~15 jogos)
+    if (jogoData.home_team_id || jogoData.away_team_id) {
+      const [v2Home, v2Away] = await Promise.all([
+        jogoData.home_team_id ? buscarHistoricoTime(jogoData.home_team_id, jogoData.home_team) : null,
+        jogoData.away_team_id ? buscarHistoricoTime(jogoData.away_team_id, jogoData.away_team) : null,
+      ]);
+
+      if (v2Home) {
+        const enriched = formatarComoFormData(v2Home);
+        homeForm = { ...homeForm, ...enriched, matches_played: v2Home.total_jogos };
+      }
+      if (v2Away) {
+        const enriched = formatarComoFormData(v2Away);
+        awayForm = { ...awayForm, ...enriched, matches_played: v2Away.total_jogos };
+      }
+    }
+
     const referee = jogoData.referee || {};
     const h2h = jogoData.head_to_head || {};
     const unavailable = jogoData.unavailable_players || {};
