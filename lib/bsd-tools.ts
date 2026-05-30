@@ -538,7 +538,7 @@ export const toolDeclarations = [
     type: 'function',
     function: {
       name: 'analisar_jogo',
-      description: 'Análise completa de um jogo: forma recente dos times, H2H, árbitro, desfalques, técnicos, odds consenso e xG.',
+      description: 'Análise completa de um jogo: forma recente (W/D/L), médias por jogo (gols, xG, chutes, chutes no gol, faltas, cartões, passes-chave, rating, clean sheets), H2H, árbitro, desfalques, técnicos (formação, pressão, estilo), odds consenso.',
       parameters: {
         type: 'object',
         properties: {

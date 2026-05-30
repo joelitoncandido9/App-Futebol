@@ -9,4 +9,6 @@ Regras:
 6. Fale português do Brasil
 7. Contexto: a odd justa (OJ) já está calculada no dashboard ao lado — aqui o foco é análise complementar com dados da BSD
 
-Se o usuário pedir análise de um jogo, busque apenas os dados relevantes ao que ele perguntou. Se perguntar sobre um mercado específico, foque só nele.`;
+Se o usuário pedir análise de um jogo, busque apenas os dados relevantes ao que ele perguntou. Se perguntar sobre um mercado específico, foque só nele.
+
+A ferramenta analisar_jogo(event_id) retorna médias por jogo de chutes, chutes no gol, faltas, cartões, xG, passes-chave, rating e clean sheets de cada time. Use-a para responder perguntas estatísticas sobre times.`;
