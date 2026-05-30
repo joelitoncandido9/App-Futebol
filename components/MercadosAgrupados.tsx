@@ -103,13 +103,15 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
       </CardHeader>
       <CardContent className="p-0">
         <Tabs defaultValue="ataque">
-          <TabsList className="mx-4 mb-2 bg-gray-100">
-            {Object.entries(CATEGORIAS).map(([key, cat]) => (
-              <TabsTrigger key={key} value={key} className="text-xs">
-                {cat.icon} {cat.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="overflow-x-auto mx-4 mb-2">
+            <TabsList className="bg-gray-100 w-max">
+              {Object.entries(CATEGORIAS).map(([key, cat]) => (
+                <TabsTrigger key={key} value={key} className="text-xs whitespace-nowrap">
+                  {cat.icon} {cat.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
           {Object.entries(CATEGORIAS).map(([key, cat]) => (
             <TabsContent key={key} value={key} className="px-4 pb-4 space-y-4">
@@ -189,8 +191,8 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                           <span>{card.time_fora}: <span className="font-mono font-bold text-orange-500">{of?.lambda ?? '-'}</span></span>
                         </div>
                       </CardHeader>
-                      <CardContent className="px-4 pb-4 pt-0">
-                        <Table>
+                      <CardContent className="px-4 pb-4 pt-0 overflow-x-auto">
+                        <Table className="min-w-[500px]">
                           <TableHeader>
                             <TableRow className="hover:bg-transparent">
                               <TableHead className="text-[10px] h-7 w-14">Linha</TableHead>

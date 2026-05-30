@@ -108,7 +108,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   return (
     <div>
       {/* Busca + Filtro Liga */}
-      <div className="mb-6 flex gap-2">
+      <div className="mb-6 flex flex-col sm:flex-row gap-2">
         <input
           type="text"
           placeholder="Buscar por time ou liga..."
@@ -119,7 +119,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         <select
           value={ligaFiltro}
           onChange={(e) => setLigaFiltro(e.target.value)}
-          className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm focus:outline-none focus:border-orange-500/50 transition-colors max-w-[180px]"
+          className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm focus:outline-none focus:border-orange-500/50 transition-colors sm:max-w-[180px] w-full"
         >
           <option value="">Todas ligas</option>
           {ligas.map((liga) => (
