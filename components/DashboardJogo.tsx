@@ -183,6 +183,14 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
                 oj2={card.oj2}
                 amostraOJ1={card.amostra_oj1}
                 amostraOJ2={card.amostra_oj2}
+                timeCasa={card.time_casa}
+                timeFora={card.time_fora}
+                oj1Casa={card.oj1_casa}
+                oj2Casa={card.oj2_casa}
+                oj1Fora={card.oj1_fora}
+                oj2Fora={card.oj2_fora}
+                amostraCasa={card.amostra_casa}
+                amostraFora={card.amostra_fora}
                 oddMercado={card.odd_mercado}
                 nomeMercado={card.nome_mercado}
               />
