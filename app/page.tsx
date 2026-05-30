@@ -15,14 +15,13 @@ export default function Home() {
 
   function handleSelectJogo(eventId: number) {
     setSelectedEventId(eventId);
-    // Busca info básica do jogo para passar pro chat
-    fetch(`/api/jogos?event_id=${eventId}`)
+    // Busca info do jogo pelo dashboard
+    fetch(`/api/dashboard/${eventId}`)
       .then((r) => r.json())
       .then((data) => {
-        const jogo = data.jogos?.[0];
-        if (jogo) {
-          setTimeCasa(jogo.time_casa);
-          setTimeFora(jogo.time_fora);
+        if (data.jogo) {
+          setTimeCasa(data.jogo.time_casa);
+          setTimeFora(data.jogo.time_fora);
         }
       })
       .catch(() => {});

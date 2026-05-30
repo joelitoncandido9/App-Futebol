@@ -7,12 +7,12 @@ interface Jogo {
   event_id: number;
   data: string;
   liga: string;
+  pais: string;
   time_casa: string;
   time_fora: string;
   odd_casa: number | null;
   odd_empate: number | null;
   odd_fora: number | null;
-  pais: string;
 }
 
 interface JogosListaProps {
@@ -51,13 +51,29 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
       )
     : jogos;
 
-  // Agrupa por data
-  const grupos = new Map<string, Jogo[]>();
-  filtrados.forEach((jogo) => {
+  // Separa jogos de hoje do restante
+  const hoje = new Date().toISOString().split('T')[0];
+  const jogosHoje = filtrados.filter((j) => j.data?.startsWith(hoje));
+  const jogosOutros = filtrados.filter((j) => !j.data?.startsWith(hoje));
+
+  // Agrupa os "outros" por data
+  const gruposData = new Map<string, Jogo[]>();
+  jogosOutros.forEach((jogo) => {
     const data = jogo.data?.split('T')[0] || 'sem data';
-    if (!grupos.has(data)) grupos.set(data, []);
-    grupos.get(data)!.push(jogo);
+    if (!gruposData.has(data)) gruposData.set(data, []);
+    gruposData.get(data)!.push(jogo);
   });
+
+  // Dentro de cada data, agrupa por liga
+  function agruparPorLiga(jogos: Jogo[]): Map<string, Jogo[]> {
+    const mapa = new Map<string, Jogo[]>();
+    jogos.forEach((j) => {
+      const liga = j.liga || 'Outros';
+      if (!mapa.has(liga)) mapa.set(liga, []);
+      mapa.get(liga)!.push(j);
+    });
+    return mapa;
+  }
 
   if (loading) return <LoadingIndicator mensagem="Buscando jogos..." />;
 
@@ -94,75 +110,107 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         </div>
       )}
 
-      {/* Lista por data */}
-      {Array.from(grupos.entries()).map(([data, jogosData]) => (
-        <div key={data} className="mb-8">
-          <h3 className="text-zinc-500 text-xs font-semibold uppercase tracking-wider mb-3">
-            {formatarData(data)}
-          </h3>
-          <div className="space-y-2">
-            {jogosData.map((jogo) => (
-              <button
-                key={jogo.event_id}
-                onClick={() => onSelectJogo(jogo.event_id)}
-                className="w-full bg-[#111111] border border-zinc-800 hover:border-zinc-700 rounded-lg p-4 text-left transition-colors group cursor-pointer"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="text-zinc-400 text-xs mb-1.5">
-                      {jogo.liga}
-                    </div>
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className="text-zinc-100 font-medium truncate group-hover:text-orange-400 transition-colors">
-                        {jogo.time_casa}
-                      </span>
-                      <span className="text-zinc-600 text-xs">vs</span>
-                      <span className="text-zinc-100 font-medium truncate group-hover:text-orange-400 transition-colors">
-                        {jogo.time_fora}
-                      </span>
-                    </div>
-                    <div className="text-zinc-600 text-xs mt-1">
-                      {jogo.data?.split('T')[1]?.slice(0, 5) || ''}
-                    </div>
-                  </div>
-                  {/* Odds resumidas */}
-                  <div className="ml-4 flex gap-2 text-xs">
-                    {jogo.odd_casa && (
-                      <div className="bg-zinc-800/60 rounded px-2 py-1 text-center min-w-[40px]">
-                        <div className="text-zinc-500 mb-0.5">1</div>
-                        <div className="text-zinc-200 font-mono">{jogo.odd_casa}</div>
-                      </div>
-                    )}
-                    {jogo.odd_empate && (
-                      <div className="bg-zinc-800/60 rounded px-2 py-1 text-center min-w-[40px]">
-                        <div className="text-zinc-500 mb-0.5">X</div>
-                        <div className="text-zinc-200 font-mono">{jogo.odd_empate}</div>
-                      </div>
-                    )}
-                    {jogo.odd_fora && (
-                      <div className="bg-zinc-800/60 rounded px-2 py-1 text-center min-w-[40px]">
-                        <div className="text-zinc-500 mb-0.5">2</div>
-                        <div className="text-zinc-200 font-mono">{jogo.odd_fora}</div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </button>
+      {/* ── JOGOS DE HOJE ── */}
+      {jogosHoje.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-orange-400 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+            Jogos de Hoje
+            <span className="text-zinc-600 font-normal">({jogosHoje.length})</span>
+          </h2>
+          {renderGrupos(agruparPorLiga(jogosHoje), onSelectJogo)}
+        </div>
+      )}
+
+      {/* ── PRÓXIMOS JOGOS ── */}
+      {jogosOutros.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-4">
+            Próximos Jogos ({jogosOutros.length})
+          </h2>
+          <div className="space-y-8">
+            {Array.from(gruposData.entries()).map(([data, jogosData]) => (
+              <div key={data}>
+                <h3 className="text-zinc-600 text-xs font-semibold mb-3">
+                  {formatarData(data)}
+                </h3>
+                {renderGrupos(agruparPorLiga(jogosData), onSelectJogo)}
+              </div>
             ))}
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 }
 
+function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) => void) {
+  return Array.from(grupos.entries()).map(([liga, jogos]) => (
+    <div key={liga} className="mb-5">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-zinc-600">🏆</span>
+        <h4 className="text-zinc-500 text-xs font-semibold">{liga}</h4>
+        <span className="text-zinc-700 text-xs">({jogos.length})</span>
+      </div>
+      <div className="space-y-1.5">
+        {jogos.map((jogo) => (
+          <button
+            key={jogo.event_id}
+            onClick={() => onSelectJogo(jogo.event_id)}
+            className="w-full bg-[#111111] border border-zinc-800 hover:border-zinc-700 rounded-lg p-3 text-left transition-colors group cursor-pointer"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex-1 min-w-0 flex items-center gap-3">
+                <div className="flex-1 text-right">
+                  <span className="text-zinc-100 text-sm font-medium group-hover:text-orange-400 transition-colors">
+                    {jogo.time_casa}
+                  </span>
+                </div>
+                <div className="text-zinc-600 text-xs font-medium px-2 py-0.5 bg-zinc-800/50 rounded">vs</div>
+                <div className="flex-1 text-left">
+                  <span className="text-zinc-100 text-sm font-medium group-hover:text-orange-400 transition-colors">
+                    {jogo.time_fora}
+                  </span>
+                </div>
+              </div>
+              {/* Odds resumidas */}
+              <div className="ml-3 flex gap-1.5 text-xs shrink-0">
+                {jogo.odd_casa && (
+                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
+                    <div className="text-zinc-600 mb-0.5 text-[10px]">1</div>
+                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_casa}</div>
+                  </div>
+                )}
+                {jogo.odd_empate && (
+                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
+                    <div className="text-zinc-600 mb-0.5 text-[10px]">X</div>
+                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_empate}</div>
+                  </div>
+                )}
+                {jogo.odd_fora && (
+                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
+                    <div className="text-zinc-600 mb-0.5 text-[10px]">2</div>
+                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_fora}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  ));
+}
+
 function formatarData(dataStr: string): string {
-  const hoje = new Date().toISOString().split('T')[0];
-  const amanha = new Date(Date.now() + 86400000).toISOString().split('T')[0];
-
-  if (dataStr === hoje) return '📅 Hoje';
-  if (dataStr === amanha) return '📅 Amanhã';
-
-  const d = new Date(dataStr + 'T12:00:00');
-  return `📅 ${d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}`;
+  try {
+    const d = new Date(dataStr + 'T12:00:00');
+    return d.toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    });
+  } catch {
+    return dataStr;
+  }
 }

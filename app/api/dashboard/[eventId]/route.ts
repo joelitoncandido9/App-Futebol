@@ -48,8 +48,11 @@ export async function GET(
     const h2h = jogoData.head_to_head || {};
     const unavailable = jogoData.unavailable_players || {};
 
-    // Calcula odds justas
-    const cardsMercado = gerarCardsMercado(homeForm, awayForm, jogoData);
+    // Calcula odds justas (com nomes dos times)
+    const cardsMercado = gerarCardsMercado(
+      homeForm, awayForm, jogoData,
+      jogoData.home_team, jogoData.away_team
+    );
 
     // Extrai odds do mercado para comparação
     const oddsMercado: Record<string, any> = {};
