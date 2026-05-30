@@ -31,16 +31,16 @@ export function poissonCumulative(lambda: number, k: number): number {
   return sum;
 }
 
-// P(Over X) = 1 - P(<= X-1)
+// P(Over X) = 1 - P(<= floor(X))
 export function probOver(lambda: number, linha: number): number {
   if (lambda === 0) return 0;
-  return Math.min(0.9999, Math.max(0.0001, 1 - poissonCumulative(lambda, Math.max(0, linha - 1))));
+  return Math.min(0.9999, Math.max(0.0001, 1 - poissonCumulative(lambda, Math.max(0, Math.floor(linha)))));
 }
 
-// P(Under X) = P(<= X-1)
+// P(Under X) = P(<= floor(X))
 export function probUnder(lambda: number, linha: number): number {
   if (lambda === 0) return 0.9999;
-  return Math.min(0.9999, Math.max(0.0001, poissonCumulative(lambda, Math.max(0, linha - 1))));
+  return Math.min(0.9999, Math.max(0.0001, poissonCumulative(lambda, Math.max(0, Math.floor(linha)))));
 }
 
 // Odd justa = 1 / probabilidade
