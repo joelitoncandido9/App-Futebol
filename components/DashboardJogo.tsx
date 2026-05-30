@@ -202,6 +202,8 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
   const isAoVivo = jogo.status === 'inprogress' || jogo.status === 'halftime' || jogo.status === 'penalties' || jogo.status === 'extratime';
   const isFinalizado = jogo.status === 'finished';
   const isAovivoOuFinalizado = isAoVivo || isFinalizado;
+  const escudoCasa = jogo.time_casa_id ? `https://sports.bzzoiro.com/img/team/${jogo.time_casa_id}/` : null;
+  const escudoFora = jogo.time_fora_id ? `https://sports.bzzoiro.com/img/team/${jogo.time_fora_id}/` : null;
 
   return (
     <div className="space-y-5">
@@ -219,6 +221,8 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         estadio={estadio}
         clima={clima}
         gramado={gramado}
+        escudoCasa={escudoCasa}
+        escudoFora={escudoFora}
       />
 
       {/* ── ANÁLISE DA PARTIDA (tabs: Stats, Shotmap, xG, Pressão) ── */}
@@ -463,6 +467,8 @@ function MatchHeader({
   estadio,
   clima,
   gramado,
+  escudoCasa,
+  escudoFora,
 }: {
   jogo: DashboardData['jogo'];
   oddsConsenso: Record<string, number | null>;
@@ -476,6 +482,8 @@ function MatchHeader({
   estadio: DashboardData['estadio'];
   clima: DashboardData['clima'];
   gramado: DashboardData['gramado'];
+  escudoCasa: string | null;
+  escudoFora: string | null;
 }) {
   const pred = predicao;
   const temPlacar = placar?.casa != null || placar?.fora != null;
@@ -521,7 +529,12 @@ function MatchHeader({
         <div className="flex items-center justify-center gap-4 md:gap-10 py-5">
           {/* Time Casa */}
           <div className="flex-1 text-right">
-            <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_casa}</div>
+            <div className="flex items-center justify-end gap-2">
+              {escudoCasa && (
+                <img src={escudoCasa} alt={jogo.time_casa} className="w-8 h-8 object-contain" />
+              )}
+              <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_casa}</div>
+            </div>
             {oddsConsenso?.vitoria_casa && !isAoVivo && !isFinalizado && (
               <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
                 {Number(oddsConsenso.vitoria_casa).toFixed(2)}
@@ -569,7 +582,12 @@ function MatchHeader({
 
           {/* Time Fora */}
           <div className="flex-1 text-left">
-            <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_fora}</div>
+            <div className="flex items-center gap-2">
+              {escudoFora && (
+                <img src={escudoFora} alt={jogo.time_fora} className="w-8 h-8 object-contain" />
+              )}
+              <div className="text-lg md:text-xl font-bold text-gray-900 leading-tight">{jogo.time_fora}</div>
+            </div>
             {oddsConsenso?.vitoria_fora && !isAoVivo && !isFinalizado && (
               <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
                 {Number(oddsConsenso.vitoria_fora).toFixed(2)}

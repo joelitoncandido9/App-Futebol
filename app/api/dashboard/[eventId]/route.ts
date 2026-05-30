@@ -233,8 +233,8 @@ export async function GET(
         rodada: jogoData.round_number,
         time_casa: jogoData.home_team,
         time_fora: jogoData.away_team,
-        time_casa_id: jogoData.home_team_id,
-        time_fora_id: jogoData.away_team_id,
+        time_casa_id: jogoData.home_team_obj?.id || jogoData.home_team_id,
+        time_fora_id: jogoData.away_team_obj?.id || jogoData.away_team_id,
         status: jogoData.status,
       },
       odds_consenso: {
