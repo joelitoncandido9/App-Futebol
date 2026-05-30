@@ -9,29 +9,43 @@
 
 import { gerarCardsMercado } from '@/lib/odds-jtsa';
 import { buscarHistoricoTime, formatarComoFormData } from '@/lib/bsd-stats';
+import { cacheFetch, makeBsdCacheKey } from '@/lib/bsd-cache';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
 const BASE_URL = 'https://sports.bzzoiro.com/api';
 const BASE_URL_V2 = 'https://sports.bzzoiro.com/api/v2';
+const TTL = 900; // 15 min
 
-export const maxDuration = 60; // pipeline v2 pode levar mais tempo
+export const maxDuration = 60;
 
 async function fetchBSD(endpoint: string) {
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
-    signal: AbortSignal.timeout(10000),
-  });
-  if (!res.ok) throw new Error(`BSD HTTP ${res.status}`);
-  return res.json();
+  return cacheFetch(
+    makeBsdCacheKey('v1', endpoint),
+    async () => {
+      const res = await fetch(`${BASE_URL}${endpoint}`, {
+        headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!res.ok) throw new Error(`BSD HTTP ${res.status}`);
+      return res.json();
+    },
+    TTL
+  );
 }
 
 async function fetchBSDv2(endpoint: string) {
-  const res = await fetch(`${BASE_URL_V2}${endpoint}`, {
-    headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
-    signal: AbortSignal.timeout(8000),
-  });
-  if (!res.ok) throw new Error(`BSD v2 HTTP ${res.status}`);
-  return res.json();
+  return cacheFetch(
+    makeBsdCacheKey('v2', endpoint),
+    async () => {
+      const res = await fetch(`${BASE_URL_V2}${endpoint}`, {
+        headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`BSD v2 HTTP ${res.status}`);
+      return res.json();
+    },
+    TTL
+  );
 }
 
 // Helper safe para chamadas v2 que podem falhar
