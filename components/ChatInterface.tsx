@@ -26,6 +26,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
   const [loading, setLoading] = useState(false);
   const [toolStatus, setToolStatus] = useState('');
   const [streaming, setStreaming] = useState('');
+  const [mode, setMode] = useState<'analista' | 'validador'>('analista');
   const chatRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -54,7 +55,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: conteudo.trim() }], eventId }),
+        body: JSON.stringify({ messages: [{ role: 'user', content: conteudo.trim() }], eventId, mode }),
         signal: controller.signal,
       });
 
@@ -115,6 +116,29 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
 
   return (
     <div className="flex flex-col h-[600px]">
+      {/* Abas de agente */}
+      <div className="flex gap-1 mb-3 bg-card border border-border rounded-lg p-1 w-fit">
+        <button
+          onClick={() => { setMode("analista"); setMessages([]); setStreaming(""); }}
+          className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+            mode === "analista"
+              ? "bg-orange-500 text-white font-semibold"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          🔍 Analista
+        </button>
+        <button
+          onClick={() => { setMode("validador"); setMessages([]); setStreaming(""); }}
+          className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+            mode === "validador"
+              ? "bg-orange-500 text-white font-semibold"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          ✅ Validador
+        </button>
+      </div>
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">

@@ -5,6 +5,8 @@
 
 import { toolDeclarations, executar_function_call } from './bsd-tools';
 import { SYSTEM_PROMPT } from './system-prompt';
+import { SYSTEM_PROMPT_VALIDADOR } from './system-prompt-validador';
+import { SYSTEM_PROMPT_ANALISTA } from './system-prompt-analista';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'openai/gpt-oss-120b:free';
@@ -30,9 +32,13 @@ interface ToolCall {
  * Faz uma chamada ao OpenRouter com streaming e processa tool calls em loop.
  * Retorna um ReadableStream com eventos SSE.
  */
-export function chatStream(messages: { role: string; content: string }[], eventId?: number) {
+export function chatStream(messages: { role: string; content: string }[], eventId?: number, mode?: string) {
+  let systemPrompt = SYSTEM_PROMPT;
+  if (mode === "validador") systemPrompt = SYSTEM_PROMPT_VALIDADOR;
+  else if (mode === "analista") systemPrompt = SYSTEM_PROMPT_ANALISTA;
+
   const fullMessages: Message[] = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: systemPrompt },
     // Se tiver eventId, adiciona contexto do jogo
     ...(eventId
       ? [{ role: 'system' as const, content: `Contexto: o usuário está vendo o jogo event_id=${eventId} no dashboard. Use as tools BSD se precisar de dados complementares.` }]
