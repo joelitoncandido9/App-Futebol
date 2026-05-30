@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import CardMercado from './CardMercado';
 import LoadingIndicator from './LoadingIndicator';
 import IncidentesTimeline from './IncidentesTimeline';
 import StatsAvancadas from './StatsAvancadas';
