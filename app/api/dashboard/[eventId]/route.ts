@@ -78,10 +78,14 @@ export async function GET(
     let awayForm = { ...(jogoData.away_form || {}) };
 
     // Pipeline v2: tenta enriquecer com histórico ampliado (~15 jogos)
-    if (jogoData.home_team_id || jogoData.away_team_id) {
+    // v1 retorna ID em home_team_obj.id, não em home_team_id
+    const homeTeamId = jogoData.home_team_obj?.id || jogoData.home_team_id;
+    const awayTeamId = jogoData.away_team_obj?.id || jogoData.away_team_id;
+
+    if (homeTeamId || awayTeamId) {
       const [v2Home, v2Away] = await Promise.all([
-        jogoData.home_team_id ? buscarHistoricoTime(jogoData.home_team_id, jogoData.home_team) : null,
-        jogoData.away_team_id ? buscarHistoricoTime(jogoData.away_team_id, jogoData.away_team) : null,
+        homeTeamId ? buscarHistoricoTime(homeTeamId, jogoData.home_team) : null,
+        awayTeamId ? buscarHistoricoTime(awayTeamId, jogoData.away_team) : null,
       ]);
 
       if (v2Home) {
