@@ -57,19 +57,22 @@ function formatForm(formData: any): Record<string, any> {
 }
 
 // ── TOOL 1 ──
-export async function buscar_jogo(params: { time_casa?: string; time_fora?: string; data?: string; event_id?: number }): Promise<string> {
+export async function buscar_jogo(params: { time_casa?: string; time_fora?: string; data?: string; event_id?: number; days_back?: number }): Promise<string> {
   if (params.event_id) {
     const data = await _get(`/events/${params.event_id}/`);
     return JSON.stringify(data, null, 2);
   }
 
-  const hoje = new Date().toISOString().split('T')[0];
-  const semana = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+  const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+  const semana = new Date(Date.now() + 7 * 86400000).toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+  const diasAtras = params.days_back
+    ? new Date(Date.now() - params.days_back * 86400000).toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' })
+    : null;
 
   const queryParams: Record<string, string | number | boolean> = {};
   if (params.time_casa) queryParams.team = params.time_casa;
-  queryParams.date_from = params.data || hoje;
-  queryParams.date_to = params.data || semana;
+  queryParams.date_from = params.data || diasAtras || hoje;
+  queryParams.date_to = params.data || (params.days_back ? hoje : semana);
 
   const result = await _get('/events/', queryParams);
 
@@ -530,6 +533,7 @@ export const toolDeclarations = [
           time_fora: { type: 'string', description: 'Nome do time visitante (parcial)' },
           data: { type: 'string', description: 'Data no formato YYYY-MM-DD' },
           event_id: { type: 'number', description: 'ID direto do evento (mais preciso)' },
+	          days_back: { type: 'number', description: 'Buscar jogos dos últimos N dias (ex: 30 = último mês). Use para histórico de um time.' },
         },
       },
     },

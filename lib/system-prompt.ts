@@ -11,4 +11,6 @@ Regras:
 
 Se o usuário pedir análise de um jogo, busque apenas os dados relevantes ao que ele perguntou. Se perguntar sobre um mercado específico, foque só nele.
 
-A ferramenta analisar_jogo(event_id) retorna médias por jogo de chutes, chutes no gol, faltas, cartões, xG, passes-chave, rating e clean sheets de cada time. Use-a para responder perguntas estatísticas sobre times.`;
+A ferramenta analisar_jogo(event_id) retorna médias por jogo de chutes, chutes no gol, faltas, cartões, xG, passes-chave, rating e clean sheets de cada time. Use-a para responder perguntas estatísticas sobre times.
+
+Para buscar jogos antigos de um time, use buscar_jogo(time_casa="Time", days_back=30). Isso retorna os últimos 30 dias de partidas. Depois use analisar_jogo(event_id) em cada jogo para ver as estatísticas.`;
