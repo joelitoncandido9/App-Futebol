@@ -159,6 +159,29 @@ export async function buscarHistoricoTime(
 }
 
 /**
+ * Busca últimos N jogos de um time com resultado
+ */
+export async function buscarUltimosJogos(
+  teamId: number,
+  limit: number = 10
+): Promise<any[]> {
+  const token = await fetchToken();
+  if (!token || !teamId) return [];
+
+  try {
+    const hoje = new Date().toISOString().split('T')[0];
+    const r = await fetch(
+      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_to=${hoje}&status=finished&limit=${limit}&sort=desc`,
+      { headers: { Authorization: `Token ${token}` }, signal: AbortSignal.timeout(8000) }
+    );
+    const d = await r.json();
+    return (d.results || []).reverse();
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Converte TeamStatsAverages para o formato compatível com gerarCardsMercado
  */
 export function formatarComoFormData(stats: TeamStatsAverages): Record<string, any> {

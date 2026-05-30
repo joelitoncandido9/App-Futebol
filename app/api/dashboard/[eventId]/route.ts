@@ -8,7 +8,7 @@
  */
 
 import { gerarCardsMercado } from '@/lib/odds-jtsa';
-import { buscarHistoricoTime, formatarComoFormData } from '@/lib/bsd-stats';
+import { buscarHistoricoTime, formatarComoFormData, buscarUltimosJogos } from '@/lib/bsd-stats';
 import { cacheFetch, makeBsdCacheKey } from '@/lib/bsd-cache';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
@@ -111,6 +111,12 @@ export async function GET(
         awayForm = { ...awayForm, ...enriched, matches_played: v2Away.total_jogos };
       }
     }
+
+    // Últimos 10 jogos de cada time
+    const [ultimosCasa, ultimosFora] = await Promise.all([
+      homeTeamId ? buscarUltimosJogos(homeTeamId, 10) : Promise.resolve([]),
+      awayTeamId ? buscarUltimosJogos(awayTeamId, 10) : Promise.resolve([]),
+    ]);
 
     const referee = jogoData.referee || {};
     const h2h = jogoData.head_to_head || {};
@@ -397,6 +403,23 @@ export async function GET(
       } : null,
       gramado: jogoData.pitch_condition ?? null,
       uniformes: jogoData.jerseys ?? null,
+      // Últimos 10 jogos de cada time
+      ultimos_jogos_casa: ultimosCasa.map((f: any) => ({
+        data: f.event_date?.split('T')[0] || '',
+        casa: f.home_team,
+        fora: f.away_team,
+        gols_casa: f.home_score ?? null,
+        gols_fora: f.away_score ?? null,
+        status: f.status,
+      })),
+      ultimos_jogos_fora: ultimosFora.map((f: any) => ({
+        data: f.event_date?.split('T')[0] || '',
+        casa: f.home_team,
+        fora: f.away_team,
+        gols_casa: f.home_score ?? null,
+        gols_fora: f.away_score ?? null,
+        status: f.status,
+      })),
     };
 
     return Response.json(resultado, {

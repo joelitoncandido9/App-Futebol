@@ -7,6 +7,7 @@ import StatsAvancadas from './StatsAvancadas';
 import PlayerStatsTabela from './PlayerStatsTabela';
 import MatchAnalytics from './MatchAnalytics';
 import MercadosAgrupados from './MercadosAgrupados';
+import UltimosJogos from './UltimosJogos';
 import {
   Table,
   TableBody,
@@ -113,6 +114,8 @@ interface DashboardData {
   clima?: { codigo: number; descricao: string; vento_kmh: number | null; temperatura_c: number | null } | null;
   gramado?: number | null;
   uniformes?: any;
+  ultimos_jogos_casa?: Array<{ data: string; casa: string; fora: string; gols_casa: number | null; gols_fora: number | null }>;
+  ultimos_jogos_fora?: Array<{ data: string; casa: string; fora: string; gols_casa: number | null; gols_fora: number | null }>;
 }
 
 interface DashboardJogoProps {
@@ -307,6 +310,14 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         timeCasa={jogo.time_casa}
         timeFora={jogo.time_fora}
         h2h={h2h}
+      />
+
+      {/* ── 📋 ÚLTIMOS 10 JOGOS ── */}
+      <UltimosJogos
+        timeCasa={jogo.time_casa}
+        timeFora={jogo.time_fora}
+        jogosCasa={data.ultimos_jogos_casa || []}
+        jogosFora={data.ultimos_jogos_fora || []}
       />
 
       {/* ── 🏆 CLASSIFICAÇÃO ── */}
