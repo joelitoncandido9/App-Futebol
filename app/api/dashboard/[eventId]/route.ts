@@ -206,14 +206,18 @@ export async function GET(
     // Cria mapa de nomes a partir dos dados de lineups (v1 ou v2)
     const nomesPorId = new Map<number, string>();
     const lineupData = jogoData.lineups || lineups;
-    if (lineupData?.home?.players) {
-      for (const p of lineupData.home.players) {
-        if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+    // Titulares
+    for (const side of ['home', 'away']) {
+      if (lineupData?.[side]?.players) {
+        for (const p of lineupData[side].players) {
+          if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+        }
       }
-    }
-    if (lineupData?.away?.players) {
-      for (const p of lineupData.away.players) {
-        if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+      // Substitutos (reservas)
+      if (lineupData?.[side]?.substitutes) {
+        for (const p of lineupData[side].substitutes) {
+          if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+        }
       }
     }
     if (lineups?.lineups?.home?.players) {
