@@ -7,6 +7,7 @@ import IncidentesTimeline from './IncidentesTimeline';
 import StatsAvancadas from './StatsAvancadas';
 import PlayerStatsTabela from './PlayerStatsTabela';
 import MatchAnalytics from './MatchAnalytics';
+import MercadosAgrupados from './MercadosAgrupados';
 
 // ── Tipos ──
 
@@ -306,34 +307,14 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         />
       )}
 
-      {/* ── 🎯 ODDS JUSTAS ── */}
-      <SectionWrapper titulo="Odds Justas por Mercado" emoji="🎯">
-        {cards_mercado.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {cards_mercado.map((card, idx) => (
-              <CardMercado
-                key={`${card.tipo}-${idx}`}
-                titulo={card.titulo}
-                tipo={card.tipo}
-                timeCasa={card.time_casa}
-                timeFora={card.time_fora}
-                oddsCasa={card.odds_casa}
-                oddsFora={card.odds_fora}
-                oddsCombinado={card.odds_combinado}
-                odds1x2={card.odds_1x2}
-                oddsBtts={card.odds_btts}
-                amostraCasa={card.amostra_casa}
-                amostraFora={card.amostra_fora}
-                oddMercado={card.odd_mercado}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="text-zinc-600 text-sm py-4 text-center">
-            Dados estatísticos insuficientes para calcular odds justas deste jogo.
-          </p>
-        )}
-      </SectionWrapper>
+      {/* ── 🎯 ODDS JUSTAS (agrupadas em abas) ── */}
+      {cards_mercado.length > 0 ? (
+        <MercadosAgrupados cards={cards_mercado} />
+      ) : (
+        <p className="text-gray-500 text-sm py-4 text-center">
+          Dados estatísticos insuficientes para calcular odds justas deste jogo.
+        </p>
+      )}
 
       {/* ── 💰 COMPARAÇÃO ODDS ── */}
       {hasOddsMercado && (
