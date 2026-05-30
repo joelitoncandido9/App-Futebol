@@ -75,7 +75,12 @@ function renderTabela(jogos: Jogo[], time: string) {
               }`}>
                 {vitoria ? 'W' : derrota ? 'L' : 'D'}
               </span>
-              <span className="text-muted-foreground text-[9px] font-mono shrink-0 w-16">
+              <span className={`text-[9px] font-bold ${
+                ehCasa ? 'text-green-500/70' : 'text-blue-500/70'
+              }`}>
+                {ehCasa ? 'C' : 'F'}
+              </span>
+              <span className="text-muted-foreground text-[9px] font-mono shrink-0 w-14">
                 {j.data?.slice(5) || ''}
               </span>
             </div>

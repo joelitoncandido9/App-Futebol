@@ -170,12 +170,16 @@ export async function buscarUltimosJogos(
 
   try {
     const hoje = new Date().toISOString().split('T')[0];
+    const seisMeses = new Date(Date.now() - 180 * 86400000).toISOString().split('T')[0];
+    // Busca com limit maior pra garantir pegar os mais recentes
     const r = await fetch(
-      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_to=${hoje}&status=finished&limit=${limit}&sort=desc`,
+      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_from=${seisMeses}&date_to=${hoje}&status=finished&limit=${limit + 20}`,
       { headers: { Authorization: `Token ${token}` }, signal: AbortSignal.timeout(8000) }
     );
     const d = await r.json();
-    return (d.results || []).reverse();
+    const fixtures = d.results || [];
+    // API retorna do mais antigo pro mais recente, pega os últimos 'limit'
+    return fixtures.slice(-limit);
   } catch {
     return [];
   }
