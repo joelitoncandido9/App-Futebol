@@ -1,0 +1,216 @@
+{
+  "market_calibration": [
+    {
+      "id": 121,
+      "market": "away_corners",
+      "direction": "over",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 16,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 122,
+      "market": "away_corners",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 12,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 123,
+      "market": "btts",
+      "direction": "nao",
+      "threshold": 0.5,
+      "accuracy": 0.6,
+      "n_samples": 15,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 124,
+      "market": "btts",
+      "direction": "sim",
+      "threshold": 0.5,
+      "accuracy": 0.4,
+      "n_samples": 15,
+      "calibrated_bucket": "",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 125,
+      "market": "double_chance",
+      "direction": "casa-empate",
+      "threshold": 0.5,
+      "accuracy": 0.375,
+      "n_samples": 8,
+      "calibrated_bucket": "",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 126,
+      "market": "double_chance",
+      "direction": "fora-empate",
+      "threshold": 0.57,
+      "accuracy": 0.625,
+      "n_samples": 8,
+      "calibrated_bucket": "",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 127,
+      "market": "home_corners",
+      "direction": "over",
+      "threshold": 0.9,
+      "accuracy": 1.0,
+      "n_samples": 7,
+      "calibrated_bucket": "90-100%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 128,
+      "market": "home_corners",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 21,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 129,
+      "market": "total_corners",
+      "direction": "over",
+      "threshold": 0.9,
+      "accuracy": 1.0,
+      "n_samples": 12,
+      "calibrated_bucket": "90-100%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 130,
+      "market": "total_corners",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 36,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 131,
+      "market": "total_fouls",
+      "direction": "over",
+      "threshold": 0.95,
+      "accuracy": 1.0,
+      "n_samples": 9,
+      "calibrated_bucket": "",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 132,
+      "market": "total_fouls",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 26,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 133,
+      "market": "total_goals",
+      "direction": "over",
+      "threshold": 0.5,
+      "accuracy": 0.508,
+      "n_samples": 61,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 134,
+      "market": "total_goals",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 0.492,
+      "n_samples": 61,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 135,
+      "market": "total_shots",
+      "direction": "over",
+      "threshold": 0.6,
+      "accuracy": 1.0,
+      "n_samples": 18,
+      "calibrated_bucket": "60-70%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 136,
+      "market": "total_shots",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 30,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 137,
+      "market": "total_shots_on_target",
+      "direction": "over",
+      "threshold": 0.9,
+      "accuracy": 1.0,
+      "n_samples": 9,
+      "calibrated_bucket": "90-100%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 138,
+      "market": "total_shots_on_target",
+      "direction": "under",
+      "threshold": 0.5,
+      "accuracy": 1.0,
+      "n_samples": 19,
+      "calibrated_bucket": "50-60%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 139,
+      "market": "total_yellow",
+      "direction": "over",
+      "threshold": 0.9,
+      "accuracy": 1.0,
+      "n_samples": 7,
+      "calibrated_bucket": "90-100%",
+      "updated_at": "2026-05-29 22:30:21"
+    },
+    {
+      "id": 140,
+      "market": "total_yellow",
+      "direction": "under",
+      "threshold": 0.6,
+      "accuracy": 1.0,
+      "n_samples": 21,
+      "calibrated_bucket": "60-70%",
+      "updated_at": "2026-05-29 22:30:21"
+    }
+  ],
+  "league_averages": {
+    "2. Bundesliga": {
+      "n": 3202,
+      "avg_corners": 10.11,
+      "avg_shots": 25.95,
+      "avg_sot": 9.97,
+      "avg_fouls": 27.36,
+      "avg_yellow": 4.18,
+      "avg_goals": 2.92
+    }
+  },
+  "team_averages": {}
+}

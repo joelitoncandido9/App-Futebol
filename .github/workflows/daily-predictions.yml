@@ -1,0 +1,33 @@
+name: Predições Diárias
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 06:00 BRT
+  workflow_dispatch:      # Execução manual
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+    env:
+      BSD_TOKEN: ${{ secrets.BSD_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependências
+        run: |
+          pip install requests numpy
+
+      - name: Gerar predições do dia
+        run: python ml/src/predict.py
+
+      - name: Commit e Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ml/predictions/daily.json
+          git diff --staged --quiet || (git commit -m "chore: predições $(date +%Y-%m-%d)" && git push)
