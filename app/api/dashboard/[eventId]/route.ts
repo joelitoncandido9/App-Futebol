@@ -202,12 +202,36 @@ export async function GET(
       recomendacoes: predicaoV2.recommendations,
     } : null;
 
+    // Player stats (rating por jogador) — com nomes dos lineups
+    // Cria mapa de nomes a partir dos dados de lineups (v1 ou v2)
+    const nomesPorId = new Map<number, string>();
+    const lineupData = jogoData.lineups || lineups;
+    if (lineupData?.home?.players) {
+      for (const p of lineupData.home.players) {
+        if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+      }
+    }
+    if (lineupData?.away?.players) {
+      for (const p of lineupData.away.players) {
+        if (p.player_id && p.name) nomesPorId.set(p.player_id, p.name);
+      }
+    }
+    if (lineups?.lineups?.home?.players) {
+      for (const p of lineups.lineups.home.players) {
+        if (p.id && p.name) nomesPorId.set(p.id, p.name);
+      }
+    }
+    if (lineups?.lineups?.away?.players) {
+      for (const p of lineups.lineups.away.players) {
+        if (p.id && p.name) nomesPorId.set(p.id, p.name);
+      }
+    }
     // Player stats (rating por jogador)
     const player_stats = playerStats?.player_stats
       ? playerStats.player_stats.map((s: any) => ({
           jogador_id: s.player_id,
           time_id: s.team_id,
-          nome: s.player?.name || null,
+          nome: s.player?.name || nomesPorId.get(s.player_id) || null,
           posicao: s.player?.position || null,
           minutos: s.minutes_played,
           rating: s.rating,
