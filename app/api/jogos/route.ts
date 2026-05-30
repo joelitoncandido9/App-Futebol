@@ -41,7 +41,6 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json();
     const jogos = (data.results || [])
-      .filter((ev: any) => ev.status === 'notstarted' || ev.status === 'halftime')
       .map((ev: any) => ({
         event_id: ev.id,
         data: ev.event_date,
@@ -54,6 +53,8 @@ export async function GET(request: NextRequest) {
         odd_empate: ev.odds_draw,
         odd_fora: ev.odds_away,
         league_id: ev.league?.id,
+        score_casa: ev.home_score,
+        score_fora: ev.away_score,
       }));
 
     // Filtra por liga se especificado

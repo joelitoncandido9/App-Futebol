@@ -33,14 +33,19 @@ export default function Home() {
       <header className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-zinc-100">
-              Agente Analista <span className="text-orange-500">⚽</span>
+            <h1 className="text-2xl font-black tracking-tight">
+              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                Agente Analista
+              </span>
+              <span className="ml-2">⚽</span>
             </h1>
-            <p className="text-zinc-600 text-xs mt-0.5">
-              Odds justas estatísticas + Especialista IA
+            <p className="text-gray-500 text-xs mt-1 font-medium tracking-wide">
+              Odds justas · Estatísticas · IA Especialista
             </p>
           </div>
         </div>
+        {/* Subtle separator */}
+        <div className="mt-4 h-px bg-gradient-to-r from-orange-500/30 via-gray-200 to-transparent" />
       </header>
 
       {/* Tela de seleção vs detalhes */}
@@ -67,13 +72,13 @@ export default function Home() {
           </button>
 
           {/* Abas */}
-          <div className="flex gap-1 mb-4 bg-[#111111] rounded-lg p-1 border border-zinc-800 w-fit">
+          <div className="flex gap-1 mb-4 bg-white rounded-lg p-1 border border-gray-200 w-fit shadow-sm">
             <button
               onClick={() => setTab('dashboard')}
               className={`px-4 py-2 text-sm rounded-md transition-colors ${
                 tab === 'dashboard'
-                  ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20'
-                  : 'text-zinc-500 hover:text-zinc-300'
+                  ? 'bg-orange-500 text-white font-semibold shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               📊 Dashboard
@@ -82,8 +87,8 @@ export default function Home() {
               onClick={() => setTab('chat')}
               className={`px-4 py-2 text-sm rounded-md transition-colors ${
                 tab === 'chat'
-                  ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20'
-                  : 'text-zinc-500 hover:text-zinc-300'
+                  ? 'bg-orange-500 text-white font-semibold shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               💬 Chat
@@ -94,7 +99,7 @@ export default function Home() {
           {tab === 'dashboard' ? (
             <DashboardJogo eventId={selectedEventId} />
           ) : (
-            <div className="bg-[#111111] border border-zinc-800 rounded-lg p-4">
+            <div className="bg-white border border-gray-200 rounded-xl p-4">
               <ChatInterface
                 eventId={selectedEventId}
                 timeCasa={timeCasa}
@@ -106,8 +111,8 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="mt-12 pt-6 border-t border-zinc-800/50 text-center text-xs text-zinc-700">
-        Dados via BSD API • IA via OpenRouter (gpt-oss-120b)
+      <footer className="mt-12 pt-6 border-t border-gray-200/50 text-center text-xs text-gray-400">
+        <span>Dados via <span className="text-orange-500/60">BSD</span> · IA via OpenRouter</span>
       </footer>
     </div>
   );

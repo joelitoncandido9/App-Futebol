@@ -31,280 +31,238 @@ interface OddsBTTS {
 
 interface CardMercadoProps {
   titulo: string;
-  time?: string;
-  tipo: 'contagem' | 'contagem_dupla' | '1x2' | 'btts';
-  // Single team
-  oj1?: OddsContagem | Odds1X2 | OddsBTTS;
-  oj2?: OddsContagem | Odds1X2 | OddsBTTS;
-  amostraOJ1?: number;
-  amostraOJ2?: number;
-  // Dual team
-  timeCasa?: string;
-  timeFora?: string;
-  oj1Casa?: OddsContagem;
-  oj2Casa?: OddsContagem;
-  oj1Fora?: OddsContagem;
-  oj2Fora?: OddsContagem;
-  amostraCasa?: number;
-  amostraFora?: number;
-  // Market comparison
+  tipo: 'contagem_dupla' | '1x2' | 'btts';
+  timeCasa: string;
+  timeFora: string;
+  oddsCasa?: OddsContagem;
+  oddsFora?: OddsContagem;
+  oddsCombinado?: OddsContagem;
+  amostraCasa: number;
+  amostraFora: number;
+  odds1x2?: Odds1X2;
+  oddsBtts?: OddsBTTS;
   oddMercado?: number;
-  nomeMercado?: string;
 }
 
 export default function CardMercado(props: CardMercadoProps) {
-  const { titulo, time, tipo } = props;
+  const { titulo, tipo, timeCasa, timeFora } = props;
 
   return (
-    <div className="bg-[#111111] border border-zinc-800 rounded-lg p-4">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <span className="text-orange-500 text-xs font-semibold uppercase tracking-wider">{titulo}</span>
-          {time && <span className="text-zinc-300 text-sm ml-2">— {time}</span>}
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden glow-accent">
+      {/* Gradient accent */}
+      <div className="h-0.5 bg-gradient-to-r from-orange-500/80 via-orange-400/40 to-transparent" />
+
+      <div className="p-4">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-orange-400 text-[11px] font-bold uppercase tracking-[0.08em]">{titulo}</span>
+          {props.oddMercado && (
+            <span className="text-zinc-600 text-[10px]">
+              Mercado: <span className="text-orange-300 font-mono font-bold">{Number(props.oddMercado).toFixed(2)}</span>
+            </span>
+          )}
         </div>
+
+        {tipo === 'contagem_dupla' && (
+          <TabelaContagemDupla
+            timeCasa={timeCasa}
+            timeFora={timeFora}
+            oddsCasa={props.oddsCasa as OddsContagem}
+            oddsFora={props.oddsFora as OddsContagem}
+            oddsCombinado={props.oddsCombinado as OddsContagem}
+            amostraCasa={props.amostraCasa}
+            amostraFora={props.amostraFora}
+          />
+        )}
+
+        {tipo === '1x2' && (
+          <Tabela1X2
+            odds={props.odds1x2 as Odds1X2}
+            timeCasa={timeCasa}
+            timeFora={timeFora}
+            amostraCasa={props.amostraCasa}
+            amostraFora={props.amostraFora}
+          />
+        )}
+
+        {tipo === 'btts' && (
+          <TabelaBTTS
+            odds={props.oddsBtts as OddsBTTS}
+            timeCasa={timeCasa}
+            timeFora={timeFora}
+            amostraCasa={props.amostraCasa}
+            amostraFora={props.amostraFora}
+          />
+        )}
       </div>
-
-      {tipo === 'contagem_dupla' && (
-        <TabelaContagemDupla
-          timeCasa={props.timeCasa || ''}
-          timeFora={props.timeFora || ''}
-          oj1Casa={props.oj1Casa as OddsContagem}
-          oj2Casa={props.oj2Casa as OddsContagem}
-          oj1Fora={props.oj1Fora as OddsContagem}
-          oj2Fora={props.oj2Fora as OddsContagem}
-          amostraCasa={props.amostraCasa || 0}
-          amostraFora={props.amostraFora || 0}
-        />
-      )}
-
-      {tipo === 'contagem' && props.oj1 && (
-        <TabelaContagem
-          oj1={props.oj1 as OddsContagem}
-          oj2={props.oj2 as OddsContagem}
-          amostraOJ1={props.amostraOJ1 || 0}
-          amostraOJ2={props.amostraOJ2 || 0}
-          oddMercado={props.oddMercado}
-          nomeMercado={props.nomeMercado}
-        />
-      )}
-
-      {tipo === '1x2' && (
-        <Tabela1X2
-          oj1={props.oj1 as Odds1X2}
-          oj2={props.oj2 as Odds1X2}
-          amostraOJ1={props.amostraOJ1 || 0}
-          amostraOJ2={props.amostraOJ2 || 0}
-          oddMercado={props.oddMercado}
-        />
-      )}
-
-      {tipo === 'btts' && (
-        <TabelaBTTS
-          oj1={props.oj1 as OddsBTTS}
-          oj2={props.oj2 as OddsBTTS}
-          amostraOJ1={props.amostraOJ1 || 0}
-          amostraOJ2={props.amostraOJ2 || 0}
-          oddMercado={props.oddMercado}
-        />
-      )}
     </div>
   );
 }
 
-// ── TABELA CONTAGEM DUPLA (casa + fora lado a lado) ──
+// ── CONTAGEM DUPLA (casa + fora lado a lado) ──
 
 function TabelaContagemDupla({
   timeCasa, timeFora,
-  oj1Casa, oj2Casa, oj1Fora, oj2Fora,
+  oddsCasa, oddsFora, oddsCombinado,
   amostraCasa, amostraFora,
 }: {
   timeCasa: string; timeFora: string;
-  oj1Casa: OddsContagem; oj2Casa: OddsContagem;
-  oj1Fora: OddsContagem; oj2Fora: OddsContagem;
+  oddsCasa: OddsContagem; oddsFora: OddsContagem; oddsCombinado?: OddsContagem;
   amostraCasa: number; amostraFora: number;
 }) {
-  const maxLinhas = Math.min(oj1Casa?.linhas?.length || 0, oj1Fora?.linhas?.length || 0);
-
   return (
-    <>
-      {/* λ por time */}
-      <div className="grid grid-cols-5 gap-1 text-xs text-zinc-500 mb-2 pb-2 border-b border-zinc-800">
-        <div />
-        <div className="text-center font-medium">{timeCasa}</div>
-        <div className="text-center font-medium text-zinc-600">/</div>
-        <div className="text-center font-medium">{timeFora}</div>
-        <div />
-      </div>
-      <div className="grid grid-cols-5 gap-1 text-xs mb-3">
-        <div className="text-zinc-400">λ (média)</div>
-        <div className="text-center text-orange-400 font-mono font-bold">{oj1Casa?.lambda ?? '-'}/j</div>
-        <div className="text-center text-zinc-600">vs</div>
-        <div className="text-center text-orange-400 font-mono font-bold">{oj1Fora?.lambda ?? '-'}/j</div>
-        <div />
-      </div>
-
-      {/* Linhas Over/Under para cada time */}
-      {Array.from({ length: maxLinhas }).map((_, i) => {
-        const lc = oj1Casa?.linhas[i];
-        const lf = oj1Fora?.linhas[i];
-        if (!lc || !lf) return null;
-        return (
-          <div key={lc.linha} className="grid grid-cols-5 gap-1 text-xs py-1.5 hover:bg-zinc-800/40 rounded px-1 -mx-1 items-center">
-            <div className="text-zinc-500">Over {lc.linha}</div>
-            <div className="text-center">
-              <span className="text-zinc-300">{lc.prob_over}%</span>
-              <span className="text-orange-400 font-mono ml-1">→ {lc.odd_over}</span>
-            </div>
-            <div className="text-center text-zinc-600 text-[10px]">vs</div>
-            <div className="text-center">
-              <span className="text-zinc-300">{lf.prob_over}%</span>
-              <span className="text-orange-400 font-mono ml-1">→ {lf.odd_over}</span>
-            </div>
-            <div className="text-zinc-500 text-right">Under {lc.linha}</div>
+    <div>
+      {/* Header: Médias por time + combinado */}
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-100">
+        <div className="text-center flex-1">
+          <div className="text-gray-400 text-[9px] uppercase tracking-wide">{timeCasa}</div>
+          <div className="text-orange-500 font-mono text-sm font-black">{oddsCasa?.lambda ?? '-'}</div>
+          <div className="text-gray-400 text-[9px]">{amostraCasa}j</div>
+        </div>
+        <div className="text-center flex-1">
+          <div className="bg-gradient-to-r from-orange-500/10 to-orange-400/10 rounded-lg px-3 py-1">
+            <div className="text-orange-600 text-[9px] font-bold uppercase tracking-wider">⚡ Total Partida</div>
+            <div className="text-orange-600 font-mono text-lg font-black">{(oddsCasa?.lambda ?? 0) + (oddsFora?.lambda ?? 0)}</div>
+            <div className="text-orange-400 text-[8px]">MÉDIA /j</div>
           </div>
-        );
-      })}
-
-      {/* Amostras */}
-      <div className="mt-3 pt-2 border-t border-zinc-800 flex justify-between text-xs text-zinc-600">
-        <span>{timeCasa}: {amostraCasa}j</span>
-        <span>{timeFora}: {amostraFora}j</span>
+        </div>
+        <div className="text-center flex-1">
+          <div className="text-gray-400 text-[9px] uppercase tracking-wide">{timeFora}</div>
+          <div className="text-orange-500 font-mono text-sm font-black">{oddsFora?.lambda ?? '-'}</div>
+          <div className="text-gray-400 text-[9px]">{amostraFora}j</div>
+        </div>
       </div>
-    </>
+
+      {/* Tabela compacta: Linha | Prob | OJ | Casa | Fora */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-[11px]">
+          <thead>
+            <tr className="text-gray-400 text-[9px] uppercase tracking-wider border-b border-gray-100">
+              <th className="text-left py-1.5 pr-2 w-14">Linha</th>
+              <th className="text-right py-1.5 px-2">Prob</th>
+              <th className="text-right py-1.5 px-2 w-14">OJ</th>
+              <th className="text-right py-1.5 px-2 w-12">{timeCasa.substring(0, 4)}</th>
+              <th className="text-right py-1.5 pl-2 w-12">{timeFora.substring(0, 4)}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {oddsCasa?.linhas.map((lc, i) => {
+              const lf = oddsFora?.linhas[i];
+              const lx = oddsCombinado?.linhas[i];
+              return (
+                <tr key={lc.linha} className="border-b border-gray-50 hover:bg-orange-50/30">
+                  {/* Over */}
+                  <td className="py-1.5 pr-2">
+                    <span className="text-green-600 font-semibold">O{lc.linha}</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-gray-800 font-mono font-bold">{lx?.prob_over ?? '-'}%</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-orange-600 font-mono font-bold">{lx?.odd_over ?? '-'}</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-gray-600 font-mono">{lc.prob_over}%</span>
+                  </td>
+                  <td className="py-1.5 pl-2 text-right">
+                    <span className="text-gray-600 font-mono">{lf?.prob_over ?? '-'}%</span>
+                  </td>
+                </tr>
+              );
+            })}
+            {/* Under rows */}
+            {oddsCasa?.linhas.map((lc, i) => {
+              const lf = oddsFora?.linhas[i];
+              const lx = oddsCombinado?.linhas[i];
+              if (!lx) return null;
+              return (
+                <tr key={`u-${lc.linha}`} className="border-b border-gray-50 hover:bg-red-50/20">
+                  <td className="py-1.5 pr-2">
+                    <span className="text-red-600 font-semibold">U{lc.linha}</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-gray-800 font-mono font-bold">{lx.prob_under}%</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-orange-600 font-mono font-bold">{lx.odd_under}</span>
+                  </td>
+                  <td className="py-1.5 px-2 text-right">
+                    <span className="text-gray-600 font-mono">{lc.prob_under}%</span>
+                  </td>
+                  <td className="py-1.5 pl-2 text-right">
+                    <span className="text-gray-600 font-mono">{lf?.prob_under ?? '-'}%</span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
-// ── TABELA CONTAGEM (time único) ──
-
-function TabelaContagem({
-  oj1, oj2, amostraOJ1, amostraOJ2, oddMercado, nomeMercado,
-}: {
-  oj1: OddsContagem; oj2: OddsContagem;
-  amostraOJ1: number; amostraOJ2: number;
-  oddMercado?: number; nomeMercado?: string;
-}) {
-  return (
-    <>
-      <div className="grid grid-cols-3 gap-2 text-xs text-zinc-500 mb-3 pb-2 border-b border-zinc-800">
-        <div />
-        <div className="text-center font-medium">OJ1 (Recente)</div>
-        <div className="text-center font-medium">OJ2 (Histórico)</div>
-      </div>
-      <div className="grid grid-cols-3 gap-2 text-xs mb-3">
-        <div className="text-zinc-400">λ (média)</div>
-        <div className="text-center text-orange-400 font-mono font-bold">{oj1.lambda}/jogo</div>
-        <div className="text-center text-orange-400 font-mono font-bold">{oj2.lambda}/jogo</div>
-      </div>
-      <div className="space-y-1.5">
-        {oj1.linhas.map((linha, i) => {
-          const o2 = oj2.linhas[i];
-          return (
-            <div key={linha.linha} className="grid grid-cols-3 gap-2 text-xs py-1 hover:bg-zinc-800/40 rounded px-1 -mx-1">
-              <div className="text-zinc-400">Over {linha.linha}</div>
-              <div className="text-center">
-                <span className="text-zinc-300">{linha.prob_over}%</span>
-                <span className="text-orange-400 font-mono ml-1">→ {linha.odd_over}</span>
-              </div>
-              <div className="text-center">
-                <span className="text-zinc-300">{o2.prob_over}%</span>
-                <span className="text-orange-400 font-mono ml-1">→ {o2.odd_over}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-3 pt-2 border-t border-zinc-800 flex justify-between text-xs">
-        <div className="text-zinc-600">Amostra: {amostraOJ1}j / {amostraOJ2}j</div>
-        {oddMercado && nomeMercado && (
-          <div className="text-zinc-400">Mercado: <span className="text-orange-300 font-mono">{oddMercado}</span> ({nomeMercado})</div>
-        )}
-      </div>
-    </>
-  );
-}
-
-// ── TABELA 1X2 ──
+// ── 1X2 ──
 
 function Tabela1X2({
-  oj1, oj2, amostraOJ1, amostraOJ2, oddMercado,
+  odds,
+  timeCasa,
+  timeFora,
 }: {
-  oj1: Odds1X2; oj2: Odds1X2;
-  amostraOJ1: number; amostraOJ2: number;
-  oddMercado?: number;
+  odds: Odds1X2;
+  timeCasa: string;
+  timeFora: string;
+  amostraCasa: number;
+  amostraFora: number;
 }) {
-  const linhas = [
-    { label: 'Casa', prob1: oj1.casa_prob, odd1: oj1.casa_odd, prob2: oj2.casa_prob, odd2: oj2.casa_odd },
-    { label: 'Empate', prob1: oj1.empate_prob, odd1: oj1.empate_odd, prob2: oj2.empate_prob, odd2: oj2.empate_odd },
-    { label: 'Fora', prob1: oj1.fora_prob, odd1: oj1.fora_odd, prob2: oj2.fora_prob, odd2: oj2.fora_odd },
-  ];
+  if (!odds) return null;
 
   return (
-    <>
-      <div className="grid grid-cols-3 gap-2 text-xs text-zinc-500 mb-3 pb-2 border-b border-zinc-800">
-        <div />
-        <div className="text-center font-medium">OJ1 (Recente)</div>
-        <div className="text-center font-medium">OJ2 (Histórico)</div>
+    <div className="grid grid-cols-3 gap-2">
+      <div className="bg-green-900/10 border border-green-500/10 rounded-lg p-3 text-center">
+        <div className="text-green-500 text-[10px] font-semibold uppercase tracking-wider mb-1">{timeCasa}</div>
+        <div className="text-green-400 font-mono text-lg font-black">{odds.casa_prob}%</div>
+        <div className="text-green-400/80 font-mono text-xs font-bold">OJ: {odds.casa_odd}</div>
       </div>
-      <div className="space-y-1.5">
-        {linhas.map((l) => (
-          <div key={l.label} className="grid grid-cols-3 gap-2 text-xs py-1 hover:bg-zinc-800/40 rounded px-1 -mx-1">
-            <div className="text-zinc-400 font-medium">{l.label}</div>
-            <div className="text-center font-mono text-zinc-300">
-              {l.prob1}% → <span className="text-orange-400">{l.odd1}</span>
-            </div>
-            <div className="text-center font-mono text-zinc-300">
-              {l.prob2}% → <span className="text-orange-400">{l.odd2}</span>
-            </div>
-          </div>
-        ))}
+      <div className="bg-yellow-500/5 border border-yellow-500/10 rounded-lg p-3 text-center">
+        <div className="text-yellow-500 text-[10px] font-semibold uppercase tracking-wider mb-1">Empate</div>
+        <div className="text-yellow-400 font-mono text-lg font-black">{odds.empate_prob}%</div>
+        <div className="text-yellow-400/80 font-mono text-xs font-bold">OJ: {odds.empate_odd}</div>
       </div>
-      <div className="mt-3 pt-2 border-t border-zinc-800 text-xs text-zinc-600">
-        Amostra: {amostraOJ1}j / {amostraOJ2}j
+      <div className="bg-blue-900/10 border border-blue-500/10 rounded-lg p-3 text-center">
+        <div className="text-blue-500 text-[10px] font-semibold uppercase tracking-wider mb-1">{timeFora}</div>
+        <div className="text-blue-400 font-mono text-lg font-black">{odds.fora_prob}%</div>
+        <div className="text-blue-400/80 font-mono text-xs font-bold">OJ: {odds.fora_odd}</div>
       </div>
-    </>
+    </div>
   );
 }
 
-// ── TABELA BTTS ──
+// ── BTTS ──
 
 function TabelaBTTS({
-  oj1, oj2, amostraOJ1, amostraOJ2, oddMercado,
+  odds,
 }: {
-  oj1: OddsBTTS; oj2: OddsBTTS;
-  amostraOJ1: number; amostraOJ2: number;
-  oddMercado?: number;
+  odds: OddsBTTS;
+  timeCasa: string;
+  timeFora: string;
+  amostraCasa: number;
+  amostraFora: number;
 }) {
+  if (!odds) return null;
+
   return (
-    <>
-      <div className="grid grid-cols-3 gap-2 text-xs text-zinc-500 mb-3 pb-2 border-b border-zinc-800">
-        <div />
-        <div className="text-center font-medium">OJ1 (Recente)</div>
-        <div className="text-center font-medium">OJ2 (Histórico)</div>
+    <div className="grid grid-cols-2 gap-3">
+      <div className="bg-green-900/10 border border-green-500/10 rounded-lg p-3 text-center">
+        <div className="text-green-500 text-[10px] font-semibold uppercase mb-1">Sim</div>
+        <div className="text-green-400 font-mono text-lg font-black">{odds.prob_sim}%</div>
+        <div className="text-green-400/80 font-mono text-xs font-bold">OJ: {odds.odd_sim}</div>
       </div>
-      <div className="space-y-1.5">
-        <div className="grid grid-cols-3 gap-2 text-xs py-1 hover:bg-zinc-800/40 rounded px-1 -mx-1">
-          <div className="text-zinc-400">Sim</div>
-          <div className="text-center font-mono text-zinc-300">
-            {oj1.prob_sim}% → <span className="text-orange-400">{oj1.odd_sim}</span>
-          </div>
-          <div className="text-center font-mono text-zinc-300">
-            {oj2.prob_sim}% → <span className="text-orange-400">{oj2.odd_sim}</span>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-2 text-xs py-1 hover:bg-zinc-800/40 rounded px-1 -mx-1">
-          <div className="text-zinc-400">Não</div>
-          <div className="text-center font-mono text-zinc-300">
-            {oj1.prob_nao}% → <span className="text-orange-400">{oj1.odd_nao}</span>
-          </div>
-          <div className="text-center font-mono text-zinc-300">
-            {oj2.prob_nao}% → <span className="text-orange-400">{oj2.odd_nao}</span>
-          </div>
-        </div>
+      <div className="bg-red-900/10 border border-red-500/10 rounded-lg p-3 text-center">
+        <div className="text-red-500 text-[10px] font-semibold uppercase mb-1">Não</div>
+        <div className="text-red-400 font-mono text-lg font-black">{odds.prob_nao}%</div>
+        <div className="text-red-400/80 font-mono text-xs font-bold">OJ: {odds.odd_nao}</div>
       </div>
-      <div className="mt-3 pt-2 border-t border-zinc-800 text-xs text-zinc-600">
-        Amostra: {amostraOJ1}j / {amostraOJ2}j
-      </div>
-    </>
+    </div>
   );
 }

@@ -13,6 +13,9 @@ interface Jogo {
   odd_casa: number | null;
   odd_empate: number | null;
   odd_fora: number | null;
+  status?: string;
+  score_casa?: number;
+  score_fora?: number;
 }
 
 interface JogosListaProps {
@@ -24,6 +27,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
   const [pesquisa, setPesquisa] = useState('');
+  const [ligaFiltro, setLigaFiltro] = useState('');
 
   useEffect(() => {
     async function carregar() {
@@ -41,30 +45,40 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     carregar();
   }, []);
 
-  // Filtragem por time ou liga
-  const filtrados = pesquisa
-    ? jogos.filter(
-        (j) =>
-          j.time_casa.toLowerCase().includes(pesquisa.toLowerCase()) ||
-          j.time_fora.toLowerCase().includes(pesquisa.toLowerCase()) ||
-          j.liga.toLowerCase().includes(pesquisa.toLowerCase())
-      )
-    : jogos;
+  // Lista única de ligas para o filtro
+  const ligas = [...new Set(jogos.map((j) => j.liga).filter(Boolean))].sort();
 
-  // Separa jogos de hoje do restante
+  // Filtragem por time, liga OU ligaFiltro
+  const filtrados = jogos.filter((j) => {
+    const matchPesquisa = !pesquisa ||
+      j.time_casa.toLowerCase().includes(pesquisa.toLowerCase()) ||
+      j.time_fora.toLowerCase().includes(pesquisa.toLowerCase()) ||
+      j.liga.toLowerCase().includes(pesquisa.toLowerCase());
+    const matchLiga = !ligaFiltro || j.liga === ligaFiltro;
+    return matchPesquisa && matchLiga;
+  });
+
+  // Separa jogos por status
+  const jogosAoVivo = filtrados.filter((j) =>
+    ['inprogress', 'halftime', '2nd_half', 'penalties', 'extratime'].includes(j.status || '')
+  );
+  const jogosFinalizados = filtrados.filter((j) => j.status === 'finished');
+  const jogosNaoIniciados = filtrados.filter((j) => j.status === 'notstarted' || j.status === 'postponed');
+  const outrosStatus = filtrados.filter((j) =>
+    !['inprogress', 'halftime', '2nd_half', 'penalties', 'extratime', 'finished', 'notstarted', 'postponed'].includes(j.status || '')
+  );
+
+  // Data de hoje pra exibição
   const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
-  const jogosHoje = filtrados.filter((j) => j.data?.startsWith(hoje));
-  const jogosOutros = filtrados.filter((j) => !j.data?.startsWith(hoje));
 
-  // Agrupa os "outros" por data
+  // Agrupa não-iniciados por data
   const gruposData = new Map<string, Jogo[]>();
-  jogosOutros.forEach((jogo) => {
+  jogosNaoIniciados.forEach((jogo) => {
     const data = jogo.data?.split('T')[0] || 'sem data';
     if (!gruposData.has(data)) gruposData.set(data, []);
     gruposData.get(data)!.push(jogo);
   });
 
-  // Dentro de cada data, agrupa por liga
   function agruparPorLiga(jogos: Jogo[]): Map<string, Jogo[]> {
     const mapa = new Map<string, Jogo[]>();
     jogos.forEach((j) => {
@@ -93,15 +107,25 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
   return (
     <div>
-      {/* Busca */}
-      <div className="mb-6">
+      {/* Busca + Filtro Liga */}
+      <div className="mb-6 flex gap-2">
         <input
           type="text"
           placeholder="Buscar por time ou liga..."
           value={pesquisa}
           onChange={(e) => setPesquisa(e.target.value)}
-          className="w-full bg-[#111111] border border-zinc-800 rounded-lg px-4 py-2.5 text-zinc-300 placeholder-zinc-600 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
+          className="flex-1 bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-gray-700 placeholder-gray-400 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
         />
+        <select
+          value={ligaFiltro}
+          onChange={(e) => setLigaFiltro(e.target.value)}
+          className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm focus:outline-none focus:border-orange-500/50 transition-colors max-w-[180px]"
+        >
+          <option value="">Todas ligas</option>
+          {ligas.map((liga) => (
+            <option key={liga} value={liga}>{liga}</option>
+          ))}
+        </select>
       </div>
 
       {filtrados.length === 0 && (
@@ -110,29 +134,41 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         </div>
       )}
 
-      {/* ── JOGOS DE HOJE ── */}
-      {jogosHoje.length > 0 && (
+      {/* ── AO VIVO ── */}
+      {jogosAoVivo.length > 0 && (
         <div className="mb-10">
-          <h2 className="text-orange-400 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            Jogos de Hoje
-            <span className="text-zinc-600 font-normal">({jogosHoje.length})</span>
+          <h2 className="text-green-500 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            ⏳ Ao Vivo
+            <span className="text-zinc-600 font-normal">({jogosAoVivo.length})</span>
           </h2>
-          {renderGrupos(agruparPorLiga(jogosHoje), onSelectJogo)}
+          {renderGrupos(agruparPorLiga(jogosAoVivo), onSelectJogo, true)}
         </div>
       )}
 
-      {/* ── PRÓXIMOS JOGOS ── */}
-      {jogosOutros.length > 0 && (
+      {/* ── FINALIZADOS (só hoje) ── */}
+      {jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+            ✅ Finalizados Hoje
+            <span className="text-zinc-600 font-normal">({jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length})</span>
+          </h2>
+          {renderGrupos(agruparPorLiga(jogosFinalizados.filter(j => j.data?.startsWith(hoje))), onSelectJogo, false, true)}
+        </div>
+      )}
+
+      {/* ── PRÓXIMOS JOGOS (não iniciados, por data) ── */}
+      {jogosNaoIniciados.length > 0 && (
         <div className="mb-10">
           <h2 className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-4">
-            Próximos Jogos ({jogosOutros.length})
+            📅 Próximos Jogos ({jogosNaoIniciados.length})
           </h2>
           <div className="space-y-8">
             {Array.from(gruposData.entries()).map(([data, jogosData]) => (
               <div key={data}>
                 <h3 className="text-zinc-600 text-xs font-semibold mb-3">
-                  {formatarData(data)}
+                  {data === hoje ? 'Hoje' : formatarData(data)}
+                  <span className="text-zinc-700 ml-1">({jogosData.length})</span>
                 </h3>
                 {renderGrupos(agruparPorLiga(jogosData), onSelectJogo)}
               </div>
@@ -144,7 +180,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   );
 }
 
-function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) => void) {
+function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) => void, aoVivo = false, finalizado = false) {
   return Array.from(grupos.entries()).map(([liga, jogos]) => (
     <div key={liga} className="mb-5">
       <div className="flex items-center gap-2 mb-2">
@@ -153,53 +189,100 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
         <span className="text-zinc-700 text-xs">({jogos.length})</span>
       </div>
       <div className="space-y-1.5">
-        {jogos.map((jogo) => (
+        {jogos.map((jogo) => {
+          const temPlacar = (jogo.score_casa != null || jogo.score_fora != null) && (aoVivo || finalizado);
+          return (
           <button
             key={jogo.event_id}
             onClick={() => onSelectJogo(jogo.event_id)}
-            className="w-full bg-[#111111] border border-zinc-800 hover:border-zinc-700 rounded-lg p-3 text-left transition-colors group cursor-pointer"
+            className="w-full bg-white border border-gray-200 hover:border-gray-300 rounded-xl overflow-hidden transition-all duration-200 group cursor-pointer glow-accent"
           >
+            {/* Gradient accent bar */}
+            <div className={`h-0.5 w-full bg-gradient-to-r ${aoVivo ? 'from-green-500 via-green-400/50 to-transparent' : finalizado ? 'from-zinc-600/50 via-zinc-500/20 to-transparent' : 'from-orange-500/80 via-orange-400/40 to-transparent'}`} />
+            <div className="p-3.5">
             <div className="flex items-center justify-between">
               <div className="flex-1 min-w-0 flex items-center gap-3">
-                <div className="flex-1 text-right">
-                  <span className="text-zinc-100 text-sm font-medium group-hover:text-orange-400 transition-colors">
-                    {jogo.time_casa}
-                  </span>
-                </div>
-                <div className="text-zinc-600 text-xs font-medium px-2 py-0.5 bg-zinc-800/50 rounded">vs</div>
-                <div className="flex-1 text-left">
-                  <span className="text-zinc-100 text-sm font-medium group-hover:text-orange-400 transition-colors">
-                    {jogo.time_fora}
-                  </span>
+                {/* Horário ou Placar */}
+                {temPlacar ? (
+                  <div className="shrink-0 text-center w-14">
+                    <div className={`text-xl font-black ${aoVivo ? 'text-green-400' : 'text-zinc-400'}`}>
+                      {jogo.score_casa}-{jogo.score_fora}
+                    </div>
+                    {aoVivo && (
+                      <div className="flex items-center justify-center gap-1 mt-0.5">
+                        <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse" />
+                        <span className="text-[7px] text-green-500 uppercase tracking-[0.15em] font-bold">AO VIVO</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="shrink-0 text-center w-12">
+                    <div className="text-zinc-500 text-[11px] font-mono font-bold tracking-tight">
+                      {formatarHora(jogo.data)}
+                    </div>
+                  </div>
+                )}
+                <div className="flex-1">
+                  <div className="flex items-center justify-center gap-2.5">
+                    <span className={`text-sm font-semibold leading-tight transition-colors group-hover:text-orange-400 ${temPlacar && aoVivo ? 'text-gray-900' : 'text-gray-900'}`}>
+                      {jogo.time_casa}
+                    </span>
+                    {!temPlacar && (
+                      <>
+                        <span className="text-zinc-600 text-[10px] font-medium px-2 py-0.5 bg-gray-50 rounded-md">VS</span>
+                        <span className="text-sm font-semibold leading-tight group-hover:text-orange-400 transition-colors">
+                          {jogo.time_fora}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  {temPlacar && (
+                    <div className="text-[11px] text-zinc-600 mt-0.5 text-center">
+                      {jogo.time_casa} · {jogo.time_fora}
+                    </div>
+                  )}
                 </div>
               </div>
-              {/* Odds resumidas */}
-              <div className="ml-3 flex gap-1.5 text-xs shrink-0">
+              {/* Odds resumidas (só pra não-iniciados) */}
+              {!aoVivo && !finalizado && (
+              <div className="ml-3 flex gap-2 text-xs shrink-0">
                 {jogo.odd_casa && (
-                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
-                    <div className="text-zinc-600 mb-0.5 text-[10px]">1</div>
-                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_casa}</div>
+                  <div className="bg-orange-500/10 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
+                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">1</div>
+                    <div className="text-orange-400 font-mono text-[12px] font-bold">{Number(jogo.odd_casa).toFixed(2)}</div>
                   </div>
                 )}
                 {jogo.odd_empate && (
-                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
-                    <div className="text-zinc-600 mb-0.5 text-[10px]">X</div>
-                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_empate}</div>
+                  <div className="bg-zinc-700/30 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
+                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">X</div>
+                    <div className="text-gray-700 font-mono text-[12px]">{Number(jogo.odd_empate).toFixed(2)}</div>
                   </div>
                 )}
                 {jogo.odd_fora && (
-                  <div className="bg-zinc-800/60 rounded px-1.5 py-1 text-center min-w-[36px]">
-                    <div className="text-zinc-600 mb-0.5 text-[10px]">2</div>
-                    <div className="text-zinc-200 font-mono text-[11px]">{jogo.odd_fora}</div>
+                  <div className="bg-blue-500/10 rounded-lg px-2 py-1.5 text-center min-w-[40px]">
+                    <div className="text-zinc-600 mb-0.5 text-[9px] font-semibold">2</div>
+                    <div className="text-blue-400 font-mono text-[12px] font-bold">{Number(jogo.odd_fora).toFixed(2)}</div>
                   </div>
                 )}
               </div>
+              )}
+            </div>
             </div>
           </button>
-        ))}
+          );
+        })}
       </div>
     </div>
   ));
+}
+
+function formatarHora(dataStr: string): string {
+  try {
+    const d = new Date(dataStr);
+    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return '';
+  }
 }
 
 function formatarData(dataStr: string): string {

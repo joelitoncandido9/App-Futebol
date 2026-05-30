@@ -119,7 +119,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <span className="text-orange-500">💬</span>
-          <h3 className="text-zinc-300 text-sm font-medium">
+          <h3 className="text-gray-700 text-sm font-medium">
             Especialista
             {timeCasa && timeFora && (
               <span className="text-zinc-600 font-normal ml-1">{timeCasa} x {timeFora}</span>
@@ -151,7 +151,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
               <button
                 key={ex}
                 onClick={() => enviar(ex)}
-                className="block w-full text-left text-xs text-zinc-500 bg-[#111111] border border-zinc-800 hover:border-zinc-700 rounded-lg px-3 py-2 transition-colors"
+                className="block w-full text-left text-xs text-zinc-500 bg-white border border-gray-200 hover:border-zinc-700 rounded-lg px-3 py-2 transition-colors"
               >
                 {ex}
               </button>
@@ -164,8 +164,8 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
             <div
               className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === 'user'
-                  ? 'bg-orange-500/10 border border-orange-500/20 text-zinc-200'
-                  : 'bg-[#111111] border border-zinc-800 text-zinc-300'
+                  ? 'bg-orange-500/10 border border-orange-500/20 text-gray-800'
+                  : 'bg-white border border-gray-200 text-gray-700'
               }`}
             >
               {msg.content}
@@ -176,7 +176,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
         {/* Streaming em andamento */}
         {streaming && (
           <div className="flex justify-start">
-            <div className="max-w-[85%] bg-[#111111] border border-zinc-800 rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap text-zinc-300">
+            <div className="max-w-[85%] bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap text-gray-700">
               {streaming}
               <span className="inline-block w-2 h-4 bg-orange-500/60 ml-0.5 animate-pulse" />
             </div>
@@ -186,7 +186,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
         {/* Tool status */}
         {toolStatus && !streaming && (
           <div className="flex justify-start">
-            <div className="text-xs text-zinc-500 bg-[#111111] border border-zinc-800 rounded-lg px-3 py-2">
+            <div className="text-xs text-zinc-500 bg-white border border-gray-200 rounded-lg px-3 py-2">
               {toolStatus}
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           }}
           placeholder="Pergunte sobre o jogo..."
           disabled={loading}
-          className="flex-1 bg-[#111111] border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-zinc-300 placeholder-zinc-600 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
+          className="flex-1 bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
         />
         <button
           onClick={() => enviar(input)}

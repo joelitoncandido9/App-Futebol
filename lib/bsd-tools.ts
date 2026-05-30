@@ -1,11 +1,13 @@
 /**
- * BSD API — 11 tools em TypeScript
- * Base URL: https://sports.bzzoiro.com/api
+ * BSD API — Tools em TypeScript (v1 + v2)
+ * v1 Base URL: https://sports.bzzoiro.com/api
+ * v2 Base URL: https://sports.bzzoiro.com/api/v2
  * Auth: Header Authorization: Token {BSD_TOKEN}
  * Todas as funções retornam JSON string para uso com OpenAI function calling
  */
 
 const BASE_URL = 'https://sports.bzzoiro.com/api';
+const BASE_URL_V2 = 'https://sports.bzzoiro.com/api/v2';
 const TZ = 'America/Sao_Paulo';
 
 function getHeaders(): HeadersInit {
@@ -26,6 +28,20 @@ async function _get(endpoint: string, params: Record<string, string | number | b
     return await res.json();
   } catch (error: any) {
     return { error: error.message || 'Erro na requisição BSD' };
+  }
+}
+
+/** Helper v2 — sem parâmetro tz (UTC-only) */
+async function _get_v2(endpoint: string, params: Record<string, string | number | boolean> = {}): Promise<any> {
+  const url = new URL(`${BASE_URL_V2}${endpoint}`);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+
+  try {
+    const res = await fetch(url.toString(), { headers: getHeaders(), signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    return await res.json();
+  } catch (error: any) {
+    return { error: error.message || 'Erro na requisição BSD v2' };
   }
 }
 
@@ -492,6 +508,208 @@ export async function buscar_jogadores_time(params: { team_id: number; apenas_in
   return JSON.stringify({ time_id: params.team_id, total: resultado.length, jogadores: resultado }, null, 2);
 }
 
+// ═══════════════════════════════════════════════════
+//  TOOLS V2 (BSD API v2)
+// ═══════════════════════════════════════════════════
+
+// ── TOOL 12 ──
+export async function buscar_predicao_v2(params: { event_id: number }): Promise<string> {
+  const data = await _get_v2(`/events/${params.event_id}/prediction/`);
+  if (data.error || data.detail) {
+    return JSON.stringify({ aviso: 'Predição ML não disponível para este jogo.' });
+  }
+
+  return JSON.stringify({
+    modelo: data.model?.version || 'N/A',
+    confianca: data.model?.confidence
+      ? Math.round(data.model.confidence * 100) + '%'
+      : 'N/A',
+    resultado_previsto: data.markets?.match_result?.predicted,
+    probabilidades_1x2: {
+      casa_pct: data.markets?.match_result?.prob_home,
+      empate_pct: data.markets?.match_result?.prob_draw,
+      fora_pct: data.markets?.match_result?.prob_away,
+    },
+    gols_esperados: {
+      casa_xg: data.markets?.expected_goals?.home,
+      fora_xg: data.markets?.expected_goals?.away,
+    },
+    over_under: {
+      over_15_pct: data.markets?.over_under?.prob_over_15,
+      over_25_pct: data.markets?.over_under?.prob_over_25,
+      over_35_pct: data.markets?.over_under?.prob_over_35,
+    },
+    btts_sim_pct: data.markets?.btts?.prob_yes,
+    placar_provavel: data.markets?.score?.most_likely,
+    recomendacoes: data.recommendations,
+  }, null, 2);
+}
+
+// ── TOOL 13 ──
+export async function buscar_player_stats(params: { event_id: number }): Promise<string> {
+  const data = await _get_v2(`/events/${params.event_id}/player-stats/`);
+  if (data.error) return JSON.stringify(data);
+
+  const stats = (data.player_stats || []).slice(0, 28).map((s: any) => ({
+    jogador_id: s.player_id,
+    time_id: s.team_id,
+    minutos: s.minutes_played,
+    rating: s.rating,
+    gols: s.goals,
+    assistencias: s.goal_assist,
+    xg: s.expected_goals,
+    xa: s.expected_assists,
+    chutes_total: s.total_shots,
+    chutes_no_gol: s.shots_on_target,
+    passes_total: s.total_pass,
+    passes_certos: s.accurate_pass,
+    passes_chave: s.key_pass,
+    desarmes: s.total_tackle,
+    interceptacoes: s.interception,
+    cartao_amarelo: s.yellow_card,
+    cartao_vermelho: s.red_card,
+    defesas: s.saves,
+  }));
+
+  return JSON.stringify({ total_jogadores: data.count || stats.length, stats }, null, 2);
+}
+
+// ── TOOL 14 ──
+export async function buscar_lineups(params: { event_id: number }): Promise<string> {
+  const data = await _get_v2(`/events/${params.event_id}/lineups/`);
+  if (data.error) return JSON.stringify(data);
+
+  if (data.lineup_status === 'unavailable') {
+    return JSON.stringify({ aviso: 'Escalações não disponíveis para este jogo.' });
+  }
+
+  return JSON.stringify({
+    status: data.lineup_status,
+    beta: data.beta,
+    atualizado_em: data.updated_at,
+    escalacoes: data.lineups ? {
+      casa: {
+        time: data.lineups.home?.team_name,
+        formacao: data.lineups.home?.formation,
+        confianca: data.lineups.home?.confidence,
+        titulares: (data.lineups.home?.players || []).map((p: any) => ({
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          score_ia: p.ai_score,
+        })),
+        reservas: (data.lineups.home?.substitutes || []).map((p: any) => ({
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+        })),
+      },
+      fora: {
+        time: data.lineups.away?.team_name,
+        formacao: data.lineups.away?.formation,
+        confianca: data.lineups.away?.confidence,
+        titulares: (data.lineups.away?.players || []).map((p: any) => ({
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          score_ia: p.ai_score,
+        })),
+        reservas: (data.lineups.away?.substitutes || []).map((p: any) => ({
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+        })),
+      },
+    } : null,
+    desfalques: data.unavailable_players ? {
+      casa: (data.unavailable_players.home || []).map((j: any) => ({
+        nome: j.name,
+        status: j.status,
+        motivo: j.reason,
+      })),
+      fora: (data.unavailable_players.away || []).map((j: any) => ({
+        nome: j.name,
+        status: j.status,
+        motivo: j.reason,
+      })),
+    } : null,
+  }, null, 2);
+}
+
+// ── TOOL 15 ──
+export async function buscar_metadados(params: { event_id: number }): Promise<string> {
+  const data = await _get_v2(`/events/${params.event_id}/metadata/`);
+  if (data.error) return JSON.stringify(data);
+
+  return JSON.stringify({
+    uniformes: data.jerseys,
+    fatos_curiosos: (data.funfacts || []).map((f: any) => f.sentence),
+    preview_ia: data.ai_preview?.text || null,
+  }, null, 2);
+}
+
+// ── TOOL 16 ──
+export async function buscar_transmissoes(params: { event_id: number }): Promise<string> {
+  const data = await _get_v2(`/events/${params.event_id}/broadcasts/`);
+  if (data.error) return JSON.stringify(data);
+
+  const canais = (data.results || []).map((b: any) => ({
+    pais: b.country_code,
+    canal: b.channel_name,
+    link: b.channel_link,
+    inicio: b.scheduled_start_time,
+  }));
+
+  return JSON.stringify({ total_canais: canais.length, canais }, null, 2);
+}
+
+// ── TOOL 17 ──
+export async function buscar_elenco(params: { team_id: number }): Promise<string> {
+  const data = await _get_v2(`/teams/${params.team_id}/squad/`);
+  if (data.error) return JSON.stringify(data);
+
+  const jogadores = (data.players || []).map((j: any) => ({
+    id: j.id,
+    nome: j.name,
+    posicao: j.position,
+    numero: j.jersey_number,
+    nacionalidade: j.nationality,
+    data_nascimento: j.date_of_birth,
+  }));
+
+  return JSON.stringify({ time_id: data.team_id, total: data.count || jogadores.length, jogadores }, null, 2);
+}
+
+// ── TOOL 18 ──
+export async function buscar_elenco_copa(params: { team_id: number }): Promise<string> {
+  const data = await _get_v2(`/worldcup/squads/${params.team_id}/`);
+  if (data.error) return JSON.stringify(data);
+
+  const jogadores = (data.results || []).map((j: any) => ({
+    id: j.id,
+    nome: j.name,
+    numero: j.jersey_number,
+    posicao: j.position,
+    status: j.status,
+    clube: j.club,
+    pais_clube: j.club_country,
+    convocacao: j.call_up_date,
+    caps: j.caps,
+    gols_selecao: j.goals,
+    idade: j.age,
+    data_nascimento: j.date_of_birth,
+    jogador_id: j.player_id,
+  }));
+
+  return JSON.stringify({
+    time_id: data.team_id,
+    time: data.team_name,
+    grupo: data.group,
+    total: data.count || jogadores.length,
+    convocados: jogadores,
+  }, null, 2);
+}
+
 // ── EXECUTOR CENTRAL ──
 type ToolFunction = (params: any) => Promise<string>;
 
@@ -507,6 +725,14 @@ const toolMap: Record<string, ToolFunction> = {
   buscar_stats_jogadores,
   listar_ligas,
   buscar_jogadores_time,
+  // v2
+  buscar_predicao_v2,
+  buscar_player_stats,
+  buscar_lineups,
+  buscar_metadados,
+  buscar_transmissoes,
+  buscar_elenco,
+  buscar_elenco_copa,
 };
 
 export async function executar_function_call(nome: string, argumentos: any): Promise<string> {
@@ -671,6 +897,105 @@ export const toolDeclarations = [
         properties: {
           team_id: { type: 'number', description: 'ID do time' },
           apenas_indisponiveis: { type: 'boolean', description: 'Se true, retorna só lesionados/suspensos' },
+        },
+        required: ['team_id'],
+      },
+    },
+  },
+  // ── V2 TOOLS ──
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_predicao_v2',
+      description: 'Predição ML CatBoost v2: resultado, gols esperados, over/under, BTTS, placar mais provável. Formato mais rico que a v1.',
+      parameters: {
+        type: 'object',
+        properties: {
+          event_id: { type: 'number', description: 'ID do evento' },
+        },
+        required: ['event_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_player_stats',
+      description: 'Stats por jogador em uma partida: rating, gols, xG, passes, desarmes, cartões. Retorna até 28 jogadores.',
+      parameters: {
+        type: 'object',
+        properties: {
+          event_id: { type: 'number', description: 'ID do evento' },
+        },
+        required: ['event_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_lineups',
+      description: 'Escalações previstas (AI) ou confirmadas: formação, titulares, reservas, lesionados. Usa para saber quem joga.',
+      parameters: {
+        type: 'object',
+        properties: {
+          event_id: { type: 'number', description: 'ID do evento' },
+        },
+        required: ['event_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_metadados',
+      description: 'Metadados do jogo: uniformes, fatos curiosos (ex: "time não perde há 5 jogos"), preview gerado por IA.',
+      parameters: {
+        type: 'object',
+        properties: {
+          event_id: { type: 'number', description: 'ID do evento' },
+        },
+        required: ['event_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_transmissoes',
+      description: 'Canais de TV que estão transmitindo o jogo, por país.',
+      parameters: {
+        type: 'object',
+        properties: {
+          event_id: { type: 'number', description: 'ID do evento' },
+        },
+        required: ['event_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_elenco',
+      description: 'Elenco completo de um time: jogadores, posições, números, nacionalidades.',
+      parameters: {
+        type: 'object',
+        properties: {
+          team_id: { type: 'number', description: 'ID do time' },
+        },
+        required: ['team_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_elenco_copa',
+      description: 'Convocados para a Copa do Mundo 2026 de uma seleção. Inclui status (oficial/preliminar), clube, caps, idade.',
+      parameters: {
+        type: 'object',
+        properties: {
+          team_id: { type: 'number', description: 'ID do time na BSD' },
         },
         required: ['team_id'],
       },
