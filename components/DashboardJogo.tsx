@@ -8,6 +8,14 @@ import StatsAvancadas from './StatsAvancadas';
 import PlayerStatsTabela from './PlayerStatsTabela';
 import MatchAnalytics from './MatchAnalytics';
 import MercadosAgrupados from './MercadosAgrupados';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 // ── Tipos ──
 
@@ -1098,36 +1106,36 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xs">
-        <thead>
-          <tr className="border-b border-gray-200">
-            <th className="text-left text-zinc-600 font-medium px-3 py-2">Mercado</th>
-            <th className="text-left text-zinc-600 font-medium px-3 py-2">Resultado</th>
-            <th className="text-right text-zinc-600 font-medium px-3 py-2">Melhor Odd</th>
-            <th className="text-right text-zinc-600 font-medium px-3 py-2">Casa</th>
-            <th className="text-right text-zinc-600 font-medium px-3 py-2">Pinnacle</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table className="min-w-[500px]">
+        <TableHeader>
+          <TableRow className="hover:bg-transparent">
+            <TableHead className="text-[11px]">Mercado</TableHead>
+            <TableHead className="text-[11px]">Resultado</TableHead>
+            <TableHead className="text-[11px] text-right">Melhor Odd</TableHead>
+            <TableHead className="text-[11px] text-right">Casa</TableHead>
+            <TableHead className="text-[11px] text-right">Pinnacle</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {mercados.flatMap(([mercado, outcomes]) =>
             Object.entries(outcomes).map(([outcome, data]: [string, any]) => (
-              <tr key={`${mercado}-${outcome}`} className="border-b border-gray-200/30 hover:bg-gray-100">
-                <td className="px-3 py-2 text-zinc-400 font-medium">{mercado}</td>
-                <td className="px-3 py-2 text-gray-700">{outcome}</td>
-                <td className="px-3 py-2 text-right text-orange-400 font-mono font-bold">
+              <TableRow key={`${mercado}-${outcome}`} className="border-gray-100 hover:bg-gray-50">
+                <TableCell className="py-2 text-[11px] text-gray-500 font-medium">{mercado}</TableCell>
+                <TableCell className="py-2 text-[11px] text-gray-700">{outcome}</TableCell>
+                <TableCell className="py-2 text-[11px] text-right font-mono font-bold text-orange-600">
                   {data.melhor_odd ?? '-'}
-                </td>
-                <td className="px-3 py-2 text-right text-zinc-400 font-mono">
+                </TableCell>
+                <TableCell className="py-2 text-[11px] text-right font-mono text-gray-400">
                   {data.melhor_casa ?? '-'}
-                </td>
-                <td className="px-3 py-2 text-right text-gray-700 font-mono">
+                </TableCell>
+                <TableCell className="py-2 text-[11px] text-right font-mono text-gray-600">
                   {data.pinnacle_odd ?? '-'}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }
