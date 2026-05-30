@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "app/api/chat/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/dashboard/*/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/jogos/route.ts": {
+      "maxDuration": 15
+    }
+  }
+}
