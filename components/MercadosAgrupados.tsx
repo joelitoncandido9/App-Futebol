@@ -193,11 +193,13 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                         <Table>
                           <TableHeader>
                             <TableRow className="hover:bg-transparent">
-                              <TableHead className="text-[10px] h-7 w-16">Linha</TableHead>
+                              <TableHead className="text-[10px] h-7 w-14">Linha</TableHead>
                               <TableHead className="text-[10px] h-7 text-right">Prob</TableHead>
                               <TableHead className="text-[10px] h-7 text-right w-14">OJ</TableHead>
-                              <TableHead className="text-[10px] h-7 text-right w-14">{card.time_casa.substring(0, 4)}</TableHead>
-                              <TableHead className="text-[10px] h-7 text-right w-14">{card.time_fora.substring(0, 4)}</TableHead>
+                              <TableHead className="text-[10px] h-7 text-right w-16">OJ {card.time_casa.substring(0, 4)}</TableHead>
+                              <TableHead className="text-[10px] h-7 text-right w-16">{card.time_casa.substring(0, 4)}%</TableHead>
+                              <TableHead className="text-[10px] h-7 text-right w-16">OJ {card.time_fora.substring(0, 4)}</TableHead>
+                              <TableHead className="text-[10px] h-7 text-right w-16">{card.time_fora.substring(0, 4)}%</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -215,8 +217,14 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-600">
                                     {lx.odd_over}
                                   </TableCell>
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">
+                                    {lc?.odd_over}
+                                  </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
                                     {lc?.prob_over}%
+                                  </TableCell>
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">
+                                    {lf?.odd_over}
                                   </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
                                     {lf?.prob_over}%
@@ -238,8 +246,14 @@ export default function MercadosAgrupados({ cards }: MercadosAgrupadosProps) {
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-600">
                                     {lx.odd_under}
                                   </TableCell>
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">
+                                    {lc?.odd_under}
+                                  </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
                                     {lc?.prob_under}%
+                                  </TableCell>
+                                  <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">
+                                    {lf?.odd_under}
                                   </TableCell>
                                   <TableCell className="py-1.5 text-[11px] text-right font-mono text-gray-500">
                                     {lf?.prob_under}%
