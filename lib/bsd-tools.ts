@@ -127,8 +127,8 @@ export async function analisar_jogo(params: { event_id: number }): Promise<strin
   const awayForm = formatForm(data.away_form);
   const unavailable = data.unavailable_players || {};
   const referee = data.referee || {};
-  const homeCoach = data.home_coach || {};
-  const awayCoach = data.away_coach || {};
+  const homeCoach = data.home_coach || data.home_coach_obj || {};
+  const awayCoach = data.away_coach || data.away_coach_obj || {};
   const h2h = data.head_to_head || {};
 
   // Busca médias reais do árbitro (yellowCards/redCards são totais, não médias)
@@ -192,8 +192,8 @@ export async function analisar_jogo(params: { event_id: number }): Promise<strin
       linha_defensiva: awayCoach.defensive_line,
       estilos_taticos: awayCoach.top_styles || [],
     },
-    desfalques_casa: unavailable.home || [],
-    desfalques_fora: unavailable.away || [],
+    desfalques_casa: unavailable.home || unavailable.home_team || [],
+    desfalques_fora: unavailable.away || unavailable.away_team || [],
     arbitro: {
       nome: referee.name,
       cartoes_amarelos_jogo: avgYellow ?? referee.yellowCards,

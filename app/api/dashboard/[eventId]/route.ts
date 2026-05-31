@@ -154,9 +154,15 @@ export async function GET(
 
     const referee = jogoData.referee || {};
     const h2h = jogoData.head_to_head || {};
+
+    // unavailable_players: v1 pode retornar {home: [...], away: [...]} ou {home_team: [...], away_team: [...]}
     const unavailable = jogoData.unavailable_players || {};
-    const homeCoach = jogoData.home_coach || {};
-    const awayCoach = jogoData.away_coach || {}
+    const desfalques_casa_raw = unavailable.home || unavailable.home_team || unavailable.homeTeam || [];
+    const desfalques_fora_raw = unavailable.away || unavailable.away_team || unavailable.awayTeam || [];
+
+    // home_coach / away_coach: v1 pode retornar _obj ou objeto direto
+    const homeCoach = jogoData.home_coach || jogoData.home_coach_obj || {};
+    const awayCoach = jogoData.away_coach || jogoData.away_coach_obj || {}
 
     // Busca média real de cartões do árbitro (yellowCards/redCards são totais, não médias)
     const mediasArbitro = await buscarMediaCartoesArbitro(referee.name);
@@ -400,8 +406,8 @@ export async function GET(
         amarelos_jogo: mediasArbitro.avg_yellow ?? referee.yellowCards,
         vermelhos_jogo: mediasArbitro.avg_red ?? referee.redCards,
       },
-      desfalques_casa: (unavailable.home || []).map((j: any) => j.name || j),
-      desfalques_fora: (unavailable.away || []).map((j: any) => j.name || j),
+      desfalques_casa: desfalques_casa_raw.map((j: any) => j.name || j),
+      desfalques_fora: desfalques_fora_raw.map((j: any) => j.name || j),
       tecnico_casa: homeCoach?.name ? {
         nome: homeCoach.name,
         formacao_preferida: homeCoach.preferred_formation,

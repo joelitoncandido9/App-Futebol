@@ -55,6 +55,18 @@ async function getV2(endpoint: string, token: string): Promise<any> {
 /**
  * Busca as médias históricas de um time usando v2
  */
+
+// Normaliza nome de time: remove acentos, pontuação, "FC", "SC", etc pra comparação
+function normalizarTime(nome: string): string {
+  return nome
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '') // remove acentos
+    .replace(/[^a-z0-9\s]/g, '')                       // remove pontuação
+    .replace(/\b(fc|sc|ec|ac|ad|ae|assoc|clube|esporte|real)\b/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export async function buscarHistoricoTime(
   teamId: number,
   teamName: string,
@@ -106,7 +118,7 @@ export async function buscarHistoricoTime(
       const result = statsResults[i];
       if (result.status !== 'fulfilled' || !result.value.stats) continue;
 
-      const ehCasa = (fixture.home_team || '').toLowerCase() === teamName.toLowerCase();
+      const ehCasa = normalizarTime(fixture.home_team) === normalizarTime(teamName);
       const side = ehCasa ? result.value.stats.home : result.value.stats.away;
       const sideOp = ehCasa ? result.value.stats.away : result.value.stats.home;
       if (!side) continue;
