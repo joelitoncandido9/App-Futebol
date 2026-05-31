@@ -70,8 +70,17 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     ![...statusAoVivo, 'finished', 'notstarted', 'postponed'].includes(j.status || '')
   );
 
+  // Converte data ISO (+04:00 da BSD) para YYYY-MM-DD em BRT
+  function converterParaBRT(dataStr: string): string {
+    try {
+      return new Date(dataStr).toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+    } catch {
+      return dataStr.split('T')[0] || 'sem data';
+    }
+  }
+
   // Data de hoje pra exibição
-  const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+  const hoje = converterParaBRT(new Date().toISOString());
   
   // Próximos 7 dias para abas
   const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -86,15 +95,15 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     else diasAba.push({ date: dateStr, label: `${diaSem} ${diaNum}` });
   }
   
-  // Filtra jogos por dia selecionado
+  // Filtra jogos por dia selecionado (usando data convertida para BRT)
   const jogosDoDia = diaSelecionado
-    ? jogosNaoIniciados.filter(j => j.data?.startsWith(diaSelecionado))
+    ? jogosNaoIniciados.filter(j => converterParaBRT(j.data) === diaSelecionado)
     : jogosNaoIniciados;
 
-  // Agrupa não-iniciados por data
+  // Agrupa não-iniciados por data (em BRT)
   const gruposData = new Map<string, Jogo[]>();
   jogosDoDia.forEach((jogo) => {
-    const data = jogo.data?.split('T')[0] || 'sem data';
+    const data = converterParaBRT(jogo.data);
     if (!gruposData.has(data)) gruposData.set(data, []);
     gruposData.get(data)!.push(jogo);
   });
@@ -191,14 +200,14 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         </div>
       )}
 
-      {/* ── FINALIZADOS (só hoje) ── */}
-      {jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length > 0 && (
+      {/* ── FINALIZADOS (só hoje, em BRT) ── */}
+      {jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje).length > 0 && (
         <div className="mb-10">
           <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             ✅ Finalizados Hoje
-            <span className="text-muted-foreground font-normal">({jogosFinalizados.filter(j => j.data?.startsWith(hoje)).length})</span>
+            <span className="text-muted-foreground font-normal">({jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje).length})</span>
           </h2>
-          {renderGrupos(agruparPorLiga(jogosFinalizados.filter(j => j.data?.startsWith(hoje))), onSelectJogo, false, true)}
+          {renderGrupos(agruparPorLiga(jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje)), onSelectJogo, false, true)}
         </div>
       )}
 
@@ -324,7 +333,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
 function formatarHora(dataStr: string): string {
   try {
     const d = new Date(dataStr);
-    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
   } catch {
     return '';
   }
@@ -337,6 +346,7 @@ function formatarData(dataStr: string): string {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
+      timeZone: 'America/Sao_Paulo',
     });
   } catch {
     return dataStr;

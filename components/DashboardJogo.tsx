@@ -724,7 +724,7 @@ function MatchHeader({
 function formatarHoraCurta(dataStr: string): string {
   try {
     const d = new Date(dataStr);
-    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
   } catch {
     return '';
   }
@@ -1162,6 +1162,7 @@ function formatarDataCompleta(dataStr: string): string {
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
+      timeZone: 'America/Sao_Paulo',
     });
   } catch {
     return dataStr;

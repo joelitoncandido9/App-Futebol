@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     date_from: hoje,
     date_to: semana,
     limit: '200',
-    
+    tz: 'America/Sao_Paulo',
   });
 
   const url = `${BASE_URL}/events/?${params}`;

@@ -131,6 +131,23 @@ export async function analisar_jogo(params: { event_id: number }): Promise<strin
   const awayCoach = data.away_coach || {};
   const h2h = data.head_to_head || {};
 
+  // Busca médias reais do árbitro (yellowCards/redCards são totais, não médias)
+  let avgYellow: number | null = null;
+  let avgRed: number | null = null;
+  if (referee.name) {
+    try {
+      const refData = await _get('/referees/', { name: referee.name });
+      const arbitros = refData.results || [];
+      if (arbitros.length) {
+        const arb = arbitros.reduce((a: any, b: any) => (a.matches || 0) > (b.matches || 0) ? a : b);
+        avgYellow = arb.avg_yellow_per_match ?? null;
+        avgRed = arb.avg_red_per_match ?? null;
+      }
+    } catch {
+      // fallback silencioso
+    }
+  }
+
   const resultado = {
     jogo: {
       event_id: data.id,
@@ -179,8 +196,8 @@ export async function analisar_jogo(params: { event_id: number }): Promise<strin
     desfalques_fora: unavailable.away || [],
     arbitro: {
       nome: referee.name,
-      cartoes_amarelos_jogo: referee.yellowCards,
-      cartoes_vermelhos_jogo: referee.redCards,
+      cartoes_amarelos_jogo: avgYellow ?? referee.yellowCards,
+      cartoes_vermelhos_jogo: avgRed ?? referee.redCards,
     },
     h2h: {
       total_jogos: h2h.total_matches,

@@ -19,10 +19,13 @@ const TTL = 900; // 15 min
 export const maxDuration = 60;
 
 async function fetchBSD(endpoint: string) {
+  // Adiciona tz=America/Sao_Paulo para datas em BRT
+  const separator = endpoint.includes('?') ? '&' : '?';
+  const url = `${BASE_URL}${endpoint}${separator}tz=America/Sao_Paulo`;
   return cacheFetch(
-    makeBsdCacheKey('v1', endpoint),
+    makeBsdCacheKey('v1', endpoint, 'tz=BRT'),
     async () => {
-      const res = await fetch(`${BASE_URL}${endpoint}`, {
+      const res = await fetch(url, {
         headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
         signal: AbortSignal.timeout(10000),
       });
@@ -34,10 +37,12 @@ async function fetchBSD(endpoint: string) {
 }
 
 async function fetchBSDv2(endpoint: string) {
+  const separator = endpoint.includes('?') ? '&' : '?';
+  const url = `${BASE_URL_V2}${endpoint}${separator}tz=America/Sao_Paulo`;
   return cacheFetch(
-    makeBsdCacheKey('v2', endpoint),
+    makeBsdCacheKey('v2', endpoint, 'tz=BRT'),
     async () => {
-      const res = await fetch(`${BASE_URL_V2}${endpoint}`, {
+      const res = await fetch(url, {
         headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
         signal: AbortSignal.timeout(8000),
       });
@@ -54,6 +59,35 @@ async function fetchV2Safe(endpoint: string): Promise<any> {
     return await fetchBSDv2(endpoint);
   } catch {
     return null;
+  }
+}
+
+/** Busca médias reais de cartões do árbitro via endpoint /referees/ */
+async function buscarMediaCartoesArbitro(nome: string): Promise<{ avg_yellow: number | null; avg_red: number | null }> {
+  if (!nome) return { avg_yellow: null, avg_red: null };
+  try {
+    const data = await cacheFetch(
+      makeBsdCacheKey('v1', `/referees/?name=${encodeURIComponent(nome)}`),
+      async () => {
+        const res = await fetch(`${BASE_URL}/referees/?name=${encodeURIComponent(nome)}&tz=America/Sao_Paulo`, {
+          headers: { Authorization: `Token ${BSD_TOKEN}`, 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(8000),
+        });
+        if (!res.ok) throw new Error(`BSD HTTP ${res.status}`);
+        return res.json();
+      },
+      TTL
+    );
+    const arbitros = data.results || [];
+    if (!arbitros.length) return { avg_yellow: null, avg_red: null };
+    // Pega o árbitro com mais jogos (mais relevante)
+    const arbitro = arbitros.reduce((a: any, b: any) => (a.matches || 0) > (b.matches || 0) ? a : b);
+    return {
+      avg_yellow: arbitro.avg_yellow_per_match ?? null,
+      avg_red: arbitro.avg_red_per_match ?? null,
+    };
+  } catch {
+    return { avg_yellow: null, avg_red: null };
   }
 }
 
@@ -122,7 +156,10 @@ export async function GET(
     const h2h = jogoData.head_to_head || {};
     const unavailable = jogoData.unavailable_players || {};
     const homeCoach = jogoData.home_coach || {};
-    const awayCoach = jogoData.away_coach || {};
+    const awayCoach = jogoData.away_coach || {}
+
+    // Busca média real de cartões do árbitro (yellowCards/redCards são totais, não médias)
+    const mediasArbitro = await buscarMediaCartoesArbitro(referee.name);
     const statsPartida = jogoData.stats || {}; // { home: {...}, away: {...} }
     const incidents = jogoData.incidents || [];
     const lineups = jogoData.lineups || null;
@@ -360,8 +397,8 @@ export async function GET(
       },
       arbitro: {
         nome: referee.name,
-        amarelos_jogo: referee.yellowCards,
-        vermelhos_jogo: referee.redCards,
+        amarelos_jogo: mediasArbitro.avg_yellow ?? referee.yellowCards,
+        vermelhos_jogo: mediasArbitro.avg_red ?? referee.redCards,
       },
       desfalques_casa: (unavailable.home || []).map((j: any) => j.name || j),
       desfalques_fora: (unavailable.away || []).map((j: any) => j.name || j),
