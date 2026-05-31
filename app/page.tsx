@@ -99,7 +99,7 @@ export default function Home() {
           {tab === 'dashboard' ? (
             <DashboardJogo eventId={selectedEventId} />
           ) : (
-            <div className="bg-white border border-gray-200 rounded-xl p-4">
+            <div className="bg-card border border-border rounded-xl p-4">
               <ChatInterface
                 eventId={selectedEventId}
                 timeCasa={timeCasa}

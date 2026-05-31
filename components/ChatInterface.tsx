@@ -189,7 +189,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
               className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === 'user'
                   ? 'bg-orange-500/10 border border-orange-500/20 text-foreground'
-                  : 'bg-card border border-border text-foreground/80'
+                  : 'bg-card border border-border text-foreground'
               }`}
             >
               {msg.content}
@@ -231,7 +231,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           }}
           placeholder="Pergunte sobre o jogo..."
           disabled={loading}
-          className="flex-1 bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground/80 placeholder-gray-400 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
+          className="flex-1 bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-gray-500 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
         />
         <button
           onClick={() => enviar(input)}
