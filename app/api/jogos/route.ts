@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
   const params = new URLSearchParams({
     date_from: hoje,
     date_to: semana,
-    tz: 'America/Sao_Paulo',
+    limit: '200',
+    
   });
 
   const url = `${BASE_URL}/events/?${params}`;
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
         Authorization: `Token ${BSD_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 1800 }, // 30 minutos de cache
+      cache: 'no-store',
     });
 
     if (!res.ok) {
