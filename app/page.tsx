@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-full max-w-2xl mx-auto px-3 sm:px-4">
+    <div className="min-h-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
       {!selectedEventId ? (
         <>
           <header className="py-5 mb-2">

@@ -77,7 +77,7 @@ Skills são carregadas sob demanda via `skill` tool pelo assistente, conforme a 
 - **Cores:** Fundo `#0c0c14`, cards com `backdrop-blur`, primary laranja queimado `oklch(0.68 0.2 45)`
 - **Glass:** `.glass` (bg 70% opacity + blur 20px), `.glass-strong` (85% + blur 32px)
 - **Animações:** `shimmer` (skeleton), `score-pop` (placar), `fade-up` (cards), `glow-pulse`
-- **Layout:** `max-w-2xl` mobile-first, padding `px-3` mobile, `px-4` desktop
+- **Layout:** `max-w-7xl` responsivo (mobile-first com padding lateral, desktop com largura total), padding `px-3 sm:px-4 lg:px-6`
 - **Navegação:** Página única sem abas (nada de Dashboard vs Chat separados)
 
 ## Componentes
