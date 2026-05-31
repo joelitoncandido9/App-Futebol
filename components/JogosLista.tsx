@@ -28,6 +28,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   const [erro, setErro] = useState('');
   const [pesquisa, setPesquisa] = useState('');
   const [ligaFiltro, setLigaFiltro] = useState('');
+  const [diaSelecionado, setDiaSelecionado] = useState<string | null>(null);
 
   useEffect(() => {
     async function carregar() {
@@ -71,10 +72,28 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
   // Data de hoje pra exibição
   const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+  
+  // Próximos 7 dias para abas
+  const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const diasAba: { date: string; label: string }[] = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+    const diaSem = diasSemana[d.getDay()];
+    const diaNum = d.toLocaleDateString('pt-BR', { day: 'numeric' });
+    if (i === 0) diasAba.push({ date: dateStr, label: 'Hoje' });
+    else diasAba.push({ date: dateStr, label: `${diaSem} ${diaNum}` });
+  }
+  
+  // Filtra jogos por dia selecionado
+  const jogosDoDia = diaSelecionado
+    ? jogosNaoIniciados.filter(j => j.data?.startsWith(diaSelecionado))
+    : jogosNaoIniciados;
 
   // Agrupa não-iniciados por data
   const gruposData = new Map<string, Jogo[]>();
-  jogosNaoIniciados.forEach((jogo) => {
+  jogosDoDia.forEach((jogo) => {
     const data = jogo.data?.split('T')[0] || 'sem data';
     if (!gruposData.has(data)) gruposData.set(data, []);
     gruposData.get(data)!.push(jogo);
@@ -129,6 +148,31 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         </select>
       </div>
 
+      {/* ── ABAS DE DIAS ── */}
+      <div className="flex gap-1 mb-4 overflow-x-auto pb-1">
+        {diasAba.map((dia) => (
+          <button
+            key={dia.date}
+            onClick={() => setDiaSelecionado(diaSelecionado === dia.date ? null : dia.date)}
+            className={`px-3 py-1.5 text-xs rounded-lg whitespace-nowrap transition-colors font-medium ${
+              diaSelecionado === dia.date
+                ? 'bg-orange-500 text-white font-semibold'
+                : 'bg-card border border-border text-muted-foreground hover:text-foreground hover:border-zinc-600'
+            }`}
+          >
+            {dia.label}
+          </button>
+        ))}
+        {diaSelecionado && (
+          <button
+            onClick={() => setDiaSelecionado(null)}
+            className="px-3 py-1.5 text-xs rounded-lg text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ✕ Limpar
+          </button>
+        )}
+      </div>
+
       {filtrados.length === 0 && (
         <div className="text-center py-12">
           <p className="text-muted-foreground">Nenhum jogo encontrado nos próximos 7 dias.</p>
@@ -159,10 +203,10 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
       )}
 
       {/* ── PRÓXIMOS JOGOS (não iniciados, por data) ── */}
-      {jogosNaoIniciados.length > 0 && (
+      {jogosDoDia.length > 0 && (
         <div className="mb-10">
           <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4">
-            📅 Próximos Jogos ({jogosNaoIniciados.length})
+            📅 Próximos Jogos ({jogosDoDia.length})
           </h2>
           <div className="space-y-8">
             {Array.from(gruposData.entries()).map(([data, jogosData]) => (
