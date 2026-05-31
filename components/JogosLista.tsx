@@ -65,30 +65,48 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     statusAoVivo.includes(j.status || '')
   );
   const jogosFinalizados = filtrados.filter((j) => j.status === 'finished');
-  const jogosNaoIniciados = filtrados.filter((j) => j.status === 'notstarted' || j.status === 'postponed');
+
+  // Filtro extra: jogos que já passaram (data+hora < agora), mesmo que a BSD retorne status notstarted
+  function jogoJaAconteceu(j: Jogo): boolean {
+    if (!j.data) return false;
+    const dataJogo = new Date(j.data).getTime();
+    if (isNaN(dataJogo)) return false; // data inválida → não filtra
+    return dataJogo < Date.now();
+  }
+
+  const jogosNaoIniciados = filtrados.filter((j) =>
+    (j.status === 'notstarted' || j.status === 'postponed') && !jogoJaAconteceu(j)
+  );
   const outrosStatus = filtrados.filter((j) =>
     ![...statusAoVivo, 'finished', 'notstarted', 'postponed'].includes(j.status || '')
   );
 
   // Converte data ISO (+04:00 da BSD) para YYYY-MM-DD em BRT
+  // Instância reutilizável pra consistência
+  const fmtBRT = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Sao_Paulo' });
+
   function converterParaBRT(dataStr: string): string {
     try {
-      return new Date(dataStr).toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+      const d = new Date(dataStr);
+      if (isNaN(d.getTime())) throw new Error('inválida');
+      return fmtBRT.format(d);
     } catch {
-      return dataStr.split('T')[0] || 'sem data';
+      // Fallback: extrai YYYY-MM-DD do começo da string
+      const match = dataStr?.match(/^(\d{4}-\d{2}-\d{2})/);
+      return match?.[1] || 'sem data';
     }
   }
 
-  // Data de hoje pra exibição
-  const hoje = converterParaBRT(new Date().toISOString());
-  
+  // Data de hoje em BRT — mesmo formatador usado pros jogos
+  const hoje = fmtBRT.format(new Date());
+
   // Próximos 7 dias para abas
   const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const diasAba: { date: string; label: string }[] = [];
   for (let i = 0; i < 7; i++) {
     const d = new Date();
     d.setDate(d.getDate() + i);
-    const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+    const dateStr = fmtBRT.format(d);
     const diaSem = diasSemana[d.getDay()];
     const diaNum = d.toLocaleDateString('pt-BR', { day: 'numeric' });
     if (i === 0) diasAba.push({ date: dateStr, label: 'Hoje' });
@@ -333,6 +351,7 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
 function formatarHora(dataStr: string): string {
   try {
     const d = new Date(dataStr);
+    if (isNaN(d.getTime())) return '';
     return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
   } catch {
     return '';
@@ -341,7 +360,9 @@ function formatarHora(dataStr: string): string {
 
 function formatarData(dataStr: string): string {
   try {
-    const d = new Date(dataStr + 'T12:00:00');
+    // dataStr é YYYY-MM-DD (vem de converterParaBRT). Seta meio-dia pra evitar shift de timezone.
+    const d = new Date(dataStr + 'T12:00:00Z'); // Z = UTC, meio-dia UTC nunca muda de dia em BRT
+    if (isNaN(d.getTime())) return dataStr;
     return d.toLocaleDateString('pt-BR', {
       weekday: 'long',
       day: 'numeric',

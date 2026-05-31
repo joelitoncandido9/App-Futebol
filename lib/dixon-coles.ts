@@ -11,7 +11,7 @@ interface TeamStrength {
   defense: number;
 }
 
-interface MatchPrediction {
+export interface MatchPrediction {
   homeProb: number;
   drawProb: number;
   awayProb: number;
@@ -32,7 +32,6 @@ function poissonProb(lambda: number, k: number): number {
 }
 
 function getLeagueParams(leagueName: string): any {
-  // Normaliza nome da liga para buscar no JSON
   const map: Record<string, string> = {
     'Brasileirão Serie A': 'Brasileirao',
     'Brasileirão': 'Brasileirao',
@@ -54,18 +53,69 @@ function getLeagueParams(leagueName: string): any {
   return params;
 }
 
+/** Normaliza nome do time BSD → nome no JSON de parâmetros */
+function normalizarNomeTime(nome: string): string {
+  const map: Record<string, string> = {
+    'Athletico': 'Athletico-PR',
+    'Athletico-PR': 'Athletico-PR',
+    'Atlético Mineiro': 'Atletico-MG',
+    'Atlético-GO': 'Atletico GO',
+    'Atletico GO': 'Atletico GO',
+    'Atletico-MG': 'Atletico-MG',
+    'América MG': 'America MG',
+    'América-MG': 'America MG',
+    'Botafogo': 'Botafogo RJ',
+    'Botafogo RJ': 'Botafogo RJ',
+    'Bragantino': 'Bragantino',
+    'Red Bull Bragantino': 'Bragantino',
+    'Chapecoense': 'Chapecoense-SC',
+    'Chapecoense-SC': 'Chapecoense-SC',
+    'Ceará': 'Ceara',
+    'Coritiba': 'Coritiba',
+    'Criciúma': 'Criciuma',
+    'Cruzeiro': 'Cruzeiro',
+    'Cuiabá': 'Cuiaba',
+    'Flamengo': 'Flamengo RJ',
+    'Flamengo RJ': 'Flamengo RJ',
+    'Fluminense': 'Fluminense',
+    'Fortaleza': 'Fortaleza',
+    'Goiás': 'Goias',
+    'Grêmio': 'Gremio',
+    'Internacional': 'Internacional',
+    'Juventude': 'Juventude',
+    'Mirassol': 'Mirassol',
+    'Náutico': 'Nautico',
+    'Palmeiras': 'Palmeiras',
+    'Ponte Preta': 'Ponte Preta',
+    'Remo': 'Remo',
+    'Santos': 'Santos',
+    'São Paulo': 'Sao Paulo',
+    'Sport Recife': 'Sport Recife',
+    'Vasco': 'Vasco',
+    'Vasco da Gama': 'Vasco',
+    'Vitória': 'Vitoria',
+    'Athletic Club': 'Athletico-PR', // fallback aproximado
+  };
+
+  return map[nome] || nome;
+}
+
 function getTeamStrength(
   teamName: string,
   leagueParams: any,
-  isHome: boolean
-): TeamStrength {
-  const teams = leagueParams.teams || {};
-  const team = teams[teamName];
-  if (!team) return { attack: 1, defense: 1 };
+  _isHome: boolean
+): TeamStrength | null {
+  const teams: string[] = leagueParams.teams || [];
+  const attack: number[] = leagueParams.attack || [];
+  const defense: number[] = leagueParams.defense || [];
+
+  const nomeNorm = normalizarNomeTime(teamName);
+  const idx = teams.indexOf(nomeNorm);
+  if (idx === -1 || idx >= attack.length || idx >= defense.length) return null;
 
   return {
-    attack: team.attack || 1,
-    defense: team.defense || 1,
+    attack: attack[idx],
+    defense: defense[idx],
   };
 }
 
@@ -79,6 +129,8 @@ export function predictMatch(
 
   const homeStrength = getTeamStrength(homeTeam, params, true);
   const awayStrength = getTeamStrength(awayTeam, params, false);
+  if (!homeStrength || !awayStrength) return null;
+
   const homeAdvantage = params.homeAdvantage || 1.1;
 
   const lambdaHome = Math.max(0.1, homeStrength.attack * awayStrength.defense * homeAdvantage);
