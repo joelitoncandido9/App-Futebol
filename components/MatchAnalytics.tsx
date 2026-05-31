@@ -54,24 +54,23 @@ export default function MatchAnalytics({
   if (tabs.length === 0) return null;
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden">
-      <div className="flex border-b border-border overflow-x-auto">
+    <div>
+      <div className="flex gap-1 overflow-x-auto scrollbar-none pb-2">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key as any)}
-            className={`px-4 py-2.5 text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`shrink-0 px-3 py-1.5 text-[10px] rounded-lg font-medium whitespace-nowrap transition-all ${
               tab === t.key
-                ? 'text-orange-500 border-b-2 border-orange-500 bg-orange-500/10'
-                : 'text-muted-foreground hover:text-foreground/80 hover:bg-muted/50'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'glass text-muted-foreground hover:text-foreground'
             }`}
           >
             {t.label}
           </button>
         ))}
       </div>
-
-      <div className="p-4">
+      <div className="mt-2">
         {tab === 'stats' && hasStats && (
           <StatsAvancadas
             home={statsAvancadas!.home}

@@ -18,8 +18,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-// ── Tipos ──
-
 interface CoachData {
   nome: string;
   formacao_preferida?: string;
@@ -78,7 +76,6 @@ interface DashboardData {
   tecnico_fora: CoachData | null;
   tabela: TabelaRow[] | null;
   xg_pos_jogo: { xg_casa: number | null; xg_fora: number | null } | null;
-  // Novos dados
   incidents?: any[];
   stats_avancadas?: { home: any; away: any } | null;
   shotmap?: any[] | null;
@@ -106,7 +103,6 @@ interface DashboardData {
     canal: string;
     inicio: string;
   }> | null;
-  // Novos campos
   placar?: { casa: number | null; fora: number | null; casa_ht: number | null; fora_ht: number | null };
   periodo?: { atual: string | null; minuto: number | null };
   xg_ao_vivo?: { casa: number | null; fora: number | null };
@@ -123,46 +119,20 @@ interface DashboardJogoProps {
   eventId: number;
 }
 
-// ── Section Wrapper (collapsible) ──
-
-function SectionWrapper({
-  titulo,
-  emoji,
-  defaultOpen = true,
-  children,
-}: {
-  titulo: string;
-  emoji?: string;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-
+function SectionBox({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden glow-accent transition-all duration-200">
-      {/* Gradient accent bar on top */}
-      <div className="h-0.5 bg-gradient-to-r from-orange-500/80 via-orange-400/40 to-transparent" />
-
-      <button
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        aria-label={titulo}
-        className="w-full px-5 py-3.5 flex items-center justify-between hover:bg-muted/50/50 transition-colors"
-      >
-        <h3 className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.08em]">
-          {emoji && <span className="mr-2">{emoji}</span>}
+    <div className="glass rounded-xl overflow-hidden">
+      <div className="px-4 pt-3.5 pb-2 border-b border-border/40">
+        <h3 className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground">
           {titulo}
         </h3>
-        <span className={`text-muted-foreground text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
-          ▼
-        </span>
-      </button>
-      {open && <div className="p-5">{children}</div>}
+      </div>
+      <div className="p-4">
+        {children}
+      </div>
     </div>
   );
 }
-
-// ── Componente Principal ──
 
 export default function DashboardJogo({ eventId }: DashboardJogoProps) {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -192,7 +162,10 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
   if (erro) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-400 text-sm">{erro}</p>
+        <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center mx-auto mb-3">
+          <span className="text-lg">⚠️</span>
+        </div>
+        <p className="text-sm text-muted-foreground">{erro}</p>
       </div>
     );
   }
@@ -211,7 +184,6 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
 
   const hasOddsMercado = odds_mercado && Object.keys(odds_mercado).length > 0;
 
-  // Verifica status do jogo
   const isAoVivo = jogo.status === 'inprogress' || jogo.status === 'halftime' || jogo.status === 'penalties' || jogo.status === 'extratime';
   const isFinalizado = jogo.status === 'finished';
   const isAovivoOuFinalizado = isAoVivo || isFinalizado;
@@ -219,8 +191,7 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
   const escudoFora = jogo.time_fora_id ? `https://sports.bzzoiro.com/img/team/${jogo.time_fora_id}/` : null;
 
   return (
-    <div className="space-y-5">
-      {/* ── MATCH HEADER ── */}
+    <div className="space-y-3">
       <MatchHeader
         jogo={jogo}
         oddsConsenso={odds_consenso}
@@ -238,59 +209,69 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         escudoFora={escudoFora}
       />
 
-      {/* ── ANÁLISE DA PARTIDA (tabs: Stats, Shotmap, xG, Pressão) ── */}
+      {metadados?.fatos_curiosos && metadados.fatos_curiosos.length > 0 && (
+        <div className="glass rounded-xl px-4 py-3">
+          {metadados.fatos_curiosos.slice(0, 2).map((fato, idx) => (
+            <p key={idx} className="text-[11px] text-muted-foreground italic leading-relaxed">
+              💡 {fato}
+            </p>
+          ))}
+        </div>
+      )}
+
       {isAovivoOuFinalizado && (
-        <MatchAnalytics
-          statsAvancadas={stats_avancadas}
-          shotmap={data.shotmap}
-          xgPorMinuto={data.xg_por_minuto}
-          momentum={data.momentum}
-          averagePositions={data.average_positions}
-          timeCasa={jogo.time_casa}
-          timeFora={jogo.time_fora}
-        />
+        <SectionBox titulo="Análise da Partida">
+          <MatchAnalytics
+            statsAvancadas={stats_avancadas}
+            shotmap={data.shotmap}
+            xgPorMinuto={data.xg_por_minuto}
+            momentum={data.momentum}
+            averagePositions={data.average_positions}
+            timeCasa={jogo.time_casa}
+            timeFora={jogo.time_fora}
+          />
+        </SectionBox>
       )}
 
-      {/* ── ⚽ CRONOLOGIA (apenas ao vivo/finalizado) ── */}
       {isAovivoOuFinalizado && incidents && incidents.length > 0 && (
-        <IncidentesTimeline
-          incidents={incidents}
-          timeCasa={jogo.time_casa}
-          timeFora={jogo.time_fora}
-        />
+        <SectionBox titulo="Cronologia">
+          <IncidentesTimeline
+            incidents={incidents}
+            timeCasa={jogo.time_casa}
+            timeFora={jogo.time_fora}
+          />
+        </SectionBox>
       )}
 
-      {/* ── 🌟 PLAYER RATINGS (apenas ao vivo/finalizado) ── */}
       {isAovivoOuFinalizado && player_stats && player_stats.length > 0 && (
-        <PlayerStatsTabela
-          players={player_stats}
-          timeCasa={jogo.time_casa}
-          timeFora={jogo.time_fora}
-          teamIdCasa={jogo.time_casa_id}
-          teamIdFora={jogo.time_fora_id}
-        />
+        <SectionBox titulo="Jogadores">
+          <PlayerStatsTabela
+            players={player_stats}
+            timeCasa={jogo.time_casa}
+            timeFora={jogo.time_fora}
+            teamIdCasa={jogo.time_casa_id}
+            teamIdFora={jogo.time_fora_id}
+          />
+        </SectionBox>
       )}
 
-      {/* ── 📋 ESCALAÇÕES ── */}
-      {data.lineups && <LineupsDisplay data={data.lineups} timeCasa={jogo.time_casa} timeFora={jogo.time_fora} />}
+      {data.lineups && <SectionBox titulo="Escalações"><LineupsDisplay data={data.lineups} timeCasa={jogo.time_casa} timeFora={jogo.time_fora} /></SectionBox>}
 
-      {/* ── 📺 ONDE ASSISTIR ── */}
       {transmissoes && transmissoes.length > 0 && (
-        <SectionWrapper titulo="Onde Assistir" emoji="📺">
+        <SectionBox titulo="Onde Assistir">
           <div className="flex flex-wrap gap-2">
             {transmissoes.map((tv, idx) => (
-              <div key={idx} className="bg-zinc-800/40 rounded-lg px-3 py-1.5 text-xs">
+              <div key={idx} className="bg-muted/50 rounded-lg px-2.5 py-1.5 text-[11px]">
                 <span className="text-foreground/80 font-medium">{tv.canal}</span>
                 {tv.pais && (
-                  <span className="text-muted-foreground ml-1.5">• {tv.pais}</span>
+                  <span className="text-muted-foreground ml-1">• {tv.pais}</span>
                 )}
               </div>
             ))}
           </div>
-        </SectionWrapper>
+        </SectionBox>
       )}
 
-      {/* ── 📈 MÉDIAS POR TIME ── */}
       <FormWidgets
         timeCasa={jogo.time_casa}
         timeFora={jogo.time_fora}
@@ -300,7 +281,6 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         desfalquesFora={desfalques_fora}
       />
 
-      {/* ── 📊 ESTATÍSTICAS (médias) ── */}
       <StatsTable
         timeCasa={jogo.time_casa}
         timeFora={jogo.time_fora}
@@ -308,14 +288,12 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         formaFora={forma_fora}
       />
 
-      {/* ── 🤝 H2H ── */}
       <H2HSection
         timeCasa={jogo.time_casa}
         timeFora={jogo.time_fora}
         h2h={h2h}
       />
 
-      {/* ── 📋 ÚLTIMOS 10 JOGOS ── */}
       <UltimosJogos
         timeCasa={jogo.time_casa}
         timeFora={jogo.time_fora}
@@ -323,7 +301,6 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         jogosFora={data.ultimos_jogos_fora || []}
       />
 
-      {/* ── 🏆 CLASSIFICAÇÃO ── */}
       {tabela && tabela.length > 0 && (
         <StandingsTable
           timeCasa={jogo.time_casa}
@@ -332,49 +309,36 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
         />
       )}
 
-      {/* ── 🎯 ODDS JUSTAS (agrupadas em abas) ── */}
       {cards_mercado.length > 0 ? (
-        <MercadosAgrupados cards={cards_mercado} oddsConsenso={odds_consenso} />
+        <SectionBox titulo="Mercados & Odds Justas">
+          <MercadosAgrupados cards={cards_mercado} oddsConsenso={odds_consenso} />
+        </SectionBox>
       ) : (
-        <p className="text-muted-foreground text-sm py-4 text-center">
+        <p className="text-muted-foreground text-xs py-4 text-center">
           Dados estatísticos insuficientes para calcular odds justas deste jogo.
         </p>
       )}
 
-      {/* ── 💰 COMPARAÇÃO ODDS ── */}
       {hasOddsMercado && (
-        <SectionWrapper titulo="Comparação de Odds (Mercado)" emoji="💰">
+        <SectionBox titulo="Comparação de Odds (Mercado)">
           <MarketOddsSection oddsMercado={odds_mercado} />
-        </SectionWrapper>
+        </SectionBox>
       )}
 
-      {/* ── 🧑‍🏫 TÉCNICOS + ÁRBITRO ── */}
       {(tecnico_casa || tecnico_fora) && (
-        <SectionWrapper titulo="Técnicos" emoji="🧑‍🏫">
+        <SectionBox titulo="Técnicos">
           <CoachesSection tecnicoCasa={tecnico_casa} tecnicoFora={tecnico_fora} timeCasa={jogo.time_casa} timeFora={jogo.time_fora} />
-        </SectionWrapper>
+        </SectionBox>
       )}
 
       {arbitro?.nome && (
-        <SectionWrapper titulo="Árbitro" emoji="⚖️">
+        <SectionBox titulo="Árbitro">
           <RefereeSection arbitro={arbitro} />
-        </SectionWrapper>
+        </SectionBox>
       )}
     </div>
   );
 }
-
-// ── Section Title Helper ──
-
-function SectionTitle({ titulo }: { titulo: string }) {
-  return (
-    <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-3">
-      {titulo}
-    </h3>
-  );
-}
-
-// ── LINEUPS DISPLAY ──
 
 function LineupsDisplay({
   data,
@@ -387,19 +351,16 @@ function LineupsDisplay({
 }) {
   if (!data) return null;
 
-  // Tenta extrair escalações de diferentes formatos (v1 embutido vs v2)
   const homeLineup = data.home?.formation ? data.home : (typeof data.lineups?.home === 'object' ? data.lineups.home : null);
   const awayLineup = data.away?.formation ? data.away : (typeof data.lineups?.away === 'object' ? data.lineups.away : null);
 
   if (!homeLineup && !awayLineup) return null;
 
   return (
-    <SectionWrapper titulo="Escalações" emoji="📋">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <LineupCard time={timeCasa} lineup={homeLineup} lado="casa" />
-        <LineupCard time={timeFora} lineup={awayLineup} lado="fora" />
-      </div>
-    </SectionWrapper>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <LineupCard time={timeCasa} lineup={homeLineup} lado="casa" />
+      <LineupCard time={timeFora} lineup={awayLineup} lado="fora" />
+    </div>
   );
 }
 
@@ -429,7 +390,7 @@ function LineupCard({
       <div className="flex items-center justify-between mb-3">
         <span className="text-foreground text-sm font-medium">{time}</span>
         {formation && (
-          <span className="text-orange-400 text-xs font-mono font-bold">
+          <span className="text-primary text-xs font-mono font-bold">
             {formation}
           </span>
         )}
@@ -437,18 +398,18 @@ function LineupCard({
 
       {players.length > 0 && (
         <div className="space-y-1 mb-3">
-          <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">Titulares</p>
+          <p className="text-muted-foreground text-[9px] uppercase tracking-wider mb-1">Titulares</p>
           {players.map((p: any, idx: number) => (
             <div key={idx} className="flex items-center gap-2 text-xs">
-              <span className="text-muted-foreground font-mono w-5 text-right">
+              <span className="text-muted-foreground font-mono w-5 text-right text-[10px]">
                 {p.jersey_number || p.numero || ''}
               </span>
               <span className="text-foreground/80">{p.name || p.nome || `#${p.id || ''}`}</span>
               {p.position && (
-                <span className="text-muted-foreground text-[10px] uppercase">{p.position}</span>
+                <span className="text-muted-foreground text-[9px] uppercase">{p.position}</span>
               )}
               {p.ai_score != null && p.ai_score > 0 && (
-                <span className="text-green-500/60 text-[10px] ml-auto">
+                <span className="text-green-500/60 text-[9px] ml-auto">
                   {Math.round(p.ai_score * 100)}%
                 </span>
               )}
@@ -459,10 +420,10 @@ function LineupCard({
 
       {substitutes.length > 0 && (
         <div className="pt-2 border-t border-border/50">
-          <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">Reservas</p>
+          <p className="text-muted-foreground text-[9px] uppercase tracking-wider mb-1">Reservas</p>
           <div className="flex flex-wrap gap-1">
             {substitutes.map((p: any, idx: number) => (
-              <span key={idx} className="text-xs text-muted-foreground bg-zinc-800/40 rounded px-1.5 py-0.5">
+              <span key={idx} className="text-xs text-muted-foreground bg-muted/30 rounded px-1.5 py-0.5">
                 {p.name || p.nome || `#${p.id || ''}`}
               </span>
             ))}
@@ -473,23 +434,10 @@ function LineupCard({
   );
 }
 
-// ── MATCH HEADER ──
-
 function MatchHeader({
-  jogo,
-  oddsConsenso,
-  xgPosJogo,
-  predicao,
-  metadados,
-  placar,
-  periodo,
-  xgAoVivo,
-  contexto,
-  estadio,
-  clima,
-  gramado,
-  escudoCasa,
-  escudoFora,
+  jogo, oddsConsenso, xgPosJogo, predicao, metadados,
+  placar, periodo, xgAoVivo, contexto, estadio, clima, gramado,
+  escudoCasa, escudoFora,
 }: {
   jogo: DashboardData['jogo'];
   oddsConsenso: Record<string, number | null>;
@@ -517,214 +465,160 @@ function MatchHeader({
     return map[val] || '';
   }
 
-  return (
-    <div className="card-destaque overflow-hidden">
-      {/* Gradient accent bar */}
-      <div className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-purple-500/30" />
+  const scoreCasa = placar?.casa ?? 0;
+  const scoreFora = placar?.fora ?? 0;
+  const casaVence = scoreCasa > scoreFora;
+  const foraVence = scoreFora > scoreCasa;
 
-      <div className="p-5">
-        {/* League + round + contexto */}
-        <div className="flex items-center justify-between mb-4 flex-wrap gap-1">
-          <div className="flex items-center gap-2.5 text-xs">
-            <span className="bg-orange-500/10 text-orange-400 px-2.5 py-0.5 rounded-md font-semibold uppercase tracking-[0.08em] text-[10px]">
+  return (
+    <div className="relative overflow-hidden rounded-xl">
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
+      <div className="glass-strong rounded-xl p-4 relative">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-[9px] bg-primary/10 text-primary px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">
               {jogo.liga}
             </span>
             {jogo.rodada != null && (
-              <span className="text-muted-foreground text-[10px] font-mono">
-                {jogo.rodada}ª rodada
-              </span>
+              <span className="text-[9px] text-muted-foreground">{jogo.rodada}ª rodada</span>
             )}
             {contexto?.classico_local && (
-              <span className="badge-moderno bg-yellow-500/10 text-yellow-500">🏙️ Clássico!</span>
-            )}
-            {contexto?.campo_neutro && (
-              <span className="badge-moderno bg-zinc-700/30 text-muted-foreground">Neutro</span>
+              <span className="text-[9px] text-yellow-500/80">🏙️ Clássico!</span>
             )}
           </div>
-          {jogo.pais && (
-            <span className="text-muted-foreground text-[10px]">{jogo.pais}</span>
-          )}
         </div>
 
-        {/* Teams + placar - estilo Sofascore */}
-        <div className="flex items-center justify-center gap-4 md:gap-10 py-5">
-          {/* Time Casa */}
+        <div className="flex items-center justify-center gap-3 py-4">
           <div className="flex-1 text-right">
-            <div className="flex items-center justify-end gap-2">
-              {escudoCasa && (
-                <img src={escudoCasa} alt={jogo.time_casa} className="w-8 h-8 object-contain" />
-              )}
-              <div className="text-lg md:text-xl font-bold text-foreground leading-tight">{jogo.time_casa}</div>
+            <div className="text-lg font-bold font-heading leading-tight text-foreground">
+              {jogo.time_casa}
             </div>
-            {oddsConsenso?.vitoria_casa && !isAoVivo && !isFinalizado && (
-              <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
-                {Number(oddsConsenso.vitoria_casa).toFixed(2)}
-              </div>
-            )}
           </div>
 
-          {/* Placar / VS central */}
-          <div className="text-center min-w-[90px]">
-            {(isAoVivo || isFinalizado) && temPlacar ? (
+          <div className="text-center min-w-[100px]">
+            {temPlacar ? (
               <div className="flex flex-col items-center">
-                <div className="flex items-center justify-center gap-3">
-                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.casa! > placar!.fora! ? 'text-white' : placar!.casa! < placar!.fora! ? 'text-muted-foreground' : 'text-foreground'}`}>
-                    {placar!.casa}
+                <div className="flex items-center justify-center gap-2">
+                  <span className={`text-5xl font-black font-heading leading-none tabular-nums ${
+                    casaVence ? 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]' :
+                    'text-muted-foreground'
+                  }`}>
+                    {scoreCasa}
                   </span>
                   <span className="text-muted-foreground text-2xl font-bold">:</span>
-                  <span className={`text-4xl md:text-5xl font-black leading-none ${placar!.fora! > placar!.casa! ? 'text-white' : placar!.fora! < placar!.casa! ? 'text-muted-foreground' : 'text-foreground'}`}>
-                    {placar!.fora}
+                  <span className={`text-5xl font-black font-heading leading-none tabular-nums ${
+                    foraVence ? 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]' :
+                    'text-muted-foreground'
+                  }`}>
+                    {scoreFora}
                   </span>
                 </div>
                 {isAoVivo && (
-                  <div className="flex items-center gap-1.5 mt-1.5">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-green-500 text-[10px] font-bold uppercase tracking-[0.1em]">
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-green-500 text-[9px] font-bold uppercase tracking-widest">
                       {periodo?.atual === 'halftime' ? 'Intervalo' : periodo?.atual === '2nd_half' ? `${periodo?.minuto || ''}'` : 'Ao vivo'}
                     </span>
                   </div>
                 )}
                 {isFinalizado && (
-                  <span className="text-muted-foreground text-[10px] font-medium mt-1">Final</span>
+                  <span className="text-muted-foreground text-[9px] font-medium mt-0.5">Final</span>
                 )}
                 {placar?.casa_ht != null && (
-                  <span className="text-muted-foreground text-[9px] mt-1 font-mono">HT {placar.casa_ht}-{placar.fora_ht}</span>
+                  <span className="text-muted-foreground text-[8px] mt-0.5 font-mono">(HT {placar.casa_ht}-{placar.fora_ht})</span>
                 )}
               </div>
             ) : (
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/20 flex items-center justify-center">
-                  <span className="text-muted-foreground text-xs font-bold">VS</span>
+                <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <span className="text-muted-foreground text-[10px] font-bold">VS</span>
                 </div>
-                <span className="text-muted-foreground text-[10px] mt-1.5 font-mono">{formatarHora(jogo.data)}</span>
+                <span className="text-muted-foreground text-[9px] mt-1 font-mono">{formatarHora(jogo.data)}</span>
               </div>
             )}
           </div>
 
-          {/* Time Fora */}
           <div className="flex-1 text-left">
-            <div className="flex items-center gap-2">
-              {escudoFora && (
-                <img src={escudoFora} alt={jogo.time_fora} className="w-8 h-8 object-contain" />
-              )}
-              <div className="text-lg md:text-xl font-bold text-foreground leading-tight">{jogo.time_fora}</div>
+            <div className="text-lg font-bold font-heading leading-tight text-foreground">
+              {jogo.time_fora}
             </div>
-            {oddsConsenso?.vitoria_fora && !isAoVivo && !isFinalizado && (
-              <div className="inline-block mt-2 bg-orange-500/10 text-orange-400 font-mono text-sm font-bold px-3 py-0.5 rounded-md">
-                {Number(oddsConsenso.vitoria_fora).toFixed(2)}
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Info bar */}
-        <div className="flex items-center justify-center gap-3 text-[11px] text-muted-foreground mt-2 flex-wrap">
-          <span className="text-muted-foreground">{formatarDataCompleta(jogo.data)}</span>
+        {!isAoVivo && !isFinalizado && (
+          <div className="flex justify-center gap-4 mb-3">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] text-muted-foreground font-medium">1</span>
+              <span className="text-xs font-mono font-bold text-foreground/90">{Number(oddsConsenso?.vitoria_casa ?? '-').toFixed(2)}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] text-muted-foreground font-medium">X</span>
+              <span className="text-xs font-mono text-foreground/70">{Number(oddsConsenso?.empate ?? '-').toFixed(2)}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] text-muted-foreground font-medium">2</span>
+              <span className="text-xs font-mono font-bold text-foreground/90">{Number(oddsConsenso?.vitoria_fora ?? '-').toFixed(2)}</span>
+            </div>
+          </div>
+        )}
+
+        <div className="flex items-center justify-center gap-3 text-[10px] text-muted-foreground flex-wrap">
+          <span>{formatarDataCompleta(jogo.data)}</span>
           {xgPosJogo?.xg_casa != null && (
-            <>
-              <span className="text-zinc-700">·</span>
-              <span className="text-muted-foreground">Gols Esperados <span className="text-green-400/80">{xgPosJogo.xg_casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgPosJogo.xg_fora?.toFixed(2)}</span></span>
-            </>
+            <span>xG {xgPosJogo.xg_casa.toFixed(2)} - {xgPosJogo.xg_fora?.toFixed(2)}</span>
           )}
           {xgAoVivo?.casa != null && (
-            <>
-              <span className="text-zinc-700">·</span>
-              <span className="text-muted-foreground">GE⏳ <span className="text-green-400/80">{xgAoVivo.casa.toFixed(2)}</span> - <span className="text-blue-400/80">{xgAoVivo.fora?.toFixed(2)}</span></span>
-            </>
+            <span>xG⏳ {xgAoVivo.casa.toFixed(2)} - {xgAoVivo.fora?.toFixed(2)}</span>
           )}
-          {!isAoVivo && !isFinalizado && (
-            <>
-              {oddsConsenso?.over_25 != null && (
-                <><span className="text-zinc-700">·</span><span>+2.5 <span className="text-orange-400/80">{Number(oddsConsenso.over_25).toFixed(2)}</span></span></>
-              )}
-              {oddsConsenso?.btts_sim != null && (
-                <><span className="text-zinc-700">·</span><span>Ambos Marcam <span className="text-orange-400/80">{Number(oddsConsenso.btts_sim).toFixed(2)}</span></span></>
-              )}
-            </>
+          {!isAoVivo && !isFinalizado && oddsConsenso?.over_25 != null && (
+            <span>+2.5 {Number(oddsConsenso.over_25).toFixed(2)}</span>
           )}
         </div>
 
-        {/* Consensus odds (não iniciados) */}
-        {!isAoVivo && !isFinalizado && (
-          <div className="flex justify-center gap-5 mt-3 pt-3 border-t border-border/60 text-[11px] text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">1</span>
-              <span className="text-foreground/80 font-mono font-bold">{Number(oddsConsenso?.vitoria_casa ?? '-').toFixed(2)}</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">X</span>
-              <span className="text-foreground/80 font-mono">{Number(oddsConsenso?.empate ?? '-').toFixed(2)}</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">2</span>
-              <span className="text-foreground/80 font-mono font-bold">{Number(oddsConsenso?.vitoria_fora ?? '-').toFixed(2)}</span>
-            </span>
-          </div>
-        )}
-
-        {/* Venue + Clima + Contexto */}
-        {(estadio || clima || contexto?.distancia_km) && (
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 mt-3 pt-3 border-t border-border/60 text-[11px] text-muted-foreground">
-            {estadio && <span>🏟️ <span className="text-muted-foreground">{estadio.nome}</span>{estadio.cidade ? <span className="text-muted-foreground">, {estadio.cidade}</span> : ''}</span>}
+        {(estadio || clima) && (
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-2.5 pt-2.5 border-t border-border/40 text-[10px] text-muted-foreground">
+            {estadio && <span>🏟️ {estadio.nome}{estadio.cidade ? `, ${estadio.cidade}` : ''}</span>}
             {clima && (
               <span>
-                🌤️ {clima.descricao}{clima.temperatura_c != null ? ` ${clima.temperatura_c}°C` : ''}{clima.vento_kmh ? ` 🌬️${clima.vento_kmh}km/h` : ''}
+                🌤️ {clima.descricao}{clima.temperatura_c != null ? ` ${clima.temperatura_c}°C` : ''}
               </span>
             )}
-            {gramado != null && <span>🌱 <span className="text-muted-foreground capitalize">{descricaoGramado(gramado)}</span></span>}
-            {contexto?.distancia_km != null && contexto.distancia_km > 0 && <span>✈️ <span className="text-muted-foreground">{contexto.distancia_km}km</span></span>}
+            {gramado != null && <span>🌱 {descricaoGramado(gramado)}</span>}
           </div>
         )}
 
-        {/* Predição ML */}
         {pred && (
-          <div className="mt-3 pt-3 border-t border-border/60">
-            <div className="flex items-center justify-center gap-4 text-xs flex-wrap">
-              <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">🤖 ML</span>
+          <div className="mt-2.5 pt-2.5 border-t border-border/40">
+            <div className="flex items-center justify-center gap-3 text-xs flex-wrap">
               {pred.probabilidades && (
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-green-500/80" />
-                    <span className="text-green-400 font-mono text-sm font-bold">{pred.probabilidades.prob_home?.toFixed(0)}%</span>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
-                    <span className="text-yellow-400 font-mono font-semibold">{pred.probabilidades.prob_draw?.toFixed(0)}%</span>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-blue-500/80" />
-                    <span className="text-blue-400 font-mono text-sm font-bold">{pred.probabilidades.prob_away?.toFixed(0)}%</span>
+                <div className="flex items-center gap-2">
+                  <div className="h-1.5 w-20 bg-muted rounded-full overflow-hidden flex">
+                    <div className="h-full bg-green-500" style={{ width: `${pred.probabilidades.prob_home}%` }} />
+                    <div className="h-full bg-yellow-500" style={{ width: `${pred.probabilidades.prob_draw}%` }} />
+                    <div className="h-full bg-blue-500" style={{ width: `${pred.probabilidades.prob_away}%` }} />
+                  </div>
+                  <span className="text-[9px] text-muted-foreground font-mono">
+                    {pred.probabilidades.prob_home.toFixed(0)}% / {pred.probabilidades.prob_draw.toFixed(0)}% / {pred.probabilidades.prob_away.toFixed(0)}%
                   </span>
                 </div>
               )}
               {pred.placar_provavel && (
-                <span className="text-muted-foreground text-[11px]">
-                  Placar: <span className="text-foreground/80 font-mono font-bold">{pred.placar_provavel}</span>
+                <span className="text-[9px] text-muted-foreground">
+                  ML: <span className="text-foreground/80 font-mono font-bold">{pred.placar_provavel}</span>
                 </span>
               )}
               {pred.confianca != null && (
-                <span className="text-muted-foreground text-[11px]">
-                  Confiança: <span className="text-orange-400 font-mono font-bold">{Math.round(pred.confianca * 100)}%</span>
+                <span className="text-[9px] text-muted-foreground">
+                  Conf: <span className="text-primary font-mono font-bold">{Math.round(pred.confianca * 100)}%</span>
                 </span>
               )}
             </div>
-          </div>
-        )}
-
-        {/* Fatos curiosos */}
-        {metadados?.fatos_curiosos && metadados.fatos_curiosos.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-border/60">
-            {metadados.fatos_curiosos.slice(0, 2).map((fato: string, idx: number) => (
-              <p key={idx} className="text-xs text-muted-foreground italic leading-relaxed">💡 {fato}</p>
-            ))}
           </div>
         )}
       </div>
     </div>
   );
 }
-
-// ── FORM WIDGETS ──
 
 function FormWidgets({
   timeCasa, timeFora, formaCasa, formaFora,
@@ -735,12 +629,12 @@ function FormWidgets({
   desfalquesCasa: string[]; desfalquesFora: string[];
 }) {
   return (
-    <SectionWrapper titulo="Médias por Time" emoji="📈">
+    <SectionBox titulo="Médias por Time">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <FormCard time={timeCasa} forma={formaCasa} desfalques={desfalquesCasa} lado="casa" />
         <FormCard time={timeFora} forma={formaFora} desfalques={desfalquesFora} lado="fora" />
       </div>
-    </SectionWrapper>
+    </SectionBox>
   );
 }
 
@@ -753,7 +647,7 @@ function FormCard({
   const ppg = lado === 'casa' ? forma.ppg_casa : forma.ppg_fora;
 
   return (
-    <div className="bg-muted/50 rounded-lg p-4">
+    <div className="bg-muted/30 rounded-lg p-3.5">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-foreground text-sm font-semibold">{time}</h4>
         {forma.ultimos_jogos && (
@@ -774,18 +668,18 @@ function FormCard({
         )}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-xs">
-        <div className="bg-card rounded p-2 text-center">
+      <div className="grid grid-cols-3 gap-2 text-[11px]">
+        <div className="bg-card/50 rounded p-2 text-center">
           <div className="text-muted-foreground">{ppgLabel}</div>
           <div className="text-foreground font-mono font-bold">{ppg ?? '-'}</div>
         </div>
-        <div className="bg-card rounded p-2 text-center">
+        <div className="bg-card/50 rounded p-2 text-center">
           <div className="text-muted-foreground">Gols marcados</div>
           <div className="text-green-400 font-mono font-bold">
             {lado === 'casa' ? forma.gols_marcados_casa ?? forma.gols_marcados_fora ?? '-' : forma.gols_marcados_fora ?? forma.gols_marcados_casa ?? '-'}
           </div>
         </div>
-        <div className="bg-card rounded p-2 text-center">
+        <div className="bg-card/50 rounded p-2 text-center">
           <div className="text-muted-foreground">Gols sofridos</div>
           <div className="text-red-400 font-mono font-bold">
             {lado === 'casa' ? forma.gols_sofridos_casa ?? forma.gols_sofridos_fora ?? '-' : forma.gols_sofridos_fora ?? forma.gols_sofridos_casa ?? '-'}
@@ -794,13 +688,13 @@ function FormCard({
       </div>
 
       {forma.clean_sheets != null && (
-        <div className="mt-2 text-xs text-muted-foreground">
+        <div className="mt-2 text-[11px] text-muted-foreground">
           Jogos sem sofrer gols: <span className="text-foreground/80 font-mono">{forma.clean_sheets}</span>
         </div>
       )}
 
       {desfalques.length > 0 && (
-        <div className="mt-2 pt-2 border-t border-border/50 text-xs">
+        <div className="mt-2 pt-2 border-t border-border/40 text-[11px]">
           <span className="text-red-400">Desfalques:</span>{' '}
           <span className="text-muted-foreground">{desfalques.join(', ')}</span>
         </div>
@@ -808,8 +702,6 @@ function FormCard({
     </div>
   );
 }
-
-// ── STATS TABLE ──
 
 function StatsTable({
   timeCasa, timeFora, formaCasa, formaFora,
@@ -839,28 +731,28 @@ function StatsTable({
   if (!hasData) return null;
 
   return (
-    <SectionWrapper titulo="Comparativo de Médias" emoji="📊">
+    <SectionBox titulo="Comparativo de Médias">
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-[11px]">
           <thead>
-            <tr className="border-b border-border/50">
-              <th className="text-left text-muted-foreground font-medium px-4 py-2">{timeCasa}</th>
-              <th className="text-center text-muted-foreground font-medium px-3 py-2 w-16">Média</th>
-              <th className="text-right text-muted-foreground font-medium px-4 py-2">{timeFora}</th>
+            <tr className="border-b border-border/40">
+              <th className="text-left text-muted-foreground font-medium px-3 py-2">{timeCasa}</th>
+              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-16">Média</th>
+              <th className="text-right text-muted-foreground font-medium px-3 py-2">{timeFora}</th>
             </tr>
           </thead>
           <tbody>
             {stats.map((s) => {
               if (s.casa == null && s.fora == null) return null;
               return (
-                <tr key={s.label} className="border-b border-border/30 hover:bg-muted/80">
-                  <td className="px-4 py-2.5">
+                <tr key={s.label} className="border-b border-border/20 hover:bg-muted/30">
+                  <td className="px-3 py-2">
                     <span className="text-foreground/80">{formatStat(s.casa, s.format)}</span>
                   </td>
-                  <td className="px-3 py-2.5 text-center">
+                  <td className="px-2 py-2 text-center">
                     <span className="text-muted-foreground">{s.label}</span>
                   </td>
-                  <td className="px-4 py-2.5 text-right">
+                  <td className="px-3 py-2 text-right">
                     <span className="text-foreground/80">{formatStat(s.fora, s.format)}</span>
                   </td>
                 </tr>
@@ -869,7 +761,7 @@ function StatsTable({
           </tbody>
         </table>
       </div>
-    </SectionWrapper>
+    </SectionBox>
   );
 }
 
@@ -879,8 +771,6 @@ function formatStat(val: number | null, format?: 'float' | 'int' | 'pct'): strin
   if (format === 'int') return val.toFixed(0);
   return String(val);
 }
-
-// ── H2H ──
 
 function H2HSection({
   timeCasa, timeFora, h2h,
@@ -892,38 +782,38 @@ function H2HSection({
   const ultimos = h2h.ultimos_jogos || [];
 
   return (
-    <SectionWrapper titulo="Confronto Direto" emoji="🤝">
-      <div className="grid grid-cols-4 gap-3 mb-4 text-center text-xs">
-        <div className="bg-zinc-800/40 rounded p-2">
+    <SectionBox titulo="Confronto Direto">
+      <div className="grid grid-cols-4 gap-2 mb-3 text-center text-[11px]">
+        <div className="bg-muted/30 rounded p-2">
           <div className="text-muted-foreground">Total</div>
           <div className="text-foreground font-mono font-bold">{h2h.total_jogos}</div>
         </div>
-        <div className="bg-green-900/20 rounded p-2">
+        <div className="bg-green-900/15 rounded p-2">
           <div className="text-green-500">{timeCasa}</div>
           <div className="text-green-400 font-mono font-bold">{h2h.vitorias_casa ?? 0}</div>
         </div>
-        <div className="bg-yellow-900/20 rounded p-2">
+        <div className="bg-yellow-900/15 rounded p-2">
           <div className="text-yellow-500">Empates</div>
           <div className="text-yellow-400 font-mono font-bold">{h2h.empates ?? 0}</div>
         </div>
-        <div className="bg-red-900/20 rounded p-2">
+        <div className="bg-red-900/15 rounded p-2">
           <div className="text-red-500">{timeFora}</div>
           <div className="text-red-400 font-mono font-bold">{h2h.vitorias_fora ?? 0}</div>
         </div>
       </div>
 
       {h2h.media_gols != null && (
-        <div className="text-xs text-muted-foreground mb-3">
+        <div className="text-[11px] text-muted-foreground mb-3">
           Média de gols no confronto: <span className="text-foreground/80 font-mono">{h2h.media_gols}</span>
         </div>
       )}
 
       {ultimos.length > 0 && (
         <div>
-          <div className="text-xs text-muted-foreground font-semibold mb-2">Últimos confrontos:</div>
-          <div className="space-y-1">
+          <div className="text-[11px] text-muted-foreground font-semibold mb-2">Últimos confrontos:</div>
+          <div className="space-y-0.5">
             {ultimos.map((m: H2HMatch, i: number) => (
-              <div key={i} className="flex items-center justify-between text-xs bg-muted/50 rounded px-3 py-1.5">
+              <div key={i} className="flex items-center justify-between text-[11px] bg-muted/30 rounded px-3 py-1.5">
                 <span className="text-foreground/80">
                   {m.home_team} {m.home_score ?? '?'} - {m.away_score ?? '?'} {m.away_team}
                 </span>
@@ -935,11 +825,9 @@ function H2HSection({
           </div>
         </div>
       )}
-    </SectionWrapper>
+    </SectionBox>
   );
 }
-
-// ── STANDINGS ──
 
 function StandingsTable({
   timeCasa, timeFora, tabela,
@@ -960,20 +848,20 @@ function StandingsTable({
   const linhasVisiveis = tabela.filter((r) => r.posicao <= 6 || destacarTimes.has(r.time));
 
   return (
-    <SectionWrapper titulo="Classificação" emoji="🏆">
+    <SectionBox titulo="Classificação">
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-[11px]">
           <thead>
-            <tr className="border-b border-border/50">
-              <th className="text-left text-muted-foreground font-medium px-3 py-2 w-8">#</th>
-              <th className="text-left text-muted-foreground font-medium px-3 py-2">Time</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">P</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">J</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">V</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">E</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-8">D</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-10">SG</th>
-              <th className="text-center text-muted-foreground font-medium px-2 py-2 w-12">F. Rec</th>
+            <tr className="border-b border-border/40">
+              <th className="text-left text-muted-foreground font-medium px-2 py-1.5 w-8">#</th>
+              <th className="text-left text-muted-foreground font-medium px-2 py-1.5">Time</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">P</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-6">J</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-6">V</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-6">E</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-6">D</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-10">SG</th>
+              <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-12">F. Rec</th>
             </tr>
           </thead>
           <tbody>
@@ -984,29 +872,29 @@ function StandingsTable({
               return (
                 <tr
                   key={row.posicao}
-                  className={`border-b border-border/30 hover:bg-muted/80 ${
-                    destaque ? 'bg-orange-500/5' : ''
+                  className={`border-b border-border/20 hover:bg-muted/30 ${
+                    destaque ? 'bg-primary/5' : ''
                   }`}
                 >
-                  <td className={`px-3 py-2 font-mono ${destaque ? 'text-orange-400' : 'text-muted-foreground'}`}>
+                  <td className={`px-2 py-1.5 font-mono ${destaque ? 'text-primary' : 'text-muted-foreground'}`}>
                     {row.posicao}
                   </td>
-                  <td className={`px-3 py-2 ${destaque ? 'text-orange-300 font-medium' : 'text-foreground/80'}`}>
+                  <td className={`px-2 py-1.5 ${destaque ? 'text-primary font-medium' : 'text-foreground/80'}`}>
                     {row.time}
                   </td>
-                  <td className="text-center px-2 py-2 font-mono font-bold text-foreground">{row.pontos}</td>
-                  <td className="text-center px-2 py-2 font-mono text-muted-foreground">{row.jogos}</td>
-                  <td className="text-center px-2 py-2 font-mono text-green-500">{row.vitorias}</td>
-                  <td className="text-center px-2 py-2 font-mono text-yellow-500">{row.empates}</td>
-                  <td className="text-center px-2 py-2 font-mono text-red-500">{row.derrotas}</td>
-                  <td className={`text-center px-2 py-2 font-mono ${
+                  <td className="text-center px-1.5 py-1.5 font-mono font-bold text-foreground">{row.pontos}</td>
+                  <td className="text-center px-1.5 py-1.5 font-mono text-muted-foreground">{row.jogos}</td>
+                  <td className="text-center px-1.5 py-1.5 font-mono text-green-500">{row.vitorias}</td>
+                  <td className="text-center px-1.5 py-1.5 font-mono text-yellow-500">{row.empates}</td>
+                  <td className="text-center px-1.5 py-1.5 font-mono text-red-500">{row.derrotas}</td>
+                  <td className={`text-center px-1.5 py-1.5 font-mono ${
                     row.saldo_gols >= 0 ? 'text-green-500' : 'text-red-500'
                   }`}>
                     {row.saldo_gols >= 0 ? `+${row.saldo_gols}` : row.saldo_gols}
                   </td>
-                  <td className="text-center px-2 py-2">
+                  <td className="text-center px-1.5 py-1.5">
                     {row.forma_recente && (
-                      <span className="text-xs font-mono tracking-wider">
+                      <span className="text-[10px] font-mono tracking-wider">
                         {row.forma_recente.split('').map((c, i) => (
                           <span key={i} className={
                             c === 'W' ? 'text-green-500' :
@@ -1023,11 +911,9 @@ function StandingsTable({
           </tbody>
         </table>
       </div>
-    </SectionWrapper>
+    </SectionBox>
   );
 }
-
-// ── COACHES ──
 
 function CoachesSection({
   tecnicoCasa, tecnicoFora, timeCasa, timeFora,
@@ -1047,9 +933,9 @@ function CoachCard({ time, coach }: { time: string; coach: CoachData }) {
   if (!coach?.nome) return null;
 
   return (
-    <div className="bg-muted/50 rounded-lg p-3">
+    <div className="bg-muted/30 rounded-lg p-3">
       <div className="text-foreground text-sm font-medium mb-2">{coach.nome}</div>
-      <div className="space-y-1 text-xs">
+      <div className="space-y-1 text-[11px]">
         {coach.formacao_preferida && (
           <div className="flex justify-between">
             <span className="text-muted-foreground">Formação</span>
@@ -1079,29 +965,19 @@ function CoachCard({ time, coach }: { time: string; coach: CoachData }) {
   );
 }
 
-// ── REFEREE ──
-
 function RefereeSection({ arbitro }: { arbitro: Record<string, any> }) {
   return (
-    <div className="flex items-center gap-4 text-xs flex-wrap">
+    <div className="flex items-center gap-3 text-[11px] flex-wrap">
       <span className="text-foreground/80 font-medium">{arbitro.nome}</span>
       {arbitro.amarelos_jogo != null && (
-        <>
-          <span className="text-zinc-700">|</span>
-          <span className="text-yellow-500">Amarelos/jogo: {arbitro.amarelos_jogo}</span>
-        </>
+        <span className="text-yellow-500">Amarelos/jogo: {arbitro.amarelos_jogo}</span>
       )}
       {arbitro.vermelhos_jogo != null && (
-        <>
-          <span className="text-zinc-700">|</span>
-          <span className="text-red-500">Vermelhos/jogo: {arbitro.vermelhos_jogo}</span>
-        </>
+        <span className="text-red-500">Vermelhos/jogo: {arbitro.vermelhos_jogo}</span>
       )}
     </div>
   );
 }
-
-// ── MARKET ODDS COMPARISON ──
 
 function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }) {
   const mercados = Object.entries(oddsMercado);
@@ -1110,29 +986,29 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
 
   return (
     <div className="overflow-x-auto">
-      <Table className="min-w-[500px]">
+      <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead className="text-[11px]">Mercado</TableHead>
-            <TableHead className="text-[11px]">Resultado</TableHead>
-            <TableHead className="text-[11px] text-right">Melhor Odd</TableHead>
-            <TableHead className="text-[11px] text-right">Casa</TableHead>
-            <TableHead className="text-[11px] text-right">Pinnacle</TableHead>
+            <TableHead className="text-[10px]">Mercado</TableHead>
+            <TableHead className="text-[10px]">Resultado</TableHead>
+            <TableHead className="text-[10px] text-right">Melhor Odd</TableHead>
+            <TableHead className="text-[10px] text-right">Casa</TableHead>
+            <TableHead className="text-[10px] text-right">Pinnacle</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mercados.flatMap(([mercado, outcomes]) =>
             Object.entries(outcomes).map(([outcome, data]: [string, any]) => (
-              <TableRow key={`${mercado}-${outcome}`} className="border-border hover:bg-muted/50">
-                <TableCell className="py-2 text-[11px] text-muted-foreground font-medium">{mercado}</TableCell>
-                <TableCell className="py-2 text-[11px] text-foreground/80">{outcome}</TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono font-bold text-orange-400">
+              <TableRow key={`${mercado}-${outcome}`} className="border-border hover:bg-muted/30">
+                <TableCell className="py-1.5 text-[10px] text-muted-foreground font-medium">{mercado}</TableCell>
+                <TableCell className="py-1.5 text-[10px] text-foreground/80">{outcome}</TableCell>
+                <TableCell className="py-1.5 text-[10px] text-right font-mono font-bold text-primary">
                   {data.melhor_odd ?? '-'}
                 </TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono text-muted-foreground">
+                <TableCell className="py-1.5 text-[10px] text-right font-mono text-muted-foreground">
                   {data.melhor_casa ?? '-'}
                 </TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono text-muted-foreground">
+                <TableCell className="py-1.5 text-[10px] text-right font-mono text-muted-foreground">
                   {data.pinnacle_odd ?? '-'}
                 </TableCell>
               </TableRow>
@@ -1143,5 +1019,3 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
     </div>
   );
 }
-
-

@@ -116,16 +116,15 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
 
   return (
     <div className="flex flex-col h-[600px] overflow-hidden">
-      {/* Abas de agente */}
-      <div className="flex gap-1 mb-3 bg-card border border-border rounded-lg p-1 w-fit" role="tablist" aria-label="Modo do agente">
+      <div className="flex gap-1 mb-3" role="tablist" aria-label="Modo do agente">
         <button
           role="tab"
           aria-selected={mode === "analista"}
           onClick={() => { setMode("analista"); setMessages([]); setStreaming(""); }}
-          className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-all ${
             mode === "analista"
-              ? "bg-orange-500 text-white font-semibold"
-              : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "glass text-muted-foreground hover:text-foreground"
           }`}
         >
           🔍 Analista
@@ -134,30 +133,18 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           role="tab"
           aria-selected={mode === "validador"}
           onClick={() => { setMode("validador"); setMessages([]); setStreaming(""); }}
-          className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-all ${
             mode === "validador"
-              ? "bg-orange-500 text-white font-semibold"
-              : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "glass text-muted-foreground hover:text-foreground"
           }`}
         >
           ✅ Validador
         </button>
-      </div>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-orange-500">💬</span>
-          <h3 className="text-foreground/80 text-sm font-medium">
-            Especialista
-            {timeCasa && timeFora && (
-              <span className="text-muted-foreground font-normal ml-1">{timeCasa} x {timeFora}</span>
-            )}
-          </h3>
-        </div>
         {messages.length > 0 && (
           <button
             onClick={() => { setMessages([]); setStreaming(''); }}
-            className="text-xs text-muted-foreground hover:text-muted-foreground transition-colors"
+            className="ml-auto text-[10px] text-muted-foreground hover:text-foreground transition-colors px-2"
           >
             Limpar
           </button>
@@ -235,12 +222,12 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           }}
           placeholder="Pergunte sobre o jogo..."
           disabled={loading}
-          className="flex-1 bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-zinc-500 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
+          className="flex-1 bg-card border border-border rounded-xl px-3 py-2.5 text-sm text-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 disabled:opacity-50 transition-all"
         />
         <button
           onClick={() => enviar(input)}
           disabled={loading || !input.trim()}
-          className="bg-orange-500 hover:bg-orange-600 disabled:bg-zinc-800 disabled:text-muted-foreground text-black font-medium rounded-lg px-4 py-2.5 text-sm transition-colors"
+          className="bg-primary hover:bg-primary/80 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground font-medium rounded-xl px-4 py-2.5 text-sm transition-all disabled:opacity-50"
         >
           {loading ? '...' : 'Enviar'}
         </button>

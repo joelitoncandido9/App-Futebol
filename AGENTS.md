@@ -10,6 +10,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Next.js 16, React 19, Tailwind 4, shadcn/ui, TypeScript
 - Hospedagem: GitHub + Vercel
 - CSS: dark-only, sem suporte a light mode
+- Design System próprio: glassmorphism, shimmer animado, score-pop, fade-up
+- Fontes: Outfit (headings) + Plus Jakarta Sans (body) via next/font/google
 
 ## APIs externas
 - **BSD API** (sports.bzzoiro.com/api) — dados esportivos, v1 + v2
@@ -70,35 +72,45 @@ Skills são carregadas sob demanda via `skill` tool pelo assistente, conforme a 
 - Preferir editar arquivos existentes, não criar novos sem necessidade
 - Não adicionar comentários em código
 
+## Design System (redesign 31/05/2026)
+- **Direção:** "Premium Data" — fintech encontra esportes. Glassmorphism, dark profundo, tipografia refinada
+- **Cores:** Fundo `#0c0c14`, cards com `backdrop-blur`, primary laranja queimado `oklch(0.68 0.2 45)`
+- **Glass:** `.glass` (bg 70% opacity + blur 20px), `.glass-strong` (85% + blur 32px)
+- **Animações:** `shimmer` (skeleton), `score-pop` (placar), `fade-up` (cards), `glow-pulse`
+- **Layout:** `max-w-2xl` mobile-first, padding `px-3` mobile, `px-4` desktop
+- **Navegação:** Página única sem abas (nada de Dashboard vs Chat separados)
+
 ## Componentes
 
 ### `components/JogosLista.tsx`
-Lista de jogos com busca, filtro por liga, abas de dia e paginação.
+Lista de jogos com busca, filtro por liga em pills, abas de dia, paginação.
 - **Props:** `onSelectJogo: (eventId: number) => void`
-- Carrega dados de `GET /api/jogos`
-- Abas: Hoje + 6 dias, com paginação de 5 grupos/página
+- **Design:** Cards glass com scoreboard compacto, times em vertical, odds à direita
+- Animações: fade-up staggered com `animation-delay` por índice
 - Seções: Ao Vivo, Finalizados Hoje, Sem Resultado, Próximos Jogos
 
 ### `components/DashboardJogo.tsx`
-Dashboard completo de um jogo (stats, odds, incidents, lineups, etc).
+Dashboard completo de um jogo em página única (sem accordion/colapsáveis).
 - **Props:** `eventId: number`
-- Carrega dados de `GET /api/dashboard/{eventId}`
-- Seções colapsáveis: MatchHeader, MatchAnalytics, IncidentesTimeline, PlayerStatsTabela, Lineups, FormWidgets, StatsTable, H2H, UltimosJogos, StandingsTable, MercadosAgrupados, MarketOdds, Coaches, Referee
+- **MatchHeader:** Estilo TV broadcast — scores gigantes com glow no vencedor, barra de probabilidade horizontal, informações do estádio/clima
+- **Seções** (sempre abertas, SectionBox sem collapse): MatchAnalytics, IncidentesTimeline, PlayerStatsTabela, Lineups, FormWidgets, StatsTable, H2H, UltimosJogos, StandingsTable, MercadosAgrupados, MarketOdds, Coaches, Referee
 
 ### `components/ChatInterface.tsx`
 Chat com agente analista via SSE + OpenRouter.
 - **Props:** `eventId?: number`, `timeCasa?: string`, `timeFora?: string`
 - Modos: Analista (`🔍`) e Validador (`✅`)
 - Streaming de resposta com status de ferramentas
+- **Inline:** Aparece no final do dashboard via botão expansivo (não em aba separada)
 
 ### `components/MercadosAgrupados.tsx`
 Odds justas agrupadas por categoria (Ataque, Defesa, Disciplina, Criação, Mercados).
 - **Props:** `cards: CardData[]`, `oddsConsenso?: Record<string, number | null>`
-- Categorias definidas em `CATEGORIAS`
+- **Design:** Cards glass, odds com barras de probabilidade visuais (`ProbBar`), pills 1X2 com gradiente de fundo
 
 ### `components/MatchAnalytics.tsx`
 Abas de análise avançada: Estatísticas, Shotmap, xG Timeline, Pressão.
 - **Props:** `statsAvancadas`, `shotmap`, `xgPorMinuto`, `momentum`, `averagePositions`, `timeCasa`, `timeFora`
+- **Design:** Pills de seleção glass (não tabs tradicionais)
 
 ### `components/ErrorBoundary.tsx`
 Error boundary genérico para capturar erros em componentes filhos.
@@ -107,13 +119,10 @@ Error boundary genérico para capturar erros em componentes filhos.
 
 ### `components/SkeletonCard.tsx`
 Skeletons para estados de carregamento.
+- **Design:** Usa `animate-shimmer` (gradient animado) ao invés de `animate-pulse`
 - `SkeletonLista` — simula busca + abas + cards
-- `SkeletonDashboard` — simula header + 3 seções
+- `SkeletonDashboard` — simula header TV + seções glass
 - `SkeletonCard` — card individual com `lines` prop
-
-### `components/LoadingIndicator.tsx`
-Spinner simples (não mais usado internamente, mantido para uso externo).
-- **Props:** `mensagem?: string` (default: "Carregando...")
 
 ### `lib/utils.ts`
 Utilitários compartilhados:
