@@ -60,12 +60,12 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   });
 
   // Separa jogos por status
+  const agora = new Date();
   const statusAoVivo = ['inprogress', '1st_half', 'halftime', '2nd_half', 'penalties', 'extratime'];
   const jogosAoVivo = filtrados.filter((j) =>
     statusAoVivo.includes(j.status || '')
   );
   const jogosFinalizados = filtrados.filter((j) => j.status === 'finished');
-
   // Filtro extra: jogos que já passaram (data+hora < agora), mesmo que a BSD retorne status notstarted
   function jogoJaAconteceu(j: Jogo): boolean {
     if (!j.data) return false;
@@ -77,6 +77,11 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   const jogosNaoIniciados = filtrados.filter((j) =>
     (j.status === 'notstarted' || j.status === 'postponed') && !jogoJaAconteceu(j)
   );
+  // Jogos notstarted cujo horário já passou (sem resultado na BSD)
+  const jogosPassadosSemResultado = filtrados.filter((j) => {
+    if (j.status !== 'notstarted') return false;
+    return jogoJaAconteceu(j);
+  });
   const outrosStatus = filtrados.filter((j) =>
     ![...statusAoVivo, 'finished', 'notstarted', 'postponed'].includes(j.status || '')
   );
@@ -226,6 +231,20 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
             <span className="text-muted-foreground font-normal">({jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje).length})</span>
           </h2>
           {renderGrupos(agruparPorLiga(jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje)), onSelectJogo, false, true)}
+        </div>
+      )}
+
+      {/* ── SEM RESULTADO (notstarted mas já ocorridos) ── */}
+      {jogosPassadosSemResultado.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-yellow-600/80 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+            ⚠️ Sem Resultado Disponível
+            <span className="text-muted-foreground font-normal">({jogosPassadosSemResultado.length})</span>
+          </h2>
+          <p className="text-muted-foreground text-xs mb-3 -mt-2">
+            Jogos já ocorridos sem resultado na base de dados (aguardando atualização da BSD)
+          </p>
+          {renderGrupos(agruparPorLiga(jogosPassadosSemResultado), onSelectJogo, false, true)}
         </div>
       )}
 
