@@ -98,24 +98,24 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
               {card1x2 && card1x2.odds_1x2 && (
                 <Card className="border-border">
                   <CardHeader className="py-3 px-4">
-                    <CardTitle className="text-xs text-orange-600 font-bold uppercase tracking-wider">1X2</CardTitle>
+                    <CardTitle className="text-xs text-orange-400 font-bold uppercase tracking-wider">1X2</CardTitle>
                   </CardHeader>
                   <CardContent className="px-4 pb-4 pt-0">
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="bg-green-50 border border-green-200/50 rounded-lg p-3 text-center">
-                        <div className="text-green-600 text-[10px] font-semibold mb-1">{card1x2.time_casa}</div>
+                      <div className="bg-green-900/20 border border-green-800/30 rounded-lg p-3 text-center">
+                        <div className="text-green-400 text-[10px] font-semibold mb-1">{card1x2.time_casa}</div>
                         <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.casa_prob}%</div>
-                        <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.casa_odd}</div>
+                        <div className="text-orange-400 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.casa_odd}</div>
                       </div>
-                      <div className="bg-yellow-50 border border-yellow-200/50 rounded-lg p-3 text-center">
-                        <div className="text-yellow-600 text-[10px] font-semibold mb-1">Empate</div>
+                      <div className="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-3 text-center">
+                        <div className="text-yellow-400 text-[10px] font-semibold mb-1">Empate</div>
                         <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.empate_prob}%</div>
-                        <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.empate_odd}</div>
+                        <div className="text-orange-400 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.empate_odd}</div>
                       </div>
-                      <div className="bg-blue-50 border border-blue-200/50 rounded-lg p-3 text-center">
-                        <div className="text-blue-600 text-[10px] font-semibold mb-1">{card1x2.time_fora}</div>
+                      <div className="bg-blue-900/20 border border-blue-800/30 rounded-lg p-3 text-center">
+                        <div className="text-blue-400 text-[10px] font-semibold mb-1">{card1x2.time_fora}</div>
                         <div className="font-mono text-sm font-black text-foreground">{card1x2.odds_1x2.fora_prob}%</div>
-                        <div className="text-orange-600 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.fora_odd}</div>
+                        <div className="text-orange-400 font-mono text-xs font-bold">OJ: {card1x2.odds_1x2.fora_odd}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -124,19 +124,19 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
               {cardBtts && cardBtts.odds_btts && (
                 <Card className="border-border">
                   <CardHeader className="py-3 px-4">
-                    <CardTitle className="text-xs text-orange-600 font-bold uppercase tracking-wider">Ambos Marcam</CardTitle>
+                    <CardTitle className="text-xs text-orange-400 font-bold uppercase tracking-wider">Ambos Marcam</CardTitle>
                   </CardHeader>
                   <CardContent className="px-4 pb-4 pt-0">
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="bg-green-50 border border-green-200/50 rounded-lg p-3 text-center">
-                        <div className="text-green-600 text-[10px] font-semibold mb-1">Sim</div>
+                      <div className="bg-green-900/20 border border-green-800/30 rounded-lg p-3 text-center">
+                        <div className="text-green-400 text-[10px] font-semibold mb-1">Sim</div>
                         <div className="font-mono text-sm font-black text-foreground">{cardBtts.odds_btts.prob_sim}%</div>
-                        <div className="text-orange-600 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_sim}</div>
+                        <div className="text-orange-400 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_sim}</div>
                       </div>
-                      <div className="bg-red-50 border border-red-200/50 rounded-lg p-3 text-center">
-                        <div className="text-red-600 text-[10px] font-semibold mb-1">Não</div>
+                      <div className="bg-red-900/20 border border-red-800/30 rounded-lg p-3 text-center">
+                        <div className="text-red-400 text-[10px] font-semibold mb-1">Não</div>
                         <div className="font-mono text-sm font-black text-foreground">{cardBtts.odds_btts.prob_nao}%</div>
-                        <div className="text-orange-600 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_nao}</div>
+                        <div className="text-orange-400 font-mono text-xs font-bold">OJ: {cardBtts.odds_btts.odd_nao}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -154,10 +154,10 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
                 return (
                   <Card key={card.titulo} className="border-border">
                     <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
-                      <CardTitle className="text-xs font-bold uppercase tracking-wider text-orange-600">{card.titulo}</CardTitle>
+                      <CardTitle className="text-xs font-bold uppercase tracking-wider text-orange-400">{card.titulo}</CardTitle>
                       <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
-                        <span>{card.time_casa}: <span className="font-mono font-bold text-orange-500">{oc?.lambda ?? '-'}</span></span>
-                        <Badge variant="outline" className="text-[9px] py-0 h-4 border-orange-200 text-orange-700 font-bold bg-orange-50">Total: {mediaTotal.toFixed(1)}</Badge>
+                        <span>{card.time_casa}: <span className="font-mono font-bold text-orange-400">{oc?.lambda ?? '-'}</span></span>
+                        <Badge variant="outline" className="text-[9px] py-0 h-4 border-orange-800/50 text-orange-400 font-bold bg-orange-900/20">Total: {mediaTotal.toFixed(1)}</Badge>
                         <span>{card.time_fora}: <span className="font-mono font-bold text-orange-500">{of?.lambda ?? '-'}</span></span>
                       </div>
                     </CardHeader>
@@ -178,13 +178,13 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
                           {ox?.linhas.map((lx, i) => {
                             const lc = oc?.linhas[i]; const lf = of?.linhas[i];
                             return (
-                              <TableRow key={`${lx.linha}`} className="border-border hover:bg-orange-50/30">
-                                <TableCell className="py-1.5 text-[11px]"><span className="text-green-600 font-semibold">O{lx.linha}</span></TableCell>
+                              <TableRow key={`${lx.linha}`} className="border-border hover:bg-orange-900/20">
+                                <TableCell className="py-1.5 text-[11px]"><span className="text-green-400 font-semibold">O{lx.linha}</span></TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-foreground/80">{lx.prob_over}%</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-600">{lx.odd_over}</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">{lc?.odd_over}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-400">{lx.odd_over}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-400">{lc?.odd_over}</TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">{lc?.prob_over}%</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">{lf?.odd_over}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-400">{lf?.odd_over}</TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">{lf?.prob_over}%</TableCell>
                               </TableRow>
                             );
@@ -192,13 +192,13 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
                           {ox?.linhas.map((lx, i) => {
                             const lc = oc?.linhas[i]; const lf = of?.linhas[i];
                             return (
-                              <TableRow key={`u-${lx.linha}`} className="border-border hover:bg-red-50/20">
-                                <TableCell className="py-1.5 text-[11px]"><span className="text-red-600 font-semibold">U{lx.linha}</span></TableCell>
+                              <TableRow key={`u-${lx.linha}`} className="border-border hover:bg-red-900/20">
+                                <TableCell className="py-1.5 text-[11px]"><span className="text-red-400 font-semibold">U{lx.linha}</span></TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-foreground/80">{lx.prob_under}%</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-600">{lx.odd_under}</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-600">{lc?.odd_under}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-orange-400">{lx.odd_under}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-green-400">{lc?.odd_under}</TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">{lc?.prob_under}%</TableCell>
-                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-600">{lf?.odd_under}</TableCell>
+                                <TableCell className="py-1.5 text-[11px] text-right font-mono font-bold text-blue-400">{lf?.odd_under}</TableCell>
                                 <TableCell className="py-1.5 text-[11px] text-right font-mono text-muted-foreground">{lf?.prob_under}%</TableCell>
                               </TableRow>
                             );

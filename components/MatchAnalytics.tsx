@@ -62,7 +62,7 @@ export default function MatchAnalytics({
             onClick={() => setTab(t.key as any)}
             className={`px-4 py-2.5 text-xs font-medium whitespace-nowrap transition-colors ${
               tab === t.key
-                ? 'text-orange-500 border-b-2 border-orange-500 bg-orange-50'
+                ? 'text-orange-500 border-b-2 border-orange-500 bg-orange-500/10'
                 : 'text-muted-foreground hover:text-foreground/80 hover:bg-muted/50'
             }`}
           >
@@ -138,9 +138,9 @@ function XgTimelineChart({
       </div>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis dataKey="m" tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false} ticks={[0, 15, 30, 45, 60, 75, 90]} domain={[0, 90]} />
-          <YAxis tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false} domain={[0, maxCum * 1.15]} tickFormatter={(v: number) => v.toFixed(1)} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+          <XAxis dataKey="m" tick={{ fontSize: 10, fill: '#71717a' }} tickLine={false} axisLine={false} ticks={[0, 15, 30, 45, 60, 75, 90]} domain={[0, 90]} />
+          <YAxis tick={{ fontSize: 10, fill: '#71717a' }} tickLine={false} axisLine={false} domain={[0, maxCum * 1.15]} tickFormatter={(v: number) => v.toFixed(1)} />
           <Tooltip content={<CustomTooltip />} />
           <Line type="monotone" dataKey="cum_home" name={timeCasa} stroke="#22c55e" strokeWidth={2} dot={false} activeDot={{ r: 4, fill: '#22c55e' }} />
           <Line type="monotone" dataKey="cum_away" name={timeFora} stroke="#3b82f6" strokeWidth={2} dot={false} activeDot={{ r: 4, fill: '#3b82f6' }} />
@@ -204,7 +204,7 @@ function MomentumChart({
     return (
       <div className="bg-card border border-border rounded-lg px-3 py-2 text-xs shadow-sm">
         <div className="text-muted-foreground font-medium mb-1">{label}&apos;</div>
-        <div className="text-orange-600 font-mono font-bold">{payload[0].value > 0 ? '+' : ''}{Number(payload[0].value).toFixed(0)}</div>
+        <div className="text-orange-400 font-mono font-bold">{payload[0].value > 0 ? '+' : ''}{Number(payload[0].value).toFixed(0)}</div>
       </div>
     );
   };
@@ -217,10 +217,10 @@ function MomentumChart({
       </p>
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis dataKey="m" tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false} ticks={[0, 15, 30, 45, 60, 75, 90]} domain={[0, 90]} />
-          <YAxis tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false} domain={[-maxAbs * 1.2, maxAbs * 1.2]} tickFormatter={(v: number) => `${v > 0 ? '+' : ''}${v}`} />
-          <ReferenceLine y={0} stroke="#d1d5db" strokeWidth={1} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+          <XAxis dataKey="m" tick={{ fontSize: 10, fill: '#71717a' }} tickLine={false} axisLine={false} ticks={[0, 15, 30, 45, 60, 75, 90]} domain={[0, 90]} />
+          <YAxis tick={{ fontSize: 10, fill: '#71717a' }} tickLine={false} axisLine={false} domain={[-maxAbs * 1.2, maxAbs * 1.2]} tickFormatter={(v: number) => `${v > 0 ? '+' : ''}${v}`} />
+          <ReferenceLine y={0} stroke="#3f3f46" strokeWidth={1} />
           <Tooltip content={<CustomTooltip />} />
           <defs>
             <linearGradient id="posGrad" x1="0" y1="0" x2="0" y2="1">
@@ -232,16 +232,16 @@ function MomentumChart({
         </AreaChart>
       </ResponsiveContainer>
       <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-        <div className="bg-green-50 border border-green-200/50 rounded-lg p-2 text-center">
-          <div className="text-green-600 font-mono font-bold">+{Math.round(Math.max(...data.map((d) => d.v)))}</div>
+        <div className="bg-green-900/20 border border-green-800/30 rounded-lg p-2 text-center">
+          <div className="text-green-400 font-mono font-bold">+{Math.round(Math.max(...data.map((d) => d.v)))}</div>
           <div className="text-muted-foreground text-[10px]">Pico {timeCasa}</div>
         </div>
         <div className="bg-muted/50 border border-border/50 rounded-lg p-2 text-center">
           <div className="text-foreground/80 font-mono font-bold">{Math.round(avgMomentum)}</div>
           <div className="text-muted-foreground text-[10px]">Média</div>
         </div>
-        <div className="bg-blue-50 border border-blue-200/50 rounded-lg p-2 text-center">
-          <div className="text-blue-600 font-mono font-bold">{Math.round(Math.abs(Math.min(...data.map((d) => d.v))))}</div>
+        <div className="bg-blue-900/20 border border-blue-800/30 rounded-lg p-2 text-center">
+          <div className="text-blue-400 font-mono font-bold">{Math.round(Math.abs(Math.min(...data.map((d) => d.v))))}</div>
           <div className="text-muted-foreground text-[10px]">Pico {timeFora}</div>
         </div>
       </div>

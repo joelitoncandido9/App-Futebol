@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LoadingIndicator from './LoadingIndicator';
 import IncidentesTimeline from './IncidentesTimeline';
+import { SkeletonDashboard } from './SkeletonCard';
 import StatsAvancadas from './StatsAvancadas';
 import PlayerStatsTabela from './PlayerStatsTabela';
 import MatchAnalytics from './MatchAnalytics';
 import MercadosAgrupados from './MercadosAgrupados';
 import UltimosJogos from './UltimosJogos';
+import { formatarHora, formatarDataCompleta, formatarDataCurta } from '@/lib/utils';
 import {
   Table,
   TableBody,
@@ -144,6 +145,8 @@ function SectionWrapper({
 
       <button
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={titulo}
         className="w-full px-5 py-3.5 flex items-center justify-between hover:bg-muted/50/50 transition-colors"
       >
         <h3 className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.08em]">
@@ -184,7 +187,7 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
     carregar();
   }, [eventId]);
 
-  if (loading) return <LoadingIndicator mensagem="Carregando dashboard..." />;
+  if (loading) return <SkeletonDashboard />;
 
   if (erro) {
     return (
@@ -593,7 +596,7 @@ function MatchHeader({
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/20 flex items-center justify-center">
                   <span className="text-muted-foreground text-xs font-bold">VS</span>
                 </div>
-                <span className="text-muted-foreground text-[10px] mt-1.5 font-mono">{formatarHoraCurta(jogo.data)}</span>
+                <span className="text-muted-foreground text-[10px] mt-1.5 font-mono">{formatarHora(jogo.data)}</span>
               </div>
             )}
           </div>
@@ -719,15 +722,6 @@ function MatchHeader({
       </div>
     </div>
   );
-}
-
-function formatarHoraCurta(dataStr: string): string {
-  try {
-    const d = new Date(dataStr);
-    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
-  } catch {
-    return '';
-  }
 }
 
 // ── FORM WIDGETS ──
@@ -1129,16 +1123,16 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
         <TableBody>
           {mercados.flatMap(([mercado, outcomes]) =>
             Object.entries(outcomes).map(([outcome, data]: [string, any]) => (
-              <TableRow key={`${mercado}-${outcome}`} className="border-gray-100 hover:bg-muted/50">
+              <TableRow key={`${mercado}-${outcome}`} className="border-border hover:bg-muted/50">
                 <TableCell className="py-2 text-[11px] text-muted-foreground font-medium">{mercado}</TableCell>
                 <TableCell className="py-2 text-[11px] text-foreground/80">{outcome}</TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono font-bold text-orange-600">
+                <TableCell className="py-2 text-[11px] text-right font-mono font-bold text-orange-400">
                   {data.melhor_odd ?? '-'}
                 </TableCell>
                 <TableCell className="py-2 text-[11px] text-right font-mono text-muted-foreground">
                   {data.melhor_casa ?? '-'}
                 </TableCell>
-                <TableCell className="py-2 text-[11px] text-right font-mono text-gray-600">
+                <TableCell className="py-2 text-[11px] text-right font-mono text-muted-foreground">
                   {data.pinnacle_odd ?? '-'}
                 </TableCell>
               </TableRow>
@@ -1150,30 +1144,4 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
   );
 }
 
-// ── Date Helpers ──
 
-function formatarDataCompleta(dataStr: string): string {
-  try {
-    const d = new Date(dataStr);
-    return d.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'America/Sao_Paulo',
-    });
-  } catch {
-    return dataStr;
-  }
-}
-
-function formatarDataCurta(dataStr: string): string {
-  try {
-    const d = new Date(dataStr);
-    return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'numeric' });
-  } catch {
-    return dataStr;
-  }
-}

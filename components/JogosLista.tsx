@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LoadingIndicator from './LoadingIndicator';
+import { formatarHora, formatarData } from '@/lib/utils';
+import { SkeletonLista } from './SkeletonCard';
 
 interface Jogo {
   event_id: number;
@@ -22,6 +23,8 @@ interface JogosListaProps {
   onSelectJogo: (eventId: number) => void;
 }
 
+const ITENS_POR_PAGINA = 5;
+
 export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   const [jogos, setJogos] = useState<Jogo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +32,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
   const [pesquisa, setPesquisa] = useState('');
   const [ligaFiltro, setLigaFiltro] = useState('');
   const [diaSelecionado, setDiaSelecionado] = useState<string | null>(null);
+  const [paginaAtual, setPaginaAtual] = useState(0);
 
   useEffect(() => {
     async function carregar() {
@@ -141,7 +145,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
     return mapa;
   }
 
-  if (loading) return <LoadingIndicator mensagem="Buscando jogos..." />;
+  if (loading) return <SkeletonLista />;
 
   if (erro) {
     return (
@@ -149,6 +153,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         <p className="text-red-400 text-sm">{erro}</p>
         <button
           onClick={() => window.location.reload()}
+          aria-label="Tentar carregar jogos novamente"
           className="mt-3 text-orange-500 text-sm hover:underline"
         >
           Tentar novamente
@@ -165,12 +170,14 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
           type="text"
           placeholder="Buscar por time ou liga..."
           value={pesquisa}
-          onChange={(e) => setPesquisa(e.target.value)}
-          className="flex-1 bg-card border border-border rounded-lg px-4 py-2.5 text-foreground/80 placeholder-gray-400 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
+          onChange={(e) => { setPesquisa(e.target.value); setPaginaAtual(0); }}
+          aria-label="Buscar jogos por time ou liga"
+          className="flex-1 bg-card border border-border rounded-lg px-4 py-2.5 text-foreground/80 placeholder-zinc-500 text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 transition-colors"
         />
         <select
           value={ligaFiltro}
-          onChange={(e) => setLigaFiltro(e.target.value)}
+          onChange={(e) => { setLigaFiltro(e.target.value); setPaginaAtual(0); }}
+          aria-label="Filtrar por liga"
           className="bg-card border border-border rounded-lg px-3 py-2.5 text-foreground/80 text-sm focus:outline-none focus:border-orange-500/50 transition-colors sm:max-w-[180px] w-full"
         >
           <option value="">Todas ligas</option>
@@ -181,10 +188,12 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
       </div>
 
       {/* ── ABAS DE DIAS ── */}
-      <div className="flex gap-1 mb-4 overflow-x-auto pb-1">
+      <div className="flex gap-1 mb-4 overflow-x-auto pb-1" role="tablist" aria-label="Filtro por dia">
         {diasAba.map((dia) => (
           <button
             key={dia.date}
+            role="tab"
+            aria-selected={diaSelecionado === dia.date}
             onClick={() => setDiaSelecionado(diaSelecionado === dia.date ? null : dia.date)}
             className={`px-3 py-1.5 text-xs rounded-lg whitespace-nowrap transition-colors font-medium ${
               diaSelecionado === dia.date
@@ -198,6 +207,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
         {diaSelecionado && (
           <button
             onClick={() => setDiaSelecionado(null)}
+            aria-label="Limpar filtro de dia"
             className="px-3 py-1.5 text-xs rounded-lg text-muted-foreground hover:text-foreground transition-colors"
           >
             ✕ Limpar
@@ -213,7 +223,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
       {/* ── AO VIVO ── */}
       {jogosAoVivo.length > 0 && (
-        <div className="mb-10">
+        <div className="mb-10" role="region" aria-label="Jogos ao vivo">
           <h2 className="text-green-500 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             ⏳ Ao Vivo
@@ -225,7 +235,7 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
       {/* ── FINALIZADOS (só hoje, em BRT) ── */}
       {jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje).length > 0 && (
-        <div className="mb-10">
+        <div className="mb-10" role="region" aria-label="Jogos finalizados hoje">
           <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             ✅ Finalizados Hoje
             <span className="text-muted-foreground font-normal">({jogosFinalizados.filter(j => converterParaBRT(j.data) === hoje).length})</span>
@@ -236,8 +246,8 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
       {/* ── SEM RESULTADO (notstarted mas já ocorridos) ── */}
       {jogosPassadosSemResultado.length > 0 && (
-        <div className="mb-10">
-          <h2 className="text-yellow-600/80 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="mb-10" role="region" aria-label="Jogos sem resultado disponível">
+          <h2 className="text-yellow-500/80 text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
             ⚠️ Sem Resultado Disponível
             <span className="text-muted-foreground font-normal">({jogosPassadosSemResultado.length})</span>
           </h2>
@@ -250,12 +260,14 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
 
       {/* ── PRÓXIMOS JOGOS (não iniciados, por data) ── */}
       {jogosDoDia.length > 0 && (
-        <div className="mb-10">
+        <div className="mb-10" role="region" aria-label="Próximos jogos">
           <h2 className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-4">
             📅 Próximos Jogos ({jogosDoDia.length})
           </h2>
           <div className="space-y-8">
-            {Array.from(gruposData.entries()).map(([data, jogosData]) => (
+            {Array.from(gruposData.entries())
+              .slice(paginaAtual * ITENS_POR_PAGINA, (paginaAtual + 1) * ITENS_POR_PAGINA)
+              .map(([data, jogosData]) => (
               <div key={data}>
                 <h3 className="text-muted-foreground text-xs font-semibold mb-3">
                   {data === hoje ? 'Hoje' : formatarData(data)}
@@ -265,6 +277,29 @@ export default function JogosLista({ onSelectJogo }: JogosListaProps) {
               </div>
             ))}
           </div>
+          {gruposData.size > ITENS_POR_PAGINA && (
+            <div className="flex items-center justify-center gap-2 mt-4" aria-label="Paginação">
+              <button
+                onClick={() => setPaginaAtual(Math.max(0, paginaAtual - 1))}
+                disabled={paginaAtual === 0}
+                className="px-3 py-1.5 text-xs rounded-lg bg-card border border-border text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                aria-label="Página anterior"
+              >
+                ← Anterior
+              </button>
+              <span className="text-xs text-muted-foreground" aria-current="page">
+                {paginaAtual + 1} de {Math.ceil(gruposData.size / ITENS_POR_PAGINA)}
+              </span>
+              <button
+                onClick={() => setPaginaAtual(Math.min(Math.ceil(gruposData.size / ITENS_POR_PAGINA) - 1, paginaAtual + 1))}
+                disabled={paginaAtual >= Math.ceil(gruposData.size / ITENS_POR_PAGINA) - 1}
+                className="px-3 py-1.5 text-xs rounded-lg bg-card border border-border text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                aria-label="Próxima página"
+              >
+                Próxima →
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -286,7 +321,8 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
           <button
             key={jogo.event_id}
             onClick={() => onSelectJogo(jogo.event_id)}
-            className="w-full bg-card border border-border hover:border-gray-300 rounded-xl overflow-hidden transition-all duration-200 group cursor-pointer glow-accent"
+            aria-label={`${jogo.time_casa} vs ${jogo.time_fora}`}
+            className="w-full bg-card border border-border hover:border-zinc-600 rounded-xl overflow-hidden transition-all duration-200 group cursor-pointer glow-accent"
           >
             {/* Gradient accent bar */}
             <div className={`h-0.5 w-full bg-gradient-to-r ${aoVivo ? 'from-green-500 via-green-400/50 to-transparent' : finalizado ? 'from-zinc-600/50 via-zinc-500/20 to-transparent' : 'from-orange-500/80 via-orange-400/40 to-transparent'}`} />
@@ -367,28 +403,4 @@ function renderGrupos(grupos: Map<string, Jogo[]>, onSelectJogo: (id: number) =>
   ));
 }
 
-function formatarHora(dataStr: string): string {
-  try {
-    const d = new Date(dataStr);
-    if (isNaN(d.getTime())) return '';
-    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
-  } catch {
-    return '';
-  }
-}
 
-function formatarData(dataStr: string): string {
-  try {
-    // dataStr é YYYY-MM-DD (vem de converterParaBRT). Seta meio-dia pra evitar shift de timezone.
-    const d = new Date(dataStr + 'T12:00:00Z'); // Z = UTC, meio-dia UTC nunca muda de dia em BRT
-    if (isNaN(d.getTime())) return dataStr;
-    return d.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      timeZone: 'America/Sao_Paulo',
-    });
-  } catch {
-    return dataStr;
-  }
-}

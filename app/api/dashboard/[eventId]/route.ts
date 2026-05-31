@@ -10,6 +10,7 @@
 import { gerarCardsMercado } from '@/lib/odds-jtsa';
 import { buscarHistoricoTime, formatarComoFormData, buscarUltimosJogos } from '@/lib/bsd-stats';
 import { cacheFetch, makeBsdCacheKey } from '@/lib/bsd-cache';
+import { dashboardParamsSchema } from '@/lib/schemas';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
 const BASE_URL = 'https://sports.bzzoiro.com/api';
@@ -96,11 +97,12 @@ export async function GET(
   { params }: { params: Promise<{ eventId: string }> }
 ) {
   try {
-    const { eventId } = await params;
-    const id = parseInt(eventId);
-    if (isNaN(id)) {
-      return Response.json({ error: 'eventId inválido' }, { status: 400 });
+    const { eventId: raw } = await params;
+    const parsed = dashboardParamsSchema.safeParse({ eventId: raw });
+    if (!parsed.success) {
+      return Response.json({ error: 'eventId inválido', details: parsed.error.issues }, { status: 400 });
     }
+    const id = parsed.data.eventId;
 
     // Busca dados do jogo (v1) + odds comparadas em paralelo
     const [jogoData, oddsData, predicaoV2, playerStats, metadata, broadcasts] = await Promise.all([

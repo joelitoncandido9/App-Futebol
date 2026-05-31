@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { jogosQuerySchema } from '@/lib/schemas';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
 const BASE_URL = 'https://sports.bzzoiro.com/api';
@@ -10,7 +11,17 @@ const BASE_URL = 'https://sports.bzzoiro.com/api';
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const liga = searchParams.get('liga');
+
+  const parsed = jogosQuerySchema.safeParse({
+    liga: searchParams.get('liga') || undefined,
+  });
+  if (!parsed.success) {
+    return Response.json(
+      { error: 'Parâmetros inválidos', details: parsed.error.issues },
+      { status: 400 }
+    );
+  }
+  const { liga } = parsed.data;
 
   const agora = new Date();
   const hoje = agora.toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });

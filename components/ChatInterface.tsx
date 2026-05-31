@@ -117,8 +117,10 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
   return (
     <div className="flex flex-col h-[600px]">
       {/* Abas de agente */}
-      <div className="flex gap-1 mb-3 bg-card border border-border rounded-lg p-1 w-fit">
+      <div className="flex gap-1 mb-3 bg-card border border-border rounded-lg p-1 w-fit" role="tablist" aria-label="Modo do agente">
         <button
+          role="tab"
+          aria-selected={mode === "analista"}
           onClick={() => { setMode("analista"); setMessages([]); setStreaming(""); }}
           className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
             mode === "analista"
@@ -129,6 +131,8 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           🔍 Analista
         </button>
         <button
+          role="tab"
+          aria-selected={mode === "validador"}
           onClick={() => { setMode("validador"); setMessages([]); setStreaming(""); }}
           className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
             mode === "validador"
@@ -231,7 +235,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
           }}
           placeholder="Pergunte sobre o jogo..."
           disabled={loading}
-          className="flex-1 bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-gray-500 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
+          className="flex-1 bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-zinc-500 focus:outline-none focus:border-orange-500/50 disabled:opacity-50"
         />
         <button
           onClick={() => enviar(input)}
