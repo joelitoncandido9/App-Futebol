@@ -8,6 +8,7 @@
  */
 
 import { gerarCardsMercado } from '@/lib/odds-jtsa';
+import { traduzirFato } from '@/lib/utils';
 import { buscarHistoricoTime, formatarComoFormData, buscarUltimosJogos } from '@/lib/bsd-stats';
 import { cacheFetch, makeBsdCacheKey } from '@/lib/bsd-cache';
 import { dashboardParamsSchema } from '@/lib/schemas';
@@ -303,7 +304,7 @@ export async function GET(
 
     // Metadata (fun facts, AI preview)
     const metadados = {
-      fatos_curiosos: metadata?.funfacts?.map((f: any) => f.sentence) || null,
+      fatos_curiosos: metadata?.funfacts?.map((f: any) => f.sentence ? traduzirFato(f.sentence) : null) || null,
       preview_ia: metadata?.ai_preview?.text || null,
     };
 

@@ -73,7 +73,7 @@ function renderTabela(jogos: Jogo[], time: string) {
               <span className={`font-mono font-bold text-[10px] ${
                 vitoria ? 'text-green-500' : derrota ? 'text-red-500' : 'text-muted-foreground'
               }`}>
-                {vitoria ? 'W' : derrota ? 'L' : 'D'}
+                {vitoria ? 'V' : derrota ? 'D' : 'E'}
               </span>
               <span className={`text-[9px] font-bold ${
                 ehCasa ? 'text-green-500/70' : 'text-blue-500/70'

@@ -767,7 +767,7 @@ function FormCard({
                   c === 'L' ? 'text-red-500' : 'text-muted-foreground'
                 }
               >
-                {c}
+                {c === 'W' ? 'V' : c === 'D' ? 'E' : c === 'L' ? 'D' : c}
               </span>
             ))}
           </span>
@@ -1012,7 +1012,7 @@ function StandingsTable({
                             c === 'W' ? 'text-green-500' :
                             c === 'D' ? 'text-yellow-500' :
                             c === 'L' ? 'text-red-500' : 'text-muted-foreground'
-                          }>{c}</span>
+                          }>{c === 'W' ? 'V' : c === 'D' ? 'E' : c === 'L' ? 'D' : c}</span>
                         ))}
                       </span>
                     )}
