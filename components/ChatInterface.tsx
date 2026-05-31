@@ -115,7 +115,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
   }
 
   return (
-    <div className="flex flex-col h-[600px]">
+    <div className="flex flex-col h-[600px] overflow-hidden">
       {/* Abas de agente */}
       <div className="flex gap-1 mb-3 bg-card border border-border rounded-lg p-1 w-fit" role="tablist" aria-label="Modo do agente">
         <button
@@ -167,7 +167,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
       {/* Mensagens */}
       <div
         ref={chatRef}
-        className="flex-1 overflow-y-auto space-y-3 mb-3 pr-1 scrollbar-thin"
+        className="flex-1 min-h-0 overflow-y-auto space-y-3 mb-3 pr-1 scrollbar-thin scroll-smooth"
       >
         {/* Exemplos iniciais */}
         {messages.length === 0 && !loading && (
@@ -190,7 +190,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
         {messages.map((msg, idx) => (
           <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
-              className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap break-words ${
                 msg.role === 'user'
                   ? 'bg-orange-500/10 border border-orange-500/20 text-foreground'
                   : 'bg-card border border-border text-foreground'
@@ -204,7 +204,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
         {/* Streaming em andamento */}
         {streaming && (
           <div className="flex justify-start">
-            <div className="max-w-[85%] bg-card border border-border rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap text-foreground/80">
+            <div className="max-w-[85%] bg-card border border-border rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap break-words text-foreground/80">
               {streaming}
               <span className="inline-block w-2 h-4 bg-orange-500/60 ml-0.5 animate-pulse" />
             </div>
