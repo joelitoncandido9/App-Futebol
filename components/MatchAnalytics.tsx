@@ -25,14 +25,13 @@ interface MatchAnalyticsProps {
   shotmap: any[] | null | undefined;
   xgPorMinuto: XgBucket[] | null | undefined;
   momentum: MomentumPoint[] | null | undefined;
-  averagePositions: any;
   timeCasa: string;
   timeFora: string;
 }
 
 export default function MatchAnalytics({
   statsAvancadas, shotmap, xgPorMinuto, momentum,
-  averagePositions, timeCasa, timeFora,
+  timeCasa, timeFora,
 }: MatchAnalyticsProps) {
   const hasStats = !!statsAvancadas;
   const hasShotmap = !!shotmap && shotmap.length > 0;

@@ -83,7 +83,6 @@ interface DashboardData {
   shotmap?: any[] | null;
   momentum?: any[] | null;
   xg_por_minuto?: any[] | null;
-  average_positions?: any;
   lineups?: any;
   player_stats?: any[] | null;
   predicao?: {
@@ -281,7 +280,6 @@ export default function DashboardJogo({ eventId }: DashboardJogoProps) {
             shotmap={data.shotmap}
             xgPorMinuto={data.xg_por_minuto}
             momentum={data.momentum}
-            averagePositions={data.average_positions}
             timeCasa={jogo.time_casa}
             timeFora={jogo.time_fora}
           />
@@ -877,16 +875,29 @@ function StatsTable({
   const stats: Array<{
     label: string; casa: number | null; fora: number | null; format?: 'float' | 'int' | 'pct';
   }> = [
-    { label: 'Gols marcados (casa/fora)', casa: formaCasa.gols_marcados_casa, fora: formaFora.gols_marcados_fora, format: 'int' },
-    { label: 'Gols sofridos (casa/fora)', casa: formaCasa.gols_sofridos_casa, fora: formaFora.gols_sofridos_fora, format: 'int' },
+    { label: 'Gols marcados', casa: formaCasa.gols_marcados_casa, fora: formaFora.gols_marcados_fora, format: 'int' },
+    { label: 'Gols sofridos', casa: formaCasa.gols_sofridos_casa, fora: formaFora.gols_sofridos_fora, format: 'int' },
     { label: 'Gols esperados (xG) p/j', casa: formaCasa.avg_xg, fora: formaFora.avg_xg, format: 'float' },
     { label: 'xG sofrido p/j', casa: formaCasa.avg_xg_conceded, fora: formaFora.avg_xg_conceded, format: 'float' },
+    { label: 'Posse de bola %', casa: formaCasa.avg_possession, fora: formaFora.avg_possession, format: 'pct' },
+    { label: 'Precisão passes %', casa: formaCasa.avg_pass_accuracy, fora: formaFora.avg_pass_accuracy, format: 'pct' },
     { label: 'Chutes por jogo', casa: formaCasa.avg_shots, fora: formaFora.avg_shots, format: 'float' },
     { label: 'Chutes no gol p/j', casa: formaCasa.avg_shots_on_target, fora: formaFora.avg_shots_on_target, format: 'float' },
-    { label: 'Passes-chave p/j', casa: formaCasa.avg_key_passes, fora: formaFora.avg_key_passes, format: 'float' },
+    { label: 'Chutes área p/j', casa: formaCasa.avg_shots_inside_box, fora: formaFora.avg_shots_inside_box, format: 'float' },
+    { label: 'Grandes chances p/j', casa: formaCasa.avg_big_chances, fora: formaFora.avg_big_chances, format: 'float' },
+    { label: 'Escanteios p/j', casa: formaCasa.avg_corners, fora: formaFora.avg_corners, format: 'float' },
+    { label: 'Cruzamentos p/j', casa: formaCasa.avg_crosses, fora: formaFora.avg_crosses, format: 'float' },
+    { label: 'Desarmes p/j', casa: formaCasa.avg_tackles, fora: formaFora.avg_tackles, format: 'float' },
+    { label: 'Interceptações p/j', casa: formaCasa.avg_interceptions, fora: formaFora.avg_interceptions, format: 'float' },
+    { label: 'Cortes p/j', casa: formaCasa.avg_clearances, fora: formaFora.avg_clearances, format: 'float' },
+    { label: 'Chutes bloqueados p/j', casa: formaCasa.avg_blocked_shots, fora: formaFora.avg_blocked_shots, format: 'float' },
+    { label: 'Dribles p/j', casa: formaCasa.avg_dribbles, fora: formaFora.avg_dribbles, format: 'float' },
+    { label: 'Duelos aéreos p/j', casa: formaCasa.avg_aerial_duels, fora: formaFora.avg_aerial_duels, format: 'float' },
+    { label: 'Defesas (goleiro) p/j', casa: formaCasa.avg_saves, fora: formaFora.avg_saves, format: 'float' },
     { label: 'Faltas por jogo', casa: formaCasa.avg_fouls, fora: formaFora.avg_fouls, format: 'float' },
     { label: 'Cartões amarelos p/j', casa: formaCasa.avg_yellow_cards, fora: formaFora.avg_yellow_cards, format: 'float' },
     { label: 'Cartões vermelhos p/j', casa: formaCasa.avg_red_cards, fora: formaFora.avg_red_cards, format: 'float' },
+    { label: 'Passes-chave p/j', casa: formaCasa.avg_key_passes, fora: formaFora.avg_key_passes, format: 'float' },
     { label: 'Jogos sem sofrer gols', casa: formaCasa.clean_sheets, fora: formaFora.clean_sheets, format: 'int' },
     { label: 'Nota geral', casa: formaCasa.avg_team_rating, fora: formaFora.avg_team_rating, format: 'float' },
   ];
@@ -933,6 +944,7 @@ function formatStat(val: number | null, format?: 'float' | 'int' | 'pct'): strin
   if (val == null) return '-';
   if (format === 'float') return val.toFixed(2);
   if (format === 'int') return val.toFixed(0);
+  if (format === 'pct') return val.toFixed(1) + '%';
   return String(val);
 }
 

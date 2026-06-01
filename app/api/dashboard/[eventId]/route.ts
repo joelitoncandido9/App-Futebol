@@ -239,6 +239,9 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
             melhor_odd: (data as any).best_odds,
             melhor_casa: (data as any).best_bookmaker,
             pinnacle_odd: (data as any).bookmakers?.Pinnacle?.decimal,
+            pinnacle_prob: (data as any).bookmakers?.Pinnacle?.decimal
+              ? Math.round((1 / (data as any).bookmakers.Pinnacle.decimal) * 10000) / 100
+              : null,
           };
         }
       }
@@ -280,9 +283,6 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
 
     // xG por minuto
     const xg_por_minuto = jogoData.xg_per_minute || null;
-
-    // Average positions
-    const average_positions = jogoData.average_positions || null;
 
     // ── DADOS v2 ──
 
@@ -409,13 +409,30 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
         clean_sheets: homeForm.clean_sheets,
         avg_shots: homeForm.avg_shots,
         avg_shots_on_target: homeForm.avg_shots_on_target,
+        avg_shots_inside_box: homeForm.avg_shots_inside_box,
+        avg_shots_outside_box: homeForm.avg_shots_outside_box,
         avg_fouls: homeForm.avg_fouls,
         avg_yellow_cards: homeForm.avg_yellow_cards,
         avg_red_cards: homeForm.avg_red_cards,
+        avg_corners: homeForm.avg_corners,
+        avg_offsides: homeForm.avg_offsides,
+        avg_tackles: homeForm.avg_tackles,
+        avg_interceptions: homeForm.avg_interceptions,
+        avg_clearances: homeForm.avg_clearances,
+        avg_blocked_shots: homeForm.avg_blocked_shots,
+        avg_crosses: homeForm.avg_crosses,
+        avg_dribbles: homeForm.avg_dribbles,
+        avg_aerial_duels: homeForm.avg_aerial_duels,
+        avg_saves: homeForm.avg_saves,
+        avg_big_chances: homeForm.avg_big_chances,
+        avg_possession: homeForm.avg_possession,
+        avg_pass_accuracy: homeForm.avg_pass_accuracy,
         avg_xg: homeForm.avg_xg,
         avg_xg_conceded: homeForm.avg_xg_conceded,
         avg_key_passes: homeForm.avg_key_passes,
         avg_team_rating: homeForm.avg_team_rating,
+        home_jogos: homeForm.home_jogos,
+        away_jogos: homeForm.away_jogos,
         ...extrairRecorde(tabela, jogoData.home_team, homeForm.form_string),
         matches_played: homeForm.matches_played ?? null,
       },
@@ -429,13 +446,30 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
         clean_sheets: awayForm.clean_sheets,
         avg_shots: awayForm.avg_shots,
         avg_shots_on_target: awayForm.avg_shots_on_target,
+        avg_shots_inside_box: awayForm.avg_shots_inside_box,
+        avg_shots_outside_box: awayForm.avg_shots_outside_box,
         avg_fouls: awayForm.avg_fouls,
         avg_yellow_cards: awayForm.avg_yellow_cards,
         avg_red_cards: awayForm.avg_red_cards,
+        avg_corners: awayForm.avg_corners,
+        avg_offsides: awayForm.avg_offsides,
+        avg_tackles: awayForm.avg_tackles,
+        avg_interceptions: awayForm.avg_interceptions,
+        avg_clearances: awayForm.avg_clearances,
+        avg_blocked_shots: awayForm.avg_blocked_shots,
+        avg_crosses: awayForm.avg_crosses,
+        avg_dribbles: awayForm.avg_dribbles,
+        avg_aerial_duels: awayForm.avg_aerial_duels,
+        avg_saves: awayForm.avg_saves,
+        avg_big_chances: awayForm.avg_big_chances,
+        avg_possession: awayForm.avg_possession,
+        avg_pass_accuracy: awayForm.avg_pass_accuracy,
         avg_xg: awayForm.avg_xg,
         avg_xg_conceded: awayForm.avg_xg_conceded,
         avg_key_passes: awayForm.avg_key_passes,
         avg_team_rating: awayForm.avg_team_rating,
+        home_jogos: awayForm.home_jogos,
+        away_jogos: awayForm.away_jogos,
         ...extrairRecorde(tabela, jogoData.away_team, awayForm.form_string),
         matches_played: awayForm.matches_played ?? null,
       },
@@ -495,7 +529,6 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
       shotmap,
       momentum,
       xg_por_minuto,
-      average_positions,
       lineups,
       predicao,
       player_stats,

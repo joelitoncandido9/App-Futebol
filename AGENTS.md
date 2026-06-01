@@ -154,9 +154,21 @@ Primitivas shadcn/ui: Badge, Button, Card, Select, Separator, Skeleton, Table, T
 
 ✅ **Sempre exportar do v2:** `avg_xg`, `avg_xg_conceded`, todas `avg_*`, `home_jogos`, `away_jogos`
 
+### Response `forma_casa`/`forma_fora` (route.ts:402-476)
+Expõe 31+ campos por time, incluindo:
+- **Ataque:** gols, xG, chutes, chutes no gol, chutes área, grandes chances
+- **Posse/Passes:** avg_possession (%), avg_pass_accuracy (%), avg_key_passes, avg_crosses, avg_dribbles
+- **Defesa:** gols sofridos, xG sofrido, desarmes, interceptações, cortes, bloqueios, duelos aéreos, defesas (goleiro)
+- **Disciplina:** faltas, amarelos, vermelhos, escanteios, impedimentos
+- **Metadata:** clean_sheets, home_jogos, away_jogos, matches_played, recorde (V/E/D da tabela)
+
+### `odds_mercado` (route.ts:233-245)
+Cada outcome inclui: `melhor_odd`, `melhor_casa`, `pinnacle_odd`, `pinnacle_prob` (implícita em %)
+
 ### Cálculo de GOLS (`odds-jtsa.ts`)
 - Fonte primária: `avg_xg` (v2)
 - Fallback: `home_goals_scored / home_jogos` (v1 real total / v2 home count)
+- Fallback final: `0` (nunca null — card sempre aparece)
 - Denominador CORRETO usa `home_jogos`/`away_jogos`, NUNCA `matches_played`
 
 ### Cálculo de BTTS (`odds-jtsa.ts`)
@@ -166,3 +178,6 @@ Primitivas shadcn/ui: Badge, Button, Card, Select, Separator, Skeleton, Table, T
 ### Percentuais da BSD v2
 - `prob_home`, `prob_draw`, `prob_away`, `btts.prob_yes`, `over_under.prob_*` → 0-100
 - `model.confidence` → 0-1 decimal (multiplicar por 100 na UI)
+
+### Dead data removido
+- `average_positions` — era buscado da API, serializado no response, mas nunca renderizado. Removido em 31/05/2026.
