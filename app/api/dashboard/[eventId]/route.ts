@@ -210,15 +210,25 @@ export async function GET(
       jogoData.home_team, jogoData.away_team
     );
 
-    // Extrai recorde V/E/D da string de forma (ex: "WDLWD" → {wins: 2, draws: 1, losses: 2})
-function contarRecorde(formString: string | undefined): { vitorias: number | null; empates: number | null; derrotas: number | null } {
-  if (!formString) return { vitorias: null, empates: null, derrotas: null };
-  const chars = formString.split('');
-  return {
-    vitorias: chars.filter(c => c === 'W').length,
-    empates: chars.filter(c => c === 'D').length,
-    derrotas: chars.filter(c => c === 'L').length,
-  };
+    // Extrai recorde V/E/D: tenta classificação primeiro, depois form_string como fallback
+function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, formString: string | undefined): { vitorias: number | null; empates: number | null; derrotas: number | null } {
+  // Tenta classificação
+  if (tabela && timeNome) {
+    const row = tabela.find((r) => r.time?.toLowerCase() === timeNome.toLowerCase());
+    if (row && (row.vitorias != null || row.empates != null || row.derrotas != null)) {
+      return { vitorias: row.vitorias ?? null, empates: row.empates ?? null, derrotas: row.derrotas ?? null };
+    }
+  }
+  // Fallback: conta da form_string (W/D/L)
+  if (formString) {
+    const chars = formString.split('');
+    return {
+      vitorias: chars.filter(c => c === 'W').length,
+      empates: chars.filter(c => c === 'D').length,
+      derrotas: chars.filter(c => c === 'L').length,
+    };
+  }
+  return { vitorias: null, empates: null, derrotas: null };
 }
     const oddsMercado: Record<string, any> = {};
     if (oddsData?.markets) {
@@ -406,7 +416,7 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
         avg_xg_conceded: homeForm.avg_xg_conceded,
         avg_key_passes: homeForm.avg_key_passes,
         avg_team_rating: homeForm.avg_team_rating,
-        ...contarRecorde(homeForm.form_string),
+        ...extrairRecorde(tabela, jogoData.home_team, homeForm.form_string),
         matches_played: homeForm.matches_played ?? null,
       },
       forma_fora: {
@@ -426,7 +436,7 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
         avg_xg_conceded: awayForm.avg_xg_conceded,
         avg_key_passes: awayForm.avg_key_passes,
         avg_team_rating: awayForm.avg_team_rating,
-        ...contarRecorde(awayForm.form_string),
+        ...extrairRecorde(tabela, jogoData.away_team, awayForm.form_string),
         matches_played: awayForm.matches_played ?? null,
       },
       h2h: {
