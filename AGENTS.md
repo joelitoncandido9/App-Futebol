@@ -142,3 +142,27 @@ Primitivas shadcn/ui: Badge, Button, Card, Select, Separator, Skeleton, Table, T
 
 ## Removidos
 - `components/LoadingIndicator.tsx` — não utilizado, substituído pelo SkeletonCard
+
+## Pipeline de Dados (regras críticas)
+
+### Enriquecimento v2 → v1 (`route.ts:153-160`)
+`homeForm = { ...homeForm(v1), ...enriched(v2) }`
+
+⚠️ **`formatarComoFormData` em `bsd-stats.ts` NUNCA deve exportar:**
+- `form_string`, `wins`, `draws`, `losses` — v1 tem os valores REAIS
+- `home_goals_scored`, `away_goals_scored`, `home_goals_conceded`, `away_goals_conceded` — v1 tem totais reais, v2 só tem estimativas proporcionais
+
+✅ **Sempre exportar do v2:** `avg_xg`, `avg_xg_conceded`, todas `avg_*`, `home_jogos`, `away_jogos`
+
+### Cálculo de GOLS (`odds-jtsa.ts`)
+- Fonte primária: `avg_xg` (v2)
+- Fallback: `home_goals_scored / home_jogos` (v1 real total / v2 home count)
+- Denominador CORRETO usa `home_jogos`/`away_jogos`, NUNCA `matches_played`
+
+### Cálculo de BTTS (`odds-jtsa.ts`)
+- Usa Poisson com xG: `P(BTTS) = (1 - e^-λ_casa) × (1 - e^-λ_fora)`
+- Header do dashboard mostra ML (BSD) + xG lado a lado
+
+### Percentuais da BSD v2
+- `prob_home`, `prob_draw`, `prob_away`, `btts.prob_yes`, `over_under.prob_*` → 0-100
+- `model.confidence` → 0-1 decimal (multiplicar por 100 na UI)
