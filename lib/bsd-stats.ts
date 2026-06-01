@@ -201,19 +201,15 @@ export async function buscarUltimosJogos(
 export function formatarComoFormData(stats: TeamStatsAverages): Record<string, any> {
   return {
     matches_played: stats.total_jogos,
-    form_string: '',
-    wins: 0, draws: 0, losses: 0,
-    // Gols
-    home_goals_scored: Math.round(stats.avg_gols_feitos * stats.home_jogos),
-    away_goals_scored: Math.round(stats.avg_gols_feitos * stats.away_jogos),
-    home_goals_conceded: Math.round(stats.avg_gols_sofridos * stats.home_jogos),
-    away_goals_conceded: Math.round(stats.avg_gols_sofridos * stats.away_jogos),
-    // Médias por jogo
+    home_jogos: stats.home_jogos,
+    away_jogos: stats.away_jogos,
+    // Médias por jogo (melhor que totais estimados)
     avg_shots: stats.avg_shots,
     avg_shots_on_target: stats.avg_shots_on_target,
     avg_fouls: stats.avg_fouls,
     avg_yellow_cards: stats.avg_yellow_cards,
-    // xG fica com v1 (mais confiável)
+    avg_xg: stats.avg_xg,
+    avg_xg_conceded: stats.avg_xg_conceded,
     // Campos estendidos
     avg_shots_inside_box: stats.avg_shots_inside_box,
     avg_shots_outside_box: stats.avg_shots_outside_box,

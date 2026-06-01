@@ -743,7 +743,14 @@ function MatchHeader({
               )}
               {pred.btts_sim_pct != null && (
                 <span className="text-[9px] text-muted-foreground">
-                  BTTS: <span className="text-foreground/80 font-mono">{Math.round(pred.btts_sim_pct)}%</span>
+                  BTTS (ML): <span className="text-foreground/80 font-mono">{Math.round(pred.btts_sim_pct)}%</span>
+                </span>
+              )}
+              {pred.gols_esperados && (
+                <span className="text-[9px] text-muted-foreground">
+                  BTTS (xG): <span className="text-foreground/80 font-mono">
+                    {Math.round((1 - Math.exp(-pred.gols_esperados.casa)) * (1 - Math.exp(-pred.gols_esperados.fora)) * 100)}%
+                  </span>
                 </span>
               )}
             </div>

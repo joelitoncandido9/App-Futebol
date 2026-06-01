@@ -215,13 +215,13 @@ export function gerarCardsMercado(
     });
   }
 
-  // ── GOLS (usando home_goals_scored / away_goals_scored) ──
-  const homeGols = homeForm?.home_goals_scored;
-  const awayGols = awayForm?.away_goals_scored;
-  if (homeGols != null && awayGols != null) {
+  // ── GOLS (usando xG como fonte primária, fallback gols reais) ──
+  const homeGolsMeta = homeForm?.avg_xg ?? (homeForm?.home_goals_scored != null ? homeForm.home_goals_scored / (homeForm?.home_jogos || homeJogos) : null);
+  const awayGolsMeta = awayForm?.avg_xg ?? (awayForm?.away_goals_scored != null ? awayForm.away_goals_scored / (awayForm?.away_jogos || awayJogos) : null);
+  if (homeGolsMeta != null && awayGolsMeta != null) {
     addCardContagemDupla(
       'GOLS', homeNomeTime, awayNomeTime,
-      homeGols / homeJogos, awayGols / awayJogos,
+      homeGolsMeta, awayGolsMeta,
       homeJogos, awayJogos,
       [0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]
     );
@@ -260,8 +260,8 @@ export function gerarCardsMercado(
   );
 
   // ── GOLS ESPERADOS (xG) — com fallback para gols reais ──
-  const homeXgVal = homeForm?.avg_xg ?? (homeGols != null ? homeGols / homeJogos : null);
-  const awayXgVal = awayForm?.avg_xg ?? (awayGols != null ? awayGols / awayJogos : null);
+  const homeXgVal = homeForm?.avg_xg ?? homeGolsMeta;
+  const awayXgVal = awayForm?.avg_xg ?? awayGolsMeta;
   addCardContagemDupla(
     'GOLS ESPERADOS (xG)', homeNomeTime, awayNomeTime,
     homeXgVal, awayXgVal,
@@ -366,8 +366,8 @@ export function gerarCardsMercado(
   );
 
   // ── 1X2 (Poisson bivariada com xG ou fallback gols) ──
-  const homeXg1x2 = homeForm?.avg_xg ?? (homeGols != null ? homeGols / homeJogos : null);
-  const awayXg1x2 = awayForm?.avg_xg ?? (awayGols != null ? awayGols / awayJogos : null);
+  const homeXg1x2 = homeForm?.avg_xg ?? homeGolsMeta;
+  const awayXg1x2 = awayForm?.avg_xg ?? awayGolsMeta;
   if (homeXg1x2 != null && awayXg1x2 != null) {
     cards.push({
       tipo: '1x2',
@@ -381,15 +381,13 @@ export function gerarCardsMercado(
   }
 
   // ── BTTS (probabilidade de ambos marcarem) ──
-  const csCasa = homeForm?.clean_sheets;
-  const csFora = awayForm?.clean_sheets;
-  if (csCasa != null && csFora != null) {
-    // Calcula BTTS como P(casa marca) × P(fora marca)
-    const probCasaMarca = homeJogos > 0 ? Math.min(0.99, Math.max(0.01, 1 - csCasa / homeJogos)) : 0.5;
-    const probForaMarca = awayJogos > 0 ? Math.min(0.99, Math.max(0.01, 1 - csFora / awayJogos)) : 0.5;
-    const probBTTS = probCasaMarca * probForaMarca;
+  // Fonte primária: Poisson com xG (mais preditivo que clean sheets históricos)
+  const homeXgBtts = homeForm?.avg_xg ?? homeGolsMeta;
+  const awayXgBtts = awayForm?.avg_xg ?? awayGolsMeta;
+  if (homeXgBtts != null && awayXgBtts != null) {
+    const probBtts = (1 - poissonProb(homeXgBtts, 0)) * (1 - poissonProb(awayXgBtts, 0));
     const total = Math.min(homeJogos, awayJogos);
-    const bttsSim = Math.round(probBTTS * total);
+    const bttsSim = Math.round(Math.min(0.99, Math.max(0.01, probBtts)) * total);
     cards.push({
       tipo: 'btts',
       titulo: 'AMBOS MARCAM',
