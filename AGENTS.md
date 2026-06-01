@@ -172,11 +172,32 @@ Expõe 31+ campos por time, incluindo:
 ### `odds_mercado` (route.ts:233-245)
 Cada outcome inclui: `melhor_odd`, `melhor_casa`, `pinnacle_odd`, `pinnacle_prob` (implícita em %)
 
-### Cálculo de GOLS (`odds-jtsa.ts`)
-- Fonte primária: `avg_xg` (v2)
-- Fallback: `home_goals_scored / home_jogos` (v1 real total / v2 home count)
-- Fallback final: `0` (nunca null — card sempre aparece)
-- Denominador CORRETO usa `home_jogos`/`away_jogos`, NUNCA `matches_played`
+### Cálculo de λ de GOLS/xG/1X2/BTTS (`odds-jtsa.ts` + `route.ts`)
+
+**Cadeia de extração (ordem de prioridade):**
+1. `blended_avg_xg` — Blend bayesiano: v2 × n_jogos + Dixon-Coles × 3
+2. `avg_xg` — v2 puro (média por jogo)
+3. `home_goals_scored / v1_jogos` — v1 total ÷ 5 (form window original)
+4. `season_goals_scored / season_jogos` — classificação (gf / played)
+5. `0` — último recurso
+
+**Regras do denominador:**
+- `v1_jogos` = `matches_played` original do v1 (salvo ANTES do enriquecimento v2 sobrescrever). NUNCA use `home_jogos`/`away_jogos` do v2 como denominador de totais v1 (janelas diferentes).
+- `season_jogos` = total de jogos do time na classificação (gf / played)
+- Para avg_xg e blended_avg_xg: já são médias por jogo, não precisam de divisão
+
+### Dixon-Coles (`lib/dixon-coles.ts`)
+- Parâmetros attack/defense treinados com 25 temporadas por liga
+- Usado em `route.ts` via `calculateMatchLambdas()`: retorna λ_home e λ_away
+- Peso: 3 jogos virtuais (prior fraco)
+- Blend: `(λ_v2 × n_v2 + λ_DC × 3) / (n_v2 + 3)`
+- Aplicado em GOLS, xG, 1X2 e BTTS (mercados baseados em Poisson com gols)
+- Só funciona para times presentes no dataset (principalmente Série A histórica)
+
+### Fallback classificação (standings)
+- Em `route.ts`: injeta `season_goals_scored` (gf), `season_goals_conceded` (ga), `season_jogos` (played) da tabela
+- Usado como 4ª opção na cadeia de extração de λ
+- Disponível para TODOS os times (inclusive Série B)
 
 ### Cálculo de BTTS (`odds-jtsa.ts`)
 - Usa Poisson com xG: `P(BTTS) = (1 - e^-λ_casa) × (1 - e^-λ_fora)`

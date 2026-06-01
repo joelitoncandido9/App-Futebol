@@ -12,6 +12,7 @@ import { traduzirFato } from '@/lib/utils';
 import { buscarHistoricoTime, formatarComoFormData, buscarUltimosJogos } from '@/lib/bsd-stats';
 import { cacheFetch, makeBsdCacheKey } from '@/lib/bsd-cache';
 import { dashboardParamsSchema } from '@/lib/schemas';
+import { calculateMatchLambdas } from '@/lib/dixon-coles';
 
 const BSD_TOKEN = process.env.BSD_TOKEN || '';
 const BASE_URL = 'https://sports.bzzoiro.com/api';
@@ -138,6 +139,9 @@ export async function GET(
     // Extrai dados do jogo
     let homeForm = { ...(jogoData.home_form || {}) };
     let awayForm = { ...(jogoData.away_form || {}) };
+    // Salva o matches_played ORIGINAL do v1 antes do v2 sobrescrever
+    homeForm.v1_jogos = homeForm.matches_played || homeForm.form_string?.length || 0;
+    awayForm.v1_jogos = awayForm.matches_played || awayForm.form_string?.length || 0;
 
     // Pipeline v2: tenta enriquecer com histórico ampliado (~15 jogos)
     // v1 retorna ID em home_team_obj.id, não em home_team_id
@@ -203,6 +207,47 @@ export async function GET(
       homeTeamId ? fetchBSD(`/players/?team=${homeTeamId}`).catch(() => null) : null,
       awayTeamId ? fetchBSD(`/players/?team=${awayTeamId}`).catch(() => null) : null,
     ]);
+
+    // Injeta médias da temporada (classificação) como fallback para λ
+    if (standingsData?.standings) {
+      const homeRow = standingsData.standings.find((r: any) => r.team === jogoData.home_team);
+      const awayRow = standingsData.standings.find((r: any) => r.team === jogoData.away_team);
+      if (homeRow) {
+        homeForm.season_goals_scored = homeRow.gf;
+        homeForm.season_goals_conceded = homeRow.ga;
+        homeForm.season_xg_for = homeRow.xgf;
+        homeForm.season_xg_against = homeRow.xga;
+        homeForm.season_jogos = homeRow.played;
+      }
+      if (awayRow) {
+        awayForm.season_goals_scored = awayRow.gf;
+        awayForm.season_goals_conceded = awayRow.ga;
+        awayForm.season_xg_for = awayRow.xgf;
+        awayForm.season_xg_against = awayRow.xga;
+        awayForm.season_jogos = awayRow.played;
+      }
+    }
+
+    // Blend bayesiano Dixon-Coles (25 temporadas) + v2 (forma recente)
+    const dcLambdas = calculateMatchLambdas(
+      jogoData.home_team, jogoData.away_team,
+      jogoData.league?.name || ''
+    );
+    if (dcLambdas) {
+      const extrairNum = (v: any) => (v != null && Number.isFinite(Number(v))) ? Number(v) : null;
+      const v2Home = extrairNum(homeForm?.avg_xg)
+        ?? ((homeForm.home_goals_scored ?? homeForm.gols_marcados_casa) / Math.max(1, homeForm.home_jogos ?? homeForm.matches_played ?? 1));
+      const v2Away = extrairNum(awayForm?.avg_xg)
+        ?? ((awayForm.away_goals_scored ?? awayForm.gols_marcados_fora) / Math.max(1, awayForm.away_jogos ?? awayForm.matches_played ?? 1));
+      const nV2 = Math.max(1, homeForm.matches_played ?? homeForm.home_jogos ?? 1);
+      const pesoDC = 3; // prior de 3 jogos virtuais
+      homeForm.blended_avg_xg = Math.round(
+        ((v2Home * nV2) + (dcLambdas.lambdaHome * pesoDC)) / (nV2 + pesoDC) * 100
+      ) / 100;
+      awayForm.blended_avg_xg = Math.round(
+        ((v2Away * nV2) + (dcLambdas.lambdaAway * pesoDC)) / (nV2 + pesoDC) * 100
+      ) / 100;
+    }
 
     // Calcula odds justas (com nomes dos times)
     const cardsMercado = gerarCardsMercado(

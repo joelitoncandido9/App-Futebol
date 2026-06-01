@@ -27,11 +27,19 @@ Médio: meio-campo criativo (-10% xG), lateral (-5% escanteios)
 Baixo: reservas e jogadores com poucas partidas
 
 ### PASSO 4 — CALIBRAÇÃO
+**Sobre o sistema:** O λ (gols esperados) é um blend bayesiano de 3 fontes:
+1. Dixon-Coles (25 temporadas, prior de 3 jogos)
+2. v2 enriquecido (últimos 12 meses, ~15-30 jogos)
+3. Classificação da temporada (fallback)
+
+A cadeia: [blended_avg_xg → avg_xg → gols v1/v1_jogos → season_gf/season_jogos → 0]
+Para Série B, Dixon-Coles pode não ter parâmetros do time — usa só v2 + classificação.
+
 Compare sistema vs Pinnacle onde disponível:
 Divergência = |Prob Sistema - Prob Pinnacle|
 < 5% ✅ | 5-10% ⚠️ | 10-15% ⚠️⚠️ | > 15% ❌ (use Pinnacle)
 
-Mercados SEM odd de mercado (apenas odd justa do sistema, sem calibração nem EV):
+Mercados SEM odd de mercado (apenas odd justa do sistema com blend, sem calibração nem EV):
 FINALIZAÇÕES, CHUTES NO GOL, xG, GRANDES CHANCES, CHUTES (dentro área)
 DESARMES, INTERCEPTAÇÕES, DUELOS AÉREOS, DEFESAS (goleiro)
 FALTAS, IMPEDIMENTOS, PASSES-CHAVE, CRUZAMENTOS, DRIBES, CARTÕES

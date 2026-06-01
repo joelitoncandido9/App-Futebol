@@ -76,11 +76,11 @@ export async function buscarHistoricoTime(
   if (!token || !teamId) return null;
 
   try {
-    // 1. Busca fixtures recentes (últimos 6 meses)
+    // 1. Busca fixtures recentes (últimos 12 meses)
     const hoje = new Date().toISOString().split('T')[0];
-    const seisMesesAtras = new Date();
-    seisMesesAtras.setMonth(seisMesesAtras.getMonth() - 6);
-    const from = seisMesesAtras.toISOString().split('T')[0];
+    const dozeMesesAtras = new Date();
+    dozeMesesAtras.setMonth(dozeMesesAtras.getMonth() - 12);
+    const from = dozeMesesAtras.toISOString().split('T')[0];
 
     const fixturesData = await getV2(
       `/teams/${teamId}/fixtures/?date_from=${from}&date_to=${hoje}&status=finished&limit=${maxJogos}`,
@@ -182,9 +182,9 @@ export async function buscarUltimosJogos(
 
   try {
     const hoje = new Date().toISOString().split('T')[0];
-    const seisMeses = new Date(Date.now() - 180 * 86400000).toISOString().split('T')[0];
+    const dozeMeses = new Date(Date.now() - 365 * 86400000).toISOString().split('T')[0];
     const r = await fetch(
-      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_from=${seisMeses}&date_to=${hoje}&status=finished&limit=50`,
+      `${BASE_URL_V2}/teams/${teamId}/fixtures/?date_from=${dozeMeses}&date_to=${hoje}&status=finished&limit=50`,
       { headers: { Authorization: `Token ${token}` }, signal: AbortSignal.timeout(8000) }
     );
     const d = await r.json();

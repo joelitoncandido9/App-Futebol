@@ -194,11 +194,11 @@ export function gerarCardsMercado(
     return Number.isFinite(n) ? n : null;
   }
 
-  function extrairGols(form: any, camelKey: string, snakeKey: string, jogosKey: string, jogosPadrao: number): number {
-    const raw = form?.[camelKey] ?? form?.[snakeKey];
+  function extrairGols(form: any, camelKey: string, snakeKey: string | null, jogosKey: string, jogosPadrao: number): number {
+    const raw = form?.[camelKey] ?? (snakeKey ? form?.[snakeKey] : undefined);
     const num = extrairNumero(raw);
     if (num == null) return 0;
-    const jogos = form?.[jogosKey] ?? jogosPadrao;
+    const jogos = form?.[jogosKey] || jogosPadrao;
     return num / Math.max(1, jogos);
   }
 
@@ -229,9 +229,15 @@ export function gerarCardsMercado(
     });
   }
 
-  // ── GOLS (xG primário, fallback gols reais via camelCase ou snake_case) ──
-  const homeGolsMeta = extrairNumero(homeForm?.avg_xg) ?? extrairGols(homeForm, 'home_goals_scored', 'gols_marcados_casa', 'home_jogos', homeJogos);
-  const awayGolsMeta = extrairNumero(awayForm?.avg_xg) ?? extrairGols(awayForm, 'away_goals_scored', 'gols_marcados_fora', 'away_jogos', awayJogos);
+  // ── GOLS (blend DC → xG → gols v1/v2 → média da temporada → 0)
+  const homeGolsMeta = extrairNumero(homeForm?.blended_avg_xg)
+    ?? extrairNumero(homeForm?.avg_xg)
+    ?? extrairGols(homeForm, 'home_goals_scored', 'gols_marcados_casa', 'v1_jogos', homeJogos)
+    ?? extrairGols(homeForm, 'season_goals_scored', null, 'season_jogos', homeJogos);
+  const awayGolsMeta = extrairNumero(awayForm?.blended_avg_xg)
+    ?? extrairNumero(awayForm?.avg_xg)
+    ?? extrairGols(awayForm, 'away_goals_scored', 'gols_marcados_fora', 'v1_jogos', awayJogos)
+    ?? extrairGols(awayForm, 'season_goals_scored', null, 'season_jogos', awayJogos);
   if (homeJogos > 0 && awayJogos > 0) {
     addCardContagemDupla(
       'GOLS', homeNomeTime, awayNomeTime,
@@ -273,9 +279,9 @@ export function gerarCardsMercado(
     [6.5, 8.5, 10.5, 12.5, 14.5, 16.5, 18.5, 20.5, 22.5]
   );
 
-  // ── GOLS ESPERADOS (xG) — com fallback para gols reais ──
-  const homeXgVal = extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
-  const awayXgVal = extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
+  // ── GOLS ESPERADOS (xG) — blend DC primário, fallback gols reais ──
+  const homeXgVal = extrairNumero(homeForm?.blended_avg_xg) ?? extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
+  const awayXgVal = extrairNumero(awayForm?.blended_avg_xg) ?? extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
   addCardContagemDupla(
     'GOLS ESPERADOS (xG)', homeNomeTime, awayNomeTime,
     homeXgVal, awayXgVal,
@@ -380,8 +386,8 @@ export function gerarCardsMercado(
   );
 
   // ── 1X2 (Poisson bivariada com xG ou fallback gols) ──
-  const homeXg1x2 = extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
-  const awayXg1x2 = extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
+  const homeXg1x2 = extrairNumero(homeForm?.blended_avg_xg) ?? extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
+  const awayXg1x2 = extrairNumero(awayForm?.blended_avg_xg) ?? extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
   if (homeXg1x2 != null && awayXg1x2 != null) {
     cards.push({
       tipo: '1x2',
@@ -396,8 +402,8 @@ export function gerarCardsMercado(
 
   // ── BTTS (probabilidade de ambos marcarem) ──
   // Fonte primária: Poisson com xG (mais preditivo que clean sheets históricos)
-  const homeXgBtts = extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
-  const awayXgBtts = extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
+  const homeXgBtts = extrairNumero(homeForm?.blended_avg_xg) ?? extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
+  const awayXgBtts = extrairNumero(awayForm?.blended_avg_xg) ?? extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
   if (homeXgBtts != null && awayXgBtts != null) {
     const probBtts = (1 - poissonProb(homeXgBtts, 0)) * (1 - poissonProb(awayXgBtts, 0));
     const total = Math.min(homeJogos, awayJogos);

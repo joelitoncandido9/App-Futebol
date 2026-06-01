@@ -34,6 +34,7 @@ function poissonProb(lambda: number, k: number): number {
 function getLeagueParams(leagueName: string): any {
   const map: Record<string, string> = {
     'Brasileirão Serie A': 'Brasileirao',
+    'Brasileirão Serie B': 'Brasileirao',
     'Brasileirão': 'Brasileirao',
     'Premier League': 'Premier League',
     'La Liga': 'La Liga',
@@ -46,7 +47,12 @@ function getLeagueParams(leagueName: string): any {
     '2 Bundesliga': '2. Bundesliga',
   };
 
-  const key = map[leagueName] || leagueName;
+  // Busca exata primeiro, depois parcial
+  let key = map[leagueName];
+  if (!key) {
+    const entry = Object.entries(map).find(([k]) => leagueName?.includes(k));
+    key = entry ? entry[1] : leagueName;
+  }
   const params = (dcParams as any)[key];
   if (!params) return null;
 
@@ -116,6 +122,50 @@ function getTeamStrength(
   return {
     attack: attack[idx],
     defense: defense[idx],
+  };
+}
+
+export interface MatchLambdas {
+  lambdaHome: number;
+  lambdaAway: number;
+  homeProb: number;
+  drawProb: number;
+  awayProb: number;
+}
+
+export function calculateMatchLambdas(
+  homeTeam: string,
+  awayTeam: string,
+  leagueName: string
+): MatchLambdas | null {
+  const params = getLeagueParams(leagueName);
+  if (!params) return null;
+
+  const homeStrength = getTeamStrength(homeTeam, params, true);
+  const awayStrength = getTeamStrength(awayTeam, params, false);
+  if (!homeStrength || !awayStrength) return null;
+
+  const homeAdvantage = params.homeAdvantage || 1.1;
+  const lambdaHome = Math.max(0.1, homeStrength.attack * awayStrength.defense * homeAdvantage);
+  const lambdaAway = Math.max(0.1, awayStrength.attack * homeStrength.defense);
+
+  let homeProb = 0, drawProb = 0, awayProb = 0;
+  for (let i = 0; i <= 5; i++) {
+    for (let j = 0; j <= 5; j++) {
+      const p = poissonProb(lambdaHome, i) * poissonProb(lambdaAway, j);
+      if (i > j) homeProb += p;
+      else if (i === j) drawProb += p;
+      else awayProb += p;
+    }
+  }
+
+  const total = homeProb + drawProb + awayProb;
+  return {
+    lambdaHome: Math.round(lambdaHome * 100) / 100,
+    lambdaAway: Math.round(lambdaAway * 100) / 100,
+    homeProb: Math.round((homeProb / total) * 10000) / 100,
+    drawProb: Math.round((drawProb / total) * 10000) / 100,
+    awayProb: Math.round((awayProb / total) * 10000) / 100,
   };
 }
 

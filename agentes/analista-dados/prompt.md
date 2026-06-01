@@ -95,6 +95,17 @@ Para cada desfalque registre o impacto:
 
 ### PASSO 4 — CALIBRAÇÃO DAS PROBABILIDADES
 
+**Sobre o sistema de odds justas:**
+O sistema usa um blend bayesiano de 3 fontes para calcular λ (gols esperados):
+
+1. **Dixon-Coles (25 temporadas)** — prior fixo de 3 jogos virtuais
+2. **v2 enriquecido (últimos 12 meses)** — ~15-30 jogos reais, peso = n_jogos
+3. **Classificação da temporada** — usado quando as fontes acima falham
+
+A cadeia de extração é: `blended_avg_xg → avg_xg (v2) → gols v1 / v1_jogos → season_gf / season_jogos → 0`.
+
+Para times de Série B, o Dixon-Coles pode não ter parâmetros (dataset só cobre Série A histórica) — nesse caso, o sistema usa só v2 + classificação.
+
 Para cada mercado com odd Pinnacle disponível:
 
 **Compare sistema vs Pinnacle:**
@@ -108,12 +119,12 @@ Divergência = |Prob Sistema - Prob Pinnacle|
 Quando há grande divergência, use a probabilidade da Pinnacle como referência e descarte o sistema. A Pinnacle raramente erra mais de 5-8%.
 
 **Mercados sem odd de mercado disponível:**
-Os mercados abaixo têm apenas odd justa do sistema (Poisson). Sem odd de mercado, não é possível calibrar nem calcular EV:
+Os mercados abaixo têm apenas odd justa do sistema (Poisson com blend bayesiano). Sem odd de mercado, não é possível calibrar nem calcular EV:
 - FINALIZAÇÕES, CHUTES NO GOL, GOLS ESPERADOS (xG)
 - GRANDES CHANCES, CHUTES (dentro área)
 - DESARMES, INTERCEPTAÇÕES, DUELOS AÉREOS, DEFESAS (goleiro)
 - FALTAS, IMPEDIMENTOS, PASSES-CHAVE, CRUZAMENTOS, DRIBES
-- CARTÕES (apenas odd justa do sistema)
+- CARTÕES (apenas odd justa do sistema, sem Pinnacle)
 
 Para estes, reporte a odd justa sem calibração.
 

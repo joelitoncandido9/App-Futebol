@@ -61,7 +61,7 @@ DRIBES — linhas O/U: 2.5 a 14.5
 BTTS (Ambos Marcam) — probabilidade baseada em clean sheets, comparar com mercado
 
 ## PASSO 3 — CÁLCULOS
-Odd Justa — use Poisson para contagem (gols, escanteios, cartões), proporção para BTTS, Poisson bivariada para 1X2
+Odd Justa — o sistema usa blend bayesiano de 3 fontes (DC 25t + v2 12m + classificação) para definir λ, depois Poisson para contagem (gols, escanteios, cartões), proporção para BTTS, Poisson bivariada para 1X2
 
 EV — SÓ calcule quando tiver AMBOS: odd justa E odd de mercado
 Fórmula: EV = (probabilidade_justa / 100 × odd_mercado) - 1
