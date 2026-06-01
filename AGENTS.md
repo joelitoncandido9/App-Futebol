@@ -31,6 +31,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `lib/bsd-stats.ts` — pipeline v2 de estatísticas históricas por time
 - `lib/bsd-cache.ts` — cache Upstash Redis com fallup
 - `lib/odds-jtsa.ts` — cálculo de odds justas (Poisson)
+- `lib/system-prompt-analista-dados.ts` — prompt do agente Analista de Dados (quantitativo)
 - `lib/dixon-coles.ts` — modelo Dixon-Coles em TS com parâmetros de `ml/params/dixon_coles_params.json`
 - `lib/openrouter.ts` — streaming com tool calling via OpenRouter
 - `app/api/jogos/route.ts` — rota API jogos (usa BSD_TOKEN)
@@ -79,6 +80,11 @@ Skills são carregadas sob demanda via `skill` tool pelo assistente, conforme a 
 - **Animações:** `shimmer` (skeleton), `score-pop` (placar), `fade-up` (cards), `glow-pulse`
 - **Layout:** `max-w-7xl` responsivo (mobile-first com padding lateral, desktop com largura total), padding `px-3 sm:px-4 lg:px-6`
 - **Navegação:** Página única sem abas (nada de Dashboard vs Chat separados)
+
+## Agentes
+
+### `agentes/analista-dados/prompt.md`
+Analista de Dados — agente quantitativo que recebe dados brutos do dashboard, valida, calibra probabilidades vs Pinnacle, calcula EV e gera relatório estruturado para o Analista Esportivo. Prompt em `lib/system-prompt-analista-dados.ts`.
 
 ## Componentes
 
