@@ -216,9 +216,9 @@ export function gerarCardsMercado(
   }
 
   // ── GOLS (usando xG como fonte primária, fallback gols reais) ──
-  const homeGolsMeta = homeForm?.avg_xg ?? (homeForm?.home_goals_scored != null ? homeForm.home_goals_scored / (homeForm?.home_jogos || homeJogos) : null);
-  const awayGolsMeta = awayForm?.avg_xg ?? (awayForm?.away_goals_scored != null ? awayForm.away_goals_scored / (awayForm?.away_jogos || awayJogos) : null);
-  if (homeGolsMeta != null && awayGolsMeta != null) {
+  const homeGolsMeta = homeForm?.avg_xg ?? (homeForm?.home_goals_scored != null ? homeForm.home_goals_scored / (homeForm?.home_jogos || homeJogos) : 0);
+  const awayGolsMeta = awayForm?.avg_xg ?? (awayForm?.away_goals_scored != null ? awayForm.away_goals_scored / (awayForm?.away_jogos || awayJogos) : 0);
+  if (homeJogos > 0 && awayJogos > 0) {
     addCardContagemDupla(
       'GOLS', homeNomeTime, awayNomeTime,
       homeGolsMeta, awayGolsMeta,
