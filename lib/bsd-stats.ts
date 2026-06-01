@@ -224,7 +224,6 @@ export function formatarComoFormData(stats: TeamStatsAverages): Record<string, a
     avg_dribbles: stats.avg_dribbles,
     avg_aerial_duels: stats.avg_aerial_duels,
     avg_saves: stats.avg_saves,
-    avg_key_passes: stats.avg_pass_key,
     avg_big_chances: stats.avg_big_chances,
     avg_possession: stats.avg_possession,
     avg_pass_accuracy: stats.avg_pass_accuracy,
