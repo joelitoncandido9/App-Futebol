@@ -200,7 +200,16 @@ export async function GET(
       jogoData.home_team, jogoData.away_team
     );
 
-    // Extrai odds do mercado para comparação
+    // Extrai recorde V/E/D da string de forma (ex: "WDLWD" → {wins: 2, draws: 1, losses: 2})
+function contarRecorde(formString: string | undefined): { vitorias: number | null; empates: number | null; derrotas: number | null } {
+  if (!formString) return { vitorias: null, empates: null, derrotas: null };
+  const chars = formString.split('');
+  return {
+    vitorias: chars.filter(c => c === 'W').length,
+    empates: chars.filter(c => c === 'D').length,
+    derrotas: chars.filter(c => c === 'L').length,
+  };
+}
     const oddsMercado: Record<string, any> = {};
     if (oddsData?.markets) {
       for (const [mercado, outcomes] of Object.entries(oddsData.markets as Record<string, any>)) {
@@ -387,9 +396,7 @@ export async function GET(
         avg_xg_conceded: homeForm.avg_xg_conceded,
         avg_key_passes: homeForm.avg_key_passes,
         avg_team_rating: homeForm.avg_team_rating,
-        vitorias: homeForm.wins,
-        empates: homeForm.draws,
-        derrotas: homeForm.losses,
+        ...contarRecorde(homeForm.form_string),
       },
       forma_fora: {
         ultimos_jogos: awayForm.form_string,
@@ -408,9 +415,7 @@ export async function GET(
         avg_xg_conceded: awayForm.avg_xg_conceded,
         avg_key_passes: awayForm.avg_key_passes,
         avg_team_rating: awayForm.avg_team_rating,
-        vitorias: awayForm.wins,
-        empates: awayForm.draws,
-        derrotas: awayForm.losses,
+        ...contarRecorde(awayForm.form_string),
       },
       h2h: {
         total_jogos: h2h.total_matches,

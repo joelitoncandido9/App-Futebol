@@ -1126,7 +1126,7 @@ function CoachCard({ time, coach, coachFull }: { time: string; coach: CoachData 
             <div className="text-muted-foreground text-[9px] uppercase tracking-wider mb-1.5">Estatísticas da carreira</div>
             <div className="grid grid-cols-3 gap-1.5 text-center">
               <div className="bg-card/50 rounded p-1">
-                <div className="text-foreground/80 font-mono font-bold text-xs">{coachFull.estatisticas.jogos_total ?? '—'}</div>
+                <div className="text-foreground/80 font-mono font-bold text-xs">{coachFull.estatisticas.jogos_total || '—'}</div>
                 <div className="text-muted-foreground text-[8px]">Jogos</div>
               </div>
               <div className="bg-card/50 rounded p-1">
