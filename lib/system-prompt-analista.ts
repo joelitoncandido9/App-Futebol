@@ -51,6 +51,7 @@ IMPEDIMENTOS — linhas O/U: 0.5 a 5.5
 CARTÕES VERMELHOS — linhas O/U: 0.5 a 2.5 (baixa frequência, não forçar)
 
 ### 🎯 Criação
+PASSES-CHAVE — média de cada time, linhas O/U: 1.5 a 10.5
 ESCANTEIOS — média de cada time, linhas O/U: 1.5 a 11.5
 CRUZAMENTOS — linhas O/U: 4.5 a 18.5
 DRIBES — linhas O/U: 2.5 a 14.5

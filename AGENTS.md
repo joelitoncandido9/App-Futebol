@@ -151,8 +151,9 @@ Primitivas shadcn/ui: Badge, Button, Card, Select, Separator, Skeleton, Table, T
 ⚠️ **`formatarComoFormData` em `bsd-stats.ts` NUNCA deve exportar:**
 - `form_string`, `wins`, `draws`, `losses` — v1 tem os valores REAIS
 - `home_goals_scored`, `away_goals_scored`, `home_goals_conceded`, `away_goals_conceded` — v1 tem totais reais, v2 só tem estimativas proporcionais
+- `avg_key_passes` — v2 stats endpoint NUNCA retorna `key_pass` (verificado em múltiplas ligas). v1 `home_form`/`away_form` já fornece este campo.
 
-✅ **Sempre exportar do v2:** `avg_xg`, `avg_xg_conceded`, todas `avg_*`, `home_jogos`, `away_jogos`
+✅ **Sempre exportar do v2:** `avg_xg`, `avg_xg_conceded`, todas `avg_*` (exceto `avg_key_passes`), `home_jogos`, `away_jogos`
 
 ### Response `forma_casa`/`forma_fora` (route.ts:402-476)
 Expõe 31+ campos por time, incluindo:

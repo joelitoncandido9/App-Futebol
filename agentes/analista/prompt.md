@@ -113,6 +113,10 @@ Para CADA mercado abaixo, você DEVE cobrir TODAS as linhas disponíveis. Não p
 
 ### 🎯 Criação
 
+**PASSES-CHAVE**
+- Média de passes-chave por jogo de cada time
+- Linhas O/U: 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5
+
 **ESCANTEIOS**
 - Média de escanteios por jogo de cada time
 - Linhas O/U: 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5
