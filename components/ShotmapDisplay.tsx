@@ -49,7 +49,7 @@ export default function ShotmapDisplay({ shotmap, timeCasa, timeFora }: ShotmapD
               <span
                 key={i}
                 className={`inline-block w-2 h-2 rounded-full ${s.is_goal ? 'bg-green-500' : s.is_on_target ? 'bg-orange-500' : 'bg-zinc-700'}`}
-                title={`${s.player || ''} ${s.minute}&apos; xG=${s.xg.toFixed(2)}`}
+                title={`${s.player || ''} ${s.minute}' xG=${s.xg.toFixed(2)}${s.body_part ? ` | ${({ head: 'cabeça', left_foot: 'pé E', right_foot: 'pé D', other: 'outro' })[s.body_part] || s.body_part}` : ''}${s.situation ? ` | ${({ open_play: 'bola rolando', set_piece: 'bola parada', penalty: 'pênalti', free_kick: 'falta', corner: 'escanteio', counter_attack: 'contra-ataque', direct_freekick: 'falta direta' })[s.situation] || s.situation}` : ''}`}
               />
             ))}
           </div>
@@ -65,7 +65,7 @@ export default function ShotmapDisplay({ shotmap, timeCasa, timeFora }: ShotmapD
               <span
                 key={i}
                 className={`inline-block w-2 h-2 rounded-full ${s.is_goal ? 'bg-blue-500' : s.is_on_target ? 'bg-purple-500' : 'bg-zinc-700'}`}
-                title={`${s.player || ''} ${s.minute}&apos; xG=${s.xg.toFixed(2)}`}
+                title={`${s.player || ''} ${s.minute}' xG=${s.xg.toFixed(2)}${s.body_part ? ` | ${({ head: 'cabeça', left_foot: 'pé E', right_foot: 'pé D', other: 'outro' })[s.body_part] || s.body_part}` : ''}${s.situation ? ` | ${({ open_play: 'bola rolando', set_piece: 'bola parada', penalty: 'pênalti', free_kick: 'falta', corner: 'escanteio', counter_attack: 'contra-ataque', direct_freekick: 'falta direta' })[s.situation] || s.situation}` : ''}`}
               />
             ))}
           </div>

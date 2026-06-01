@@ -1491,10 +1491,18 @@ function JogadoresStatusSection({
       <div className="space-y-1">
         {indisponiveis.map((j: any) => (
           <div key={j.id} className="flex items-center justify-between text-[11px]">
-            <span className="text-foreground/80">{j.nome}</span>
-            <span className={`text-[9px] font-medium ${j.disponibilidade === 'injured' ? 'text-red-400' : j.disponibilidade === 'suspended' ? 'text-yellow-400' : 'text-orange-400'}`}>
-              {j.disponibilidade === 'injured' ? `🩹 ${j.tipo_lesao || 'Lesionado'}` : j.disponibilidade === 'suspended' ? '🚫 Suspenso' : '⚠️ Duvidoso'}
-            </span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="text-foreground/80 truncate">{j.nome}</span>
+              {j.posicao && <span className="text-[9px] text-muted-foreground shrink-0">({j.posicao})</span>}
+              {j.numero && <span className="text-[9px] text-muted-foreground shrink-0">#{j.numero}</span>}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              {j.retorno_previsto && <span className="text-[9px] text-muted-foreground">volta {j.retorno_previsto}</span>}
+              {j.valor_mercado_eur != null && <span className="text-[9px] text-muted-foreground">€{(j.valor_mercado_eur / 1000000).toFixed(1)}M</span>}
+              <span className={`text-[9px] font-medium ${j.disponibilidade === 'injured' ? 'text-red-400' : j.disponibilidade === 'suspended' ? 'text-yellow-400' : 'text-orange-400'}`}>
+                {j.disponibilidade === 'injured' ? `🩹 ${j.tipo_lesao || 'Lesionado'}` : j.disponibilidade === 'suspended' ? '🚫 Suspenso' : '⚠️ Duvidoso'}
+              </span>
+            </div>
           </div>
         ))}
       </div>
