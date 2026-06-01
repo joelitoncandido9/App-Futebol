@@ -64,9 +64,14 @@ async function fetchV2Safe(endpoint: string): Promise<any> {
   }
 }
 
-/** Busca médias reais de cartões do árbitro via endpoint /referees/ */
-async function buscarMediaCartoesArbitro(nome: string): Promise<{ avg_yellow: number | null; avg_red: number | null }> {
-  if (!nome) return { avg_yellow: null, avg_red: null };
+/** Busca dados completos do árbitro via endpoint /referees/ */
+async function buscarDadosArbitro(nome: string): Promise<{
+  avg_yellow: number | null; avg_red: number | null;
+  pais: string | null; avg_gols: number | null; avg_faltas: number | null;
+  carreira_jogos: number | null; carreira_amarelos: number | null; carreira_vermelhos: number | null;
+}> {
+  const fallback = { avg_yellow: null, avg_red: null, pais: null, avg_gols: null, avg_faltas: null, carreira_jogos: null, carreira_amarelos: null, carreira_vermelhos: null };
+  if (!nome) return fallback;
   try {
     const data = await cacheFetch(
       makeBsdCacheKey('v1', `/referees/?name=${encodeURIComponent(nome)}`),
@@ -81,15 +86,20 @@ async function buscarMediaCartoesArbitro(nome: string): Promise<{ avg_yellow: nu
       TTL
     );
     const arbitros = data.results || [];
-    if (!arbitros.length) return { avg_yellow: null, avg_red: null };
-    // Pega o árbitro com mais jogos (mais relevante)
-    const arbitro = arbitros.reduce((a: any, b: any) => (a.matches || 0) > (b.matches || 0) ? a : b);
+    if (!arbitros.length) return fallback;
+    const a = arbitros.reduce((a: any, b: any) => (a.matches || 0) > (b.matches || 0) ? a : b);
     return {
-      avg_yellow: arbitro.avg_yellow_per_match ?? null,
-      avg_red: arbitro.avg_red_per_match ?? null,
+      avg_yellow: a.avg_yellow_per_match ?? null,
+      avg_red: a.avg_red_per_match ?? null,
+      pais: a.country || null,
+      avg_gols: a.avg_goals_per_match ?? null,
+      avg_faltas: a.avg_fouls_per_match ?? null,
+      carreira_jogos: a.career_games ?? null,
+      carreira_amarelos: a.career_yellow_cards ?? null,
+      carreira_vermelhos: a.career_red_cards ?? null,
     };
   } catch {
-    return { avg_yellow: null, avg_red: null };
+    return fallback;
   }
 }
 
@@ -169,7 +179,7 @@ export async function GET(
     const awayCoach = jogoData.away_coach || jogoData.away_coach_obj || {}
 
     // Busca média real de cartões do árbitro (yellowCards/redCards são totais, não médias)
-    const mediasArbitro = await buscarMediaCartoesArbitro(referee.name);
+    const mediasArbitro = await buscarDadosArbitro(referee.name);
     const statsPartida = jogoData.stats || {}; // { home: {...}, away: {...} }
     const incidents = jogoData.incidents || [];
     const lineups = jogoData.lineups || null;
@@ -397,6 +407,7 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
         avg_key_passes: homeForm.avg_key_passes,
         avg_team_rating: homeForm.avg_team_rating,
         ...contarRecorde(homeForm.form_string),
+        matches_played: homeForm.matches_played ?? null,
       },
       forma_fora: {
         ultimos_jogos: awayForm.form_string,
@@ -416,6 +427,7 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
         avg_key_passes: awayForm.avg_key_passes,
         avg_team_rating: awayForm.avg_team_rating,
         ...contarRecorde(awayForm.form_string),
+        matches_played: awayForm.matches_played ?? null,
       },
       h2h: {
         total_jogos: h2h.total_matches,
@@ -425,6 +437,8 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
         gols_casa_total: h2h.home_goals,
         gols_fora_total: h2h.away_goals,
         media_gols: h2h.avg_total_goals != null ? Math.round(h2h.avg_total_goals * 100) / 100 : null,
+        taxa_vitoria_casa: h2h.home_win_rate != null ? Math.round(h2h.home_win_rate * 100) : null,
+        taxa_vitoria_fora: h2h.away_win_rate != null ? Math.round(h2h.away_win_rate * 100) : null,
         ultimos_jogos: (h2h.recent_matches || []).slice(0, 10).map((m: any) => ({
           home_team: m.home || m.home_team,
           away_team: m.away || m.away_team,
@@ -435,8 +449,14 @@ function contarRecorde(formString: string | undefined): { vitorias: number | nul
       },
       arbitro: {
         nome: referee.name,
+        pais: mediasArbitro.pais,
         amarelos_jogo: mediasArbitro.avg_yellow ?? referee.yellowCards,
         vermelhos_jogo: mediasArbitro.avg_red ?? referee.redCards,
+        gols_jogo: mediasArbitro.avg_gols,
+        faltas_jogo: mediasArbitro.avg_faltas,
+        carreira_jogos: mediasArbitro.carreira_jogos,
+        carreira_amarelos: mediasArbitro.carreira_amarelos,
+        carreira_vermelhos: mediasArbitro.carreira_vermelhos,
       },
       desfalques_casa: desfalques_casa_raw.map((j: any) => j.name || j),
       desfalques_fora: desfalques_fora_raw.map((j: any) => j.name || j),

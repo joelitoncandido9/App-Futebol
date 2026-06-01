@@ -793,7 +793,11 @@ function FormCard({
     <div className="bg-muted/30 rounded-lg p-3.5">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-foreground text-sm font-semibold">{time}</h4>
-        {forma.ultimos_jogos && (
+        <div className="flex items-center gap-2">
+          {forma.matches_played != null && (
+            <span className="text-muted-foreground text-[9px] font-mono">{forma.matches_played}J</span>
+          )}
+          {forma.ultimos_jogos && (
           <span className="text-xs font-mono tracking-wider">
             {forma.ultimos_jogos.split('').map((c: string, i: number) => (
               <span
@@ -809,6 +813,7 @@ function FormCard({
             ))}
           </span>
         )}
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2 text-[11px]">
@@ -957,6 +962,15 @@ function H2HSection({
       {h2h.media_gols != null && (
         <div className="text-[11px] text-muted-foreground mb-3">
           Média de gols no confronto: <span className="text-foreground/80 font-mono">{h2h.media_gols}</span>
+        </div>
+      )}
+
+      {(h2h.taxa_vitoria_casa != null || h2h.taxa_vitoria_fora != null) && (
+        <div className="text-[11px] text-muted-foreground mb-3">
+          Taxa de vitória: <span className="text-green-400 font-mono">{h2h.taxa_vitoria_casa ?? '?'}%</span>
+          {' / '}<span className="text-muted-foreground">{timeCasa}</span>
+          {' · '}<span className="text-red-400 font-mono">{h2h.taxa_vitoria_fora ?? '?'}%</span>
+          {' / '}<span className="text-muted-foreground">{timeFora}</span>
         </div>
       )}
 
@@ -1124,7 +1138,7 @@ function CoachCard({ time, coach, coachFull }: { time: string; coach: CoachData 
         {coachFull?.estatisticas && (
           <div className="pt-2 border-t border-border/40 mt-2">
             <div className="text-muted-foreground text-[9px] uppercase tracking-wider mb-1.5">Estatísticas da carreira</div>
-            <div className="grid grid-cols-3 gap-1.5 text-center">
+            <div className="grid grid-cols-3 gap-1.5 text-center mb-1.5">
               <div className="bg-card/50 rounded p-1">
                 <div className="text-foreground/80 font-mono font-bold text-xs">{coachFull.estatisticas.jogos_total || '—'}</div>
                 <div className="text-muted-foreground text-[8px]">Jogos</div>
@@ -1138,15 +1152,79 @@ function CoachCard({ time, coach, coachFull }: { time: string; coach: CoachData 
                 <div className="text-muted-foreground text-[8px]">Gols p/j</div>
               </div>
             </div>
-            {coachFull.estatisticas.media_xg_favor != null && (
-              <div className="grid grid-cols-2 gap-1.5 text-center mt-1.5">
+            {(coachFull.estatisticas.media_xg_favor != null || coachFull.estatisticas.media_xg_contra != null || coachFull.estatisticas.pct_clean_sheet != null) && (
+              <div className="grid grid-cols-3 gap-1.5 text-center mb-1.5">
                 <div className="bg-card/50 rounded p-1">
-                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_xg_favor.toFixed(2)}</div>
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_xg_favor != null ? coachFull.estatisticas.media_xg_favor.toFixed(2) : '—'}</div>
                   <div className="text-muted-foreground text-[8px]">xG p/j</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_xg_contra != null ? coachFull.estatisticas.media_xg_contra.toFixed(2) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">xG sofrido</div>
                 </div>
                 <div className="bg-card/50 rounded p-1">
                   <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.pct_clean_sheet != null ? `${coachFull.estatisticas.pct_clean_sheet}%` : '—'}</div>
                   <div className="text-muted-foreground text-[8px]">Clean sheet</div>
+                </div>
+              </div>
+            )}
+            {(coachFull.estatisticas.media_posse != null || coachFull.estatisticas.media_chutes != null || coachFull.estatisticas.media_chutes_gol != null) && (
+              <div className="grid grid-cols-3 gap-1.5 text-center mb-1.5">
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_posse != null ? `${coachFull.estatisticas.media_posse}%` : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Posse</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_chutes != null ? coachFull.estatisticas.media_chutes.toFixed(1) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Chutes p/j</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_chutes_gol != null ? coachFull.estatisticas.media_chutes_gol.toFixed(1) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">No gol p/j</div>
+                </div>
+              </div>
+            )}
+            {(coachFull.estatisticas.media_amarelos != null || coachFull.estatisticas.media_vermelhos != null || coachFull.estatisticas.media_faltas != null) && (
+              <div className="grid grid-cols-3 gap-1.5 text-center mb-1.5">
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-yellow-500 font-mono text-[10px]">{coachFull.estatisticas.media_amarelos != null ? coachFull.estatisticas.media_amarelos.toFixed(2) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Amarelos p/j</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-red-500 font-mono text-[10px]">{coachFull.estatisticas.media_vermelhos != null ? coachFull.estatisticas.media_vermelhos.toFixed(2) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Vermelhos p/j</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_faltas != null ? coachFull.estatisticas.media_faltas.toFixed(1) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Faltas p/j</div>
+                </div>
+              </div>
+            )}
+            {(coachFull.estatisticas.media_escanteios != null || coachFull.estatisticas.media_gols_sofridos != null) && (
+              <div className="grid grid-cols-2 gap-1.5 text-center mb-1.5">
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.media_escanteios != null ? coachFull.estatisticas.media_escanteios.toFixed(1) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Escanteios p/j</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-red-400 font-mono text-[10px]">{coachFull.estatisticas.media_gols_sofridos != null ? coachFull.estatisticas.media_gols_sofridos.toFixed(1) : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Gols sofridos p/j</div>
+                </div>
+              </div>
+            )}
+            {(coachFull.estatisticas.pct_btts != null || coachFull.estatisticas.pct_over_25 != null || coachFull.estatisticas.pct_falha_marcar != null) && (
+              <div className="grid grid-cols-3 gap-1.5 text-center">
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.pct_btts != null ? `${coachFull.estatisticas.pct_btts}%` : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">BTTS</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.pct_over_25 != null ? `${coachFull.estatisticas.pct_over_25}%` : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">+2.5</div>
+                </div>
+                <div className="bg-card/50 rounded p-1">
+                  <div className="text-foreground/80 font-mono text-[10px]">{coachFull.estatisticas.pct_falha_marcar != null ? `${coachFull.estatisticas.pct_falha_marcar}%` : '—'}</div>
+                  <div className="text-muted-foreground text-[8px]">Falha marcar</div>
                 </div>
               </div>
             )}
@@ -1159,14 +1237,24 @@ function CoachCard({ time, coach, coachFull }: { time: string; coach: CoachData 
 
 function RefereeSection({ arbitro }: { arbitro: Record<string, any> }) {
   return (
-    <div className="flex items-center gap-3 text-[11px] flex-wrap">
-      <span className="text-foreground/80 font-medium">{arbitro.nome}</span>
-      <span className="text-yellow-500">
-        Amarelos/jogo: <span className="text-foreground/80">{arbitro.amarelos_jogo ?? '—'}</span>
-      </span>
-      <span className="text-red-500">
-        Vermelhos/jogo: <span className="text-foreground/80">{arbitro.vermelhos_jogo ?? '—'}</span>
-      </span>
+    <div className="space-y-1 text-[11px]">
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="text-foreground/80 font-medium">{arbitro.nome}</span>
+        {arbitro.pais && <span className="text-muted-foreground">• {arbitro.pais}</span>}
+      </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
+        <span className="text-yellow-500">Amarelos/jogo: <span className="text-foreground/80">{arbitro.amarelos_jogo ?? '—'}</span></span>
+        <span className="text-red-500">Vermelhos/jogo: <span className="text-foreground/80">{arbitro.vermelhos_jogo ?? '—'}</span></span>
+        <span>Gols/jogo: <span className="text-foreground/80">{arbitro.gols_jogo ?? '—'}</span></span>
+        <span>Faltas/jogo: <span className="text-foreground/80">{arbitro.faltas_jogo ?? '—'}</span></span>
+      </div>
+      {(arbitro.carreira_jogos || arbitro.carreira_amarelos || arbitro.carreira_vermelhos) && (
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-muted-foreground pt-0.5 border-t border-border/20">
+          <span>Carreira: <span className="text-foreground/80">{arbitro.carreira_jogos ?? '—'} jogos</span></span>
+          <span className="text-yellow-500">Amarelos: <span className="text-foreground/80">{arbitro.carreira_amarelos ?? '—'}</span></span>
+          <span className="text-red-500">Vermelhos: <span className="text-foreground/80">{arbitro.carreira_vermelhos ?? '—'}</span></span>
+        </div>
+      )}
     </div>
   );
 }
