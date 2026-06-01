@@ -287,6 +287,10 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
             pinnacle_prob: (data as any).bookmakers?.Pinnacle?.decimal
               ? Math.round((1 / (data as any).bookmakers.Pinnacle.decimal) * 10000) / 100
               : null,
+            betfair_odd: (data as any).bookmakers?.Betfair?.decimal ?? null,
+            betfair_prob: (data as any).bookmakers?.Betfair?.decimal
+              ? Math.round((1 / (data as any).bookmakers.Betfair.decimal) * 10000) / 100
+              : null,
           };
         }
       }
@@ -474,6 +478,7 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
         avg_pass_accuracy: homeForm.avg_pass_accuracy,
         avg_xg: homeForm.avg_xg,
         avg_xg_conceded: homeForm.avg_xg_conceded,
+        blended_avg_xg: homeForm.blended_avg_xg ?? null,
         avg_key_passes: homeForm.avg_key_passes,
         avg_team_rating: homeForm.avg_team_rating,
         home_jogos: homeForm.home_jogos,
@@ -511,6 +516,7 @@ function extrairRecorde(tabela: any[] | null, timeNome: string | undefined, form
         avg_pass_accuracy: awayForm.avg_pass_accuracy,
         avg_xg: awayForm.avg_xg,
         avg_xg_conceded: awayForm.avg_xg_conceded,
+        blended_avg_xg: awayForm.blended_avg_xg ?? null,
         avg_key_passes: awayForm.avg_key_passes,
         avg_team_rating: awayForm.avg_team_rating,
         home_jogos: awayForm.home_jogos,

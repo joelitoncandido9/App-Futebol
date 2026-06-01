@@ -877,7 +877,7 @@ function StatsTable({
   }> = [
     { label: 'Gols marcados', casa: formaCasa.gols_marcados_casa, fora: formaFora.gols_marcados_fora, format: 'int' },
     { label: 'Gols sofridos', casa: formaCasa.gols_sofridos_casa, fora: formaFora.gols_sofridos_fora, format: 'int' },
-    { label: 'Gols esperados (xG) p/j', casa: formaCasa.avg_xg, fora: formaFora.avg_xg, format: 'float' },
+    { label: 'Gols esperados (xG) p/j', casa: formaCasa.blended_avg_xg ?? formaCasa.avg_xg, fora: formaFora.blended_avg_xg ?? formaFora.avg_xg, format: 'float' },
     { label: 'xG sofrido p/j', casa: formaCasa.avg_xg_conceded, fora: formaFora.avg_xg_conceded, format: 'float' },
     { label: 'Posse de bola %', casa: formaCasa.avg_possession, fora: formaFora.avg_possession, format: 'pct' },
     { label: 'Precisão passes %', casa: formaCasa.avg_pass_accuracy, fora: formaFora.avg_pass_accuracy, format: 'pct' },
@@ -1351,6 +1351,7 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
             <TableHead className="text-[10px] text-right">Melhor Odd</TableHead>
             <TableHead className="text-[10px] text-right">Casa</TableHead>
             <TableHead className="text-[10px] text-right">Pinnacle</TableHead>
+            <TableHead className="text-[10px] text-right">Betfair</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -1367,6 +1368,9 @@ function MarketOddsSection({ oddsMercado }: { oddsMercado: Record<string, any> }
                 </TableCell>
                 <TableCell className="py-1.5 text-[10px] text-right font-mono text-muted-foreground">
                   {data.pinnacle_odd ?? '-'}
+                </TableCell>
+                <TableCell className="py-1.5 text-[10px] text-right font-mono text-muted-foreground">
+                  {data.betfair_odd ?? '-'}
                 </TableCell>
               </TableRow>
             ))

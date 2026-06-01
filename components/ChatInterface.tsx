@@ -26,7 +26,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
   const [loading, setLoading] = useState(false);
   const [toolStatus, setToolStatus] = useState('');
   const [streaming, setStreaming] = useState('');
-  const [mode, setMode] = useState<'analista' | 'validador'>('analista');
+  const [mode, setMode] = useState<'analista' | 'analista-dados'>('analista');
   const chatRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -138,15 +138,15 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
         </button>
         <button
           role="tab"
-          aria-selected={mode === "validador"}
-          onClick={() => { setMode("validador"); setMessages([]); setStreaming(""); }}
+          aria-selected={mode === "analista-dados"}
+          onClick={() => { setMode("analista-dados"); setMessages([]); setStreaming(""); }}
           className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-all ${
-            mode === "validador"
+            mode === "analista-dados"
               ? "bg-primary text-primary-foreground shadow-sm"
               : "glass text-muted-foreground hover:text-foreground"
           }`}
         >
-          ✅ Validador
+          📊 Dados
         </button>
         {messages.length > 0 && (
           <button

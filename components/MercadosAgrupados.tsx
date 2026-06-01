@@ -40,6 +40,10 @@ interface CardData {
   amostra_fora: number;
   odds_1x2?: any;
   odds_btts?: any;
+  prob_referencia?: number;
+  fonte_referencia?: string;
+  ev_casa?: number;
+  ev_fora?: number;
 }
 
 interface MercadosAgrupadosProps {
@@ -113,7 +117,28 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {card1x2 && card1x2.odds_1x2 && (
                 <div className="glass rounded-xl p-3.5">
-                  <h5 className="text-[10px] font-bold uppercase tracking-wider text-primary mb-3">1X2</h5>
+                  <div className="flex items-center justify-between mb-3">
+                    <h5 className="text-[10px] font-bold uppercase tracking-wider text-primary">1X2</h5>
+                    <div className="flex items-center gap-2">
+                      {card1x2.fonte_referencia && (
+                        <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded ${
+                          card1x2.fonte_referencia === 'Pinnacle' ? 'bg-green-900/40 text-green-400' :
+                          card1x2.fonte_referencia === 'Betfair' ? 'bg-blue-900/40 text-blue-400' :
+                          'bg-amber-900/40 text-amber-400'
+                        }`}>
+                          Ref: {card1x2.fonte_referencia}
+                        </span>
+                      )}
+                      {card1x2.ev_casa != null && (
+                        <span className={`text-[9px] font-mono font-bold ${
+                          card1x2.ev_casa >= 8 ? 'text-green-400' :
+                          card1x2.ev_casa >= 3 ? 'text-yellow-400' : 'text-red-400'
+                        }`}>
+                          EV {card1x2.ev_casa}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
                   <div className="grid grid-cols-3 gap-2">
                     <OddPill
                       label={card1x2.time_casa}
@@ -138,7 +163,18 @@ export default function MercadosAgrupados({ cards, oddsConsenso }: MercadosAgrup
               )}
               {cardBtts && cardBtts.odds_btts && (
                 <div className="glass rounded-xl p-3.5">
-                  <h5 className="text-[10px] font-bold uppercase tracking-wider text-primary mb-3">Ambos Marcam</h5>
+                  <div className="flex items-center justify-between mb-3">
+                    <h5 className="text-[10px] font-bold uppercase tracking-wider text-primary">Ambos Marcam</h5>
+                    {cardBtts.fonte_referencia && (
+                      <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded ${
+                        cardBtts.fonte_referencia === 'Pinnacle' ? 'bg-green-900/40 text-green-400' :
+                        cardBtts.fonte_referencia === 'Betfair' ? 'bg-blue-900/40 text-blue-400' :
+                        'bg-amber-900/40 text-amber-400'
+                      }`}>
+                        Ref: {cardBtts.fonte_referencia}
+                      </span>
+                    )}
+                  </div>
                   <div className="grid grid-cols-2 gap-2">
                     <OddPill
                       label="Sim"

@@ -15,7 +15,7 @@ Confiança do modelo: acima de 60% = confiável | abaixo = alerta
 xG disponível ou zerado?
 Passes-chave zerados ou ausentes? Se sim: dado não disponível. Se disponível, incluir na análise.
 Amostra suficiente? (mínimo 8 jogos por time)
-Dados suspeitos: BTTS > 85% (superestimado), odds 999/1000 (ausente), divergência > 15% da Pinnacle
+Dados suspeitos: BTTS > 85% (superestimado), odds 999/1000 (ausente)
 
 ### PASSO 2 — ANÁLISE DO ÁRBITRO
 Classifique: 🟢 Permissivo (< 3.5 amarelos/j), 🟡 Moderado (3.5-5.5), 🔴 Rigoroso (> 5.5)
@@ -35,9 +35,8 @@ Baixo: reservas e jogadores com poucas partidas
 A cadeia: [blended_avg_xg → avg_xg → gols v1/v1_jogos → season_gf/season_jogos → 0]
 Para Série B, Dixon-Coles pode não ter parâmetros do time — usa só v2 + classificação.
 
-Compare sistema vs Pinnacle onde disponível:
-Divergência = |Prob Sistema - Prob Pinnacle|
-< 5% ✅ | 5-10% ⚠️ | 10-15% ⚠️⚠️ | > 15% ❌ (use Pinnacle)
+A referência de probabilidade é automática: Pinnacle → Betfair → Sistema.
+Use \`fonte_referencia\` e \`prob_referencia\` do card. Se suspeitar que a odd Pinnacle está desatualizada, alerte.
 
 Mercados SEM odd de mercado (apenas odd justa do sistema com blend, sem calibração nem EV):
 FINALIZAÇÕES, CHUTES NO GOL, xG, GRANDES CHANCES, CHUTES (dentro área)
@@ -45,17 +44,19 @@ DESARMES, INTERCEPTAÇÕES, DUELOS AÉREOS, DEFESAS (goleiro)
 FALTAS, IMPEDIMENTOS, PASSES-CHAVE, CRUZAMENTOS, DRIBES, CARTÕES
 
 ### PASSO 5 — EV
-Com odd de mercado: EV = (prob_real × melhor_odd) - 1
-Sem odd de mercado: reporte apenas odd justa, sem EV
+EV já calculado no card (ev_casa/ev_fora). Use os valores conforme a tabela:
 Critérios: > 8% ✅ | 3-8% ⚠️ | < 3% ❌
-Limites especiais: competições obscuras 12%, odd < 1.30 → 15%, dados suspeitos → 12%
+Limites especiais: fonte_referencia = "Sistema" + amostra < 8 → 12%
+competições obscuras 12%, odd < 1.30 → 15%, dados suspeitos → 12%
+Sem odds de mercado: reporte apenas odd justa, sem EV
 
 ### PASSO 6 — RANKING
 Ordene mercados por EV decrescente. Inclua apenas EV > 3%.
 
 ## FORMATO DO RELATÓRIO
 📋 RELATÓRIO DE DADOS
-🔍 Qualidade dos dados (score X/10: confiança 2pt + xG 2pt + amostra 2pt + Pinnacle 2pt + desfalques/árbitro 2pt)
+🔍 Qualidade dos dados (score X/10: confiança 2pt + xG 2pt + amostra 2pt + referência 2pt + desfalques/árbitro 2pt)
+Referência: Pinnacle=2, Betfair=1.5, Sistema=1, sem referência=0
 ⚽ Dados fundamentais (xG, médias 25+ campos)
 🟨 Árbitro
 🏥 Desfalques
@@ -67,7 +68,7 @@ Ordene mercados por EV decrescente. Inclua apenas EV > 3%.
 ## REGRAS INVIOLÁVEIS
 1. NUNCA emita opinião sobre time
 2. NUNCA analise contexto tático
-3. SEMPRE use Pinnacle quando divergência > 10%
+3. SEMPRE confie na referência automática. Se suspeitar que a odd Pinnacle está desatualizada, alerte.
 4. SEMPRE alerte dados suspeitos antes do EV
 5. NUNCA aprove dado suspeito sem avisar
 6. SEMPRE entregue no formato padronizado

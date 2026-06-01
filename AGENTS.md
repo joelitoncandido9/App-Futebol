@@ -30,10 +30,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `lib/bsd-tools.ts` — tools BSD API (v1+v2), ~37KB, usada via function calling OpenRouter
 - `lib/bsd-stats.ts` — pipeline v2 de estatísticas históricas por time
 - `lib/bsd-cache.ts` — cache Upstash Redis com fallup
-- `lib/odds-jtsa.ts` — cálculo de odds justas (Poisson)
+- `lib/odds-jtsa.ts` — cálculo de odds justas (Poisson) + `selecionarReferencia()` (Pinnacle → Betfair → Sistema)
 - `lib/system-prompt-analista-dados.ts` — prompt do agente Analista de Dados (quantitativo)
 - `lib/dixon-coles.ts` — modelo Dixon-Coles em TS com parâmetros de `ml/params/dixon_coles_params.json`
-- `lib/openrouter.ts` — streaming com tool calling via OpenRouter
+- `lib/openrouter.ts` — streaming com tool calling via OpenRouter (modos: `analista`, `analista-dados`)
 - `app/api/jogos/route.ts` — rota API jogos (usa BSD_TOKEN)
 - `app/api/dashboard/[eventId]/route.ts` — rota API dashboard (usa BSD_TOKEN)
 
@@ -84,7 +84,7 @@ Skills são carregadas sob demanda via `skill` tool pelo assistente, conforme a 
 ## Agentes
 
 ### `agentes/analista-dados/prompt.md`
-Analista de Dados — agente quantitativo que recebe dados brutos do dashboard, valida, calibra probabilidades vs Pinnacle, calcula EV e gera relatório estruturado para o Analista Esportivo. Prompt em `lib/system-prompt-analista-dados.ts`.
+Analista de Dados — agente quantitativo que recebe dados brutos do dashboard, valida, usa referência automática (Pinnacle → Betfair → Sistema), calcula EV e gera relatório estruturado para o Analista Esportivo. Prompt em `lib/system-prompt-analista-dados.ts`.
 
 ## Componentes
 
@@ -106,7 +106,7 @@ Dashboard completo de um jogo em página única (sem accordion/colapsáveis). ~1
 ### `components/ChatInterface.tsx`
 Chat com agente analista via SSE + OpenRouter (DEPRECATED — será substituído pelos novos agentes).
 - **Props:** `eventId?: number`, `timeCasa?: string`, `timeFora?: string`
-- Modos: Analista (`🔍`) e Validador (`✅`)
+- Modos: Analista (`🔍`) e Analista de Dados (`📊`)
 
 ### `components/MercadosAgrupados.tsx`
 Odds justas agrupadas por categoria (Ataque, Defesa, Disciplina, Criação, Mercados).
@@ -170,7 +170,15 @@ Expõe 31+ campos por time, incluindo:
 - **Metadata:** clean_sheets, home_jogos, away_jogos, matches_played, recorde (V/E/D da tabela)
 
 ### `odds_mercado` (route.ts:233-245)
-Cada outcome inclui: `melhor_odd`, `melhor_casa`, `pinnacle_odd`, `pinnacle_prob` (implícita em %)
+Cada outcome inclui: `melhor_odd`, `melhor_casa`, `pinnacle_odd`, `pinnacle_prob`, `betfair_odd`, `betfair_prob`
+
+### Referência automática de probabilidade (`odds-jtsa.ts`)
+Hierarquia: **Pinnacle → Betfair → Sistema**
+- Função `selecionarReferencia(pinnacleOdd, betfairOdd, probSistema)` no `odds-jtsa.ts`
+- Aplicada nos cards 1X2 e BTTS em `gerarCardsMercado()`
+- Resultado exposto no card: `prob_referencia`, `fonte_referencia`, `ev_casa`, `ev_fora`
+- Badge visual "Ref: Pinnacle / Betfair / Sistema" nos cards do dashboard
+- Prompt do Analista de Dados já instruído a confiar na referência automática
 
 ### Cálculo de λ de GOLS/xG/1X2/BTTS (`odds-jtsa.ts` + `route.ts`)
 

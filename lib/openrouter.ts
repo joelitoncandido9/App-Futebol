@@ -5,8 +5,8 @@
 
 import { toolDeclarations, executar_function_call } from './bsd-tools';
 import { SYSTEM_PROMPT } from './system-prompt';
-import { SYSTEM_PROMPT_VALIDADOR } from './system-prompt-validador';
 import { SYSTEM_PROMPT_ANALISTA } from './system-prompt-analista';
+import { SYSTEM_PROMPT_ANALISTA_DADOS } from './system-prompt-analista-dados';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'openai/gpt-oss-120b:free';
@@ -34,7 +34,7 @@ interface ToolCall {
  */
 export function chatStream(messages: { role: string; content: string }[], eventId?: number, mode?: string) {
   let systemPrompt = SYSTEM_PROMPT;
-  if (mode === "validador") systemPrompt = SYSTEM_PROMPT_VALIDADOR;
+  if (mode === "analista-dados") systemPrompt = SYSTEM_PROMPT_ANALISTA_DADOS;
   else if (mode === "analista") systemPrompt = SYSTEM_PROMPT_ANALISTA;
 
   const fullMessages: Message[] = [

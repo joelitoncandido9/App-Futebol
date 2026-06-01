@@ -148,7 +148,7 @@ export function calcularOddsBTTS(
   };
 }
 
-// ── INTERFACE DO CARD (SIMPLIFICADA, SEM OJ2) ──
+// ── INTERFACE DO CARD ──
 
 export interface CardMercadoData {
   tipo: 'contagem_dupla' | '1x2' | 'btts';
@@ -158,24 +158,56 @@ export interface CardMercadoData {
   // Contagem dupla (casa + fora)
   odds_casa?: OddsContagem;
   odds_fora?: OddsContagem;
-  odds_combinado?: OddsContagem; // λ total da partida (casa + fora)
+  odds_combinado?: OddsContagem;
   amostra_casa: number;
   amostra_fora: number;
   // 1X2
   odds_1x2?: Odds1X2;
   // BTTS
   odds_btts?: { prob_sim: number; odd_sim: number; prob_nao: number; odd_nao: number };
-  // Mercado
-  odd_mercado?: number;
+  // Referência automática (Pinnacle → Betfair → Sistema)
+  prob_referencia?: number;
+  fonte_referencia?: string;
+  ev_casa?: number;
+  ev_fora?: number;
+}
+
+function extrairNumero(valor: any): number | null {
+  if (valor == null) return null;
+  const n = Number(valor);
+  return Number.isFinite(n) ? n : null;
+}
+
+function selecionarReferencia(
+  pinnacleOdd: number | null | undefined,
+  betfairOdd: number | null | undefined,
+  probSistema: number
+): { prob: number; fonte: string } {
+  const pin = extrairNumero(pinnacleOdd);
+  if (pin != null && pin > 1) {
+    return { prob: Math.round((1 / pin) * 10000) / 10000, fonte: 'Pinnacle' };
+  }
+  const bet = extrairNumero(betfairOdd);
+  if (bet != null && bet > 1) {
+    return { prob: Math.round((1 / bet) * 10000) / 10000, fonte: 'Betfair' };
+  }
+  return { prob: probSistema, fonte: 'Sistema' };
 }
 
 /**
  * Gera cards de mercado — APENAS com dados reais, sem suavização
  */
+function buscaOutcome(oddsMercado: any, mercadoKey: string, outcomeKey: string): any {
+  if (!oddsMercado) return null;
+  const mercado = Object.entries(oddsMercado).find(([k]) => k.toLowerCase() === mercadoKey.toLowerCase())?.[1];
+  if (!mercado) return null;
+  return Object.entries(mercado).find(([k]) => k.toLowerCase() === outcomeKey.toLowerCase())?.[1];
+}
+
 export function gerarCardsMercado(
   homeForm: any,
   awayForm: any,
-  _oddsMercado: any,
+  oddsMercado: any,
   homeNome?: string,
   awayNome?: string
 ): CardMercadoData[] {
@@ -187,12 +219,6 @@ export function gerarCardsMercado(
   const awayNomeTime = awayNome || 'Fora';
 
   if (homeJogos === 0 || awayJogos === 0) return cards;
-
-  function extrairNumero(valor: any): number | null {
-    if (valor == null) return null;
-    const n = Number(valor);
-    return Number.isFinite(n) ? n : null;
-  }
 
   function extrairGols(form: any, camelKey: string, snakeKey: string | null, jogosKey: string, jogosPadrao: number): number {
     const raw = form?.[camelKey] ?? (snakeKey ? form?.[snakeKey] : undefined);
@@ -389,33 +415,58 @@ export function gerarCardsMercado(
   const homeXg1x2 = extrairNumero(homeForm?.blended_avg_xg) ?? extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
   const awayXg1x2 = extrairNumero(awayForm?.blended_avg_xg) ?? extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
   if (homeXg1x2 != null && awayXg1x2 != null) {
+    const odds1x2 = calcularOdds1X2(Math.max(0.3, homeXg1x2), Math.max(0.3, awayXg1x2));
+    const pinCasa = buscaOutcome(oddsMercado, '1X2', 'vitoria_casa')?.pinnacle_odd;
+    const pinEmp = buscaOutcome(oddsMercado, '1X2', 'empate')?.pinnacle_odd;
+    const pinFora = buscaOutcome(oddsMercado, '1X2', 'vitoria_fora')?.pinnacle_odd;
+    const betCasa = buscaOutcome(oddsMercado, '1X2', 'vitoria_casa')?.betfair_odd;
+    const betEmp = buscaOutcome(oddsMercado, '1X2', 'empate')?.betfair_odd;
+    const betFora = buscaOutcome(oddsMercado, '1X2', 'vitoria_fora')?.betfair_odd;
+    const refCasa = selecionarReferencia(pinCasa, betCasa, odds1x2.casa_prob / 100);
+    const refEmp = selecionarReferencia(pinEmp, betEmp, odds1x2.empate_prob / 100);
+    const refFora = selecionarReferencia(pinFora, betFora, odds1x2.fora_prob / 100);
+    const melhorCasa = buscaOutcome(oddsMercado, '1X2', 'vitoria_casa')?.melhor_odd;
+    const melhorFora = buscaOutcome(oddsMercado, '1X2', 'vitoria_fora')?.melhor_odd;
     cards.push({
       tipo: '1x2',
       titulo: '1X2',
       time_casa: homeNomeTime,
       time_fora: awayNomeTime,
-      odds_1x2: calcularOdds1X2(Math.max(0.3, homeXg1x2), Math.max(0.3, awayXg1x2)),
+      odds_1x2: odds1x2,
       amostra_casa: homeJogos,
       amostra_fora: awayJogos,
+      prob_referencia: refCasa.prob,
+      fonte_referencia: refCasa.fonte,
+      ev_casa: melhorCasa ? Math.round(((refCasa.prob * melhorCasa) - 1) * 10000) / 100 : undefined,
+      ev_fora: melhorFora ? Math.round(((refFora.prob * melhorFora) - 1) * 10000) / 100 : undefined,
     });
   }
 
   // ── BTTS (probabilidade de ambos marcarem) ──
-  // Fonte primária: Poisson com xG (mais preditivo que clean sheets históricos)
   const homeXgBtts = extrairNumero(homeForm?.blended_avg_xg) ?? extrairNumero(homeForm?.avg_xg) ?? homeGolsMeta;
   const awayXgBtts = extrairNumero(awayForm?.blended_avg_xg) ?? extrairNumero(awayForm?.avg_xg) ?? awayGolsMeta;
   if (homeXgBtts != null && awayXgBtts != null) {
     const probBtts = (1 - poissonProb(homeXgBtts, 0)) * (1 - poissonProb(awayXgBtts, 0));
     const total = Math.min(homeJogos, awayJogos);
     const bttsSim = Math.round(Math.min(0.99, Math.max(0.01, probBtts)) * total);
+    const oddsBtts = calcularOddsBTTS(total, bttsSim);
+    const pinSim = buscaOutcome(oddsMercado, 'AMBOS MARCAM', 'sim')?.pinnacle_odd;
+    const pinNao = buscaOutcome(oddsMercado, 'AMBOS MARCAM', 'nao')?.pinnacle_odd;
+    const betSim = buscaOutcome(oddsMercado, 'AMBOS MARCAM', 'sim')?.betfair_odd;
+    const betNao = buscaOutcome(oddsMercado, 'AMBOS MARCAM', 'nao')?.betfair_odd;
+    const refSim = selecionarReferencia(pinSim, betSim, oddsBtts.prob_sim / 100);
+    const melhorSim = buscaOutcome(oddsMercado, 'AMBOS MARCAM', 'sim')?.melhor_odd;
     cards.push({
       tipo: 'btts',
       titulo: 'AMBOS MARCAM',
       time_casa: homeNomeTime,
       time_fora: awayNomeTime,
-      odds_btts: calcularOddsBTTS(total, bttsSim),
+      odds_btts: oddsBtts,
       amostra_casa: homeJogos,
       amostra_fora: awayJogos,
+      prob_referencia: refSim.prob,
+      fonte_referencia: refSim.fonte,
+      ev_casa: melhorSim ? Math.round(((refSim.prob * melhorSim) - 1) * 10000) / 100 : undefined,
     });
   }
 
