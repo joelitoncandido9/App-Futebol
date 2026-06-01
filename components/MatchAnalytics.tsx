@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Area, AreaChart, ReferenceLine,
@@ -35,8 +34,6 @@ export default function MatchAnalytics({
   statsAvancadas, shotmap, xgPorMinuto, momentum,
   averagePositions, timeCasa, timeFora,
 }: MatchAnalyticsProps) {
-  const [tab, setTab] = useState<'stats' | 'shotmap' | 'xg' | 'momentum'>('stats');
-
   const hasStats = !!statsAvancadas;
   const hasShotmap = !!shotmap && shotmap.length > 0;
   const hasXg = !!xgPorMinuto && xgPorMinuto.length > 0;
@@ -44,47 +41,21 @@ export default function MatchAnalytics({
 
   if (!hasStats && !hasShotmap && !hasXg && !hasMomentum) return null;
 
-  const tabs: Array<{ key: string; label: string; count?: number; condition: boolean }> = [
-    { key: 'stats', label: '📊 Estatísticas', condition: hasStats },
-    { key: 'shotmap', label: `🎯 Chutes${hasShotmap ? ` (${shotmap!.length})` : ''}`, condition: hasShotmap },
-    { key: 'xg', label: '📈 Gols Esperados', condition: hasXg },
-    { key: 'momentum', label: '⚡ Pressão', condition: hasMomentum },
-  ].filter((t) => t.condition);
-
-  if (tabs.length === 0) return null;
-
   return (
-    <div>
-      <div className="flex gap-1 overflow-x-auto scrollbar-none pb-2">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key as any)}
-            className={`shrink-0 px-3 py-1.5 text-[10px] rounded-lg font-medium whitespace-nowrap transition-all ${
-              tab === t.key
-                ? 'bg-primary text-primary-foreground shadow-sm'
-                : 'glass text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div className="mt-2">
-        {tab === 'stats' && hasStats && (
-          <StatsAvancadas
-            home={statsAvancadas!.home}
-            away={statsAvancadas!.away}
-            timeCasa={timeCasa}
-            timeFora={timeFora}
-          />
-        )}
-        {tab === 'shotmap' && hasShotmap && (
-          <ShotmapDisplay shotmap={shotmap!} timeCasa={timeCasa} timeFora={timeFora} />
-        )}
-        {tab === 'xg' && hasXg && <XgTimelineChart data={xgPorMinuto!} timeCasa={timeCasa} timeFora={timeFora} />}
-        {tab === 'momentum' && hasMomentum && <MomentumChart data={momentum!} timeCasa={timeCasa} timeFora={timeFora} />}
-      </div>
+    <div className="space-y-4">
+      {hasStats && (
+        <StatsAvancadas
+          home={statsAvancadas!.home}
+          away={statsAvancadas!.away}
+          timeCasa={timeCasa}
+          timeFora={timeFora}
+        />
+      )}
+      {hasShotmap && (
+        <ShotmapDisplay shotmap={shotmap!} timeCasa={timeCasa} timeFora={timeFora} />
+      )}
+      {hasXg && <XgTimelineChart data={xgPorMinuto!} timeCasa={timeCasa} timeFora={timeFora} />}
+      {hasMomentum && <MomentumChart data={momentum!} timeCasa={timeCasa} timeFora={timeFora} />}
     </div>
   );
 }

@@ -98,7 +98,7 @@ async function processLoop(
       tools: toolDeclarations,
       tool_choice: 'auto',
       stream: true,
-      max_tokens: 4000,
+      max_tokens: 8000,
       temperature: 0.7,
     }),
     signal: AbortSignal.timeout(55000),
@@ -191,10 +191,10 @@ async function processLoop(
         args = JSON.parse(tc.function.arguments);
       } catch { /* mantém vazio */ }
 
-      // Notifica o frontend
+      const toolLabel = tc.function.name === 'buscar_na_web' ? '🌐 Pesquisando na web' : `🔧 Buscando ${tc.function.name}...`;
       const toolEvent = JSON.stringify({
         type: 'tool',
-        message: `🔧 Buscando ${tc.function.name}...`,
+        message: toolLabel,
       });
       controller.enqueue(encoder.encode(`data: ${toolEvent}\n\n`));
 

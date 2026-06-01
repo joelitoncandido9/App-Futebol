@@ -106,13 +106,14 @@ export async function GET(
     const id = parsed.data.eventId;
 
     // Busca dados do jogo (v1) + odds comparadas em paralelo
-    const [jogoData, oddsData, predicaoV2, playerStats, metadata, broadcasts] = await Promise.all([
+    const [jogoData, oddsData, predicaoV2, playerStats, metadata, broadcasts, polymarketData] = await Promise.all([
       fetchBSD(`/events/${id}/`),
       fetchBSD(`/odds/compare/?event=${id}`).catch(() => null),
       fetchV2Safe(`/events/${id}/prediction/`),
       fetchV2Safe(`/events/${id}/player-stats/`),
       fetchV2Safe(`/events/${id}/metadata/`),
       fetchV2Safe(`/events/${id}/broadcasts/`),
+      fetchBSD(`/odds/polymarket/?event=${id}`).catch(() => null),
     ]);
 
     if (!jogoData || jogoData.error) {
@@ -172,6 +173,26 @@ export async function GET(
     const statsPartida = jogoData.stats || {}; // { home: {...}, away: {...} }
     const incidents = jogoData.incidents || [];
     const lineups = jogoData.lineups || null;
+
+    // ── NOVOS ENDPOINTS INTEGRADOS ──
+
+    // Elenco completo (v2 /teams/{id}/squad/)
+    const [elencoCasa, elencoFora] = await Promise.all([
+      homeTeamId ? fetchV2Safe(`/teams/${homeTeamId}/squad/`) : null,
+      awayTeamId ? fetchV2Safe(`/teams/${awayTeamId}/squad/`) : null,
+    ]);
+
+    // Perfil técnico completo (v1 /managers/)
+    const [tecnicoCasaFull, tecnicoForaFull] = await Promise.all([
+      homeTeamId ? fetchBSD(`/managers/?team_id=${homeTeamId}`).catch(() => null) : null,
+      awayTeamId ? fetchBSD(`/managers/?team_id=${awayTeamId}`).catch(() => null) : null,
+    ]);
+
+    // Jogadores com status de disponibilidade (v1 /players/)
+    const [jogadoresCasa, jogadoresFora] = await Promise.all([
+      homeTeamId ? fetchBSD(`/players/?team=${homeTeamId}`).catch(() => null) : null,
+      awayTeamId ? fetchBSD(`/players/?team=${awayTeamId}`).catch(() => null) : null,
+    ]);
 
     // Calcula odds justas (com nomes dos times)
     const cardsMercado = gerarCardsMercado(
@@ -241,7 +262,10 @@ export async function GET(
       modelo: predicaoV2.model?.version,
       confianca: predicaoV2.model?.confidence,
       probabilidades: predicaoV2.markets?.match_result,
-      expected_goals: predicaoV2.markets?.expected_goals,
+      gols_esperados: predicaoV2.markets?.expected_goals ? {
+        casa: predicaoV2.markets.expected_goals.home,
+        fora: predicaoV2.markets.expected_goals.away,
+      } : null,
       over_under: predicaoV2.markets?.over_under,
       btts_sim_pct: predicaoV2.markets?.btts?.prob_yes,
       placar_provavel: predicaoV2.markets?.score?.most_likely,
@@ -286,19 +310,19 @@ export async function GET(
           minutos: s.minutes_played,
           rating: s.rating,
           gols: s.goals,
-          goal_assist: s.goal_assist,
-          expected_goals: s.expected_goals,
-          expected_assists: s.expected_assists,
-          total_shots: s.total_shots,
-          shots_on_target: s.shots_on_target,
-          total_pass: s.total_pass,
-          accurate_pass: s.accurate_pass,
-          key_pass: s.key_pass,
-          total_tackle: s.total_tackle,
-          interception: s.interception,
-          yellow_card: s.yellow_card,
-          red_card: s.red_card,
-          saves: s.saves,
+          assistencias: s.goal_assist,
+          xg: s.expected_goals,
+          xa: s.expected_assists,
+          chutes_total: s.total_shots,
+          chutes_no_gol: s.shots_on_target,
+          passes_total: s.total_pass,
+          passes_certos: s.accurate_pass,
+          passes_chave: s.key_pass,
+          desarmes: s.total_tackle,
+          interceptacoes: s.interception,
+          cartao_amarelo: s.yellow_card,
+          cartao_vermelho: s.red_card,
+          defesas: s.saves,
         }))
       : null;
 
@@ -414,16 +438,16 @@ export async function GET(
       tecnico_casa: homeCoach?.name ? {
         nome: homeCoach.name,
         formacao_preferida: homeCoach.preferred_formation,
-        pressing_intensity: homeCoach.pressing_intensity,
-        defensive_line: homeCoach.defensive_line,
-        top_styles: homeCoach.top_styles || [],
+        intensidade_pressao: homeCoach.pressing_intensity,
+        linha_defensiva: homeCoach.defensive_line,
+        estilos_principais: homeCoach.top_styles || [],
       } : null,
       tecnico_fora: awayCoach?.name ? {
         nome: awayCoach.name,
         formacao_preferida: awayCoach.preferred_formation,
-        pressing_intensity: awayCoach.pressing_intensity,
-        defensive_line: awayCoach.defensive_line,
-        top_styles: awayCoach.top_styles || [],
+        intensidade_pressao: awayCoach.pressing_intensity,
+        linha_defensiva: awayCoach.defensive_line,
+        estilos_principais: awayCoach.top_styles || [],
       } : null,
       tabela,
       xg_pos_jogo: {
@@ -494,6 +518,137 @@ export async function GET(
         gols_fora: f.away_score ?? null,
         status: f.status,
       })),
+      // ── ENDPOINTS INTEGRADOS ──
+      polymarket: polymarketData?.results?.[0] ? {
+        odds: polymarketData.results[0].odds || null,
+        placares_exatos: polymarketData.results[0].exact_scores
+          ? Object.entries(polymarketData.results[0].exact_scores as Record<string, number>)
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 10)
+              .map(([placar, prob]) => ({ placar, prob_pct: Math.round(prob * 1000) / 10 }))
+          : null,
+        artilheiros: polymarketData.results[0].goalscorers
+          ? Object.entries(polymarketData.results[0].goalscorers as Record<string, number>)
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 10)
+              .map(([jogador, prob]) => ({ jogador, prob_pct: Math.round(prob * 1000) / 10 }))
+          : null,
+        atualizado_em: polymarketData.results[0].updated_at || null,
+      } : null,
+      elenco_casa: elencoCasa?.players ? {
+        total: elencoCasa.count || elencoCasa.players.length,
+        jogadores: elencoCasa.players.map((p: any) => ({
+          id: p.id,
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          nacionalidade: p.nationality,
+          data_nascimento: p.date_of_birth,
+        })),
+      } : null,
+      elenco_fora: elencoFora?.players ? {
+        total: elencoFora.count || elencoFora.players.length,
+        jogadores: elencoFora.players.map((p: any) => ({
+          id: p.id,
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          nacionalidade: p.nationality,
+          data_nascimento: p.date_of_birth,
+        })),
+      } : null,
+      tecnico_casa_completo: tecnicoCasaFull?.results?.[0] ? {
+        nome: tecnicoCasaFull.results[0].name,
+        pais: tecnicoCasaFull.results[0].country,
+        time_atual: tecnicoCasaFull.results[0].current_team?.name || null,
+        perfil_geral: tecnicoCasaFull.results[0].profile || null,
+        estilo_time: tecnicoCasaFull.results[0].team_style || null,
+        formacoes_usadas: tecnicoCasaFull.results[0].formations_used || [],
+        estatisticas: {
+          jogos_total: tecnicoCasaFull.results[0].matches_total,
+          vitorias: tecnicoCasaFull.results[0].wins,
+          empates: tecnicoCasaFull.results[0].draws,
+          derrotas: tecnicoCasaFull.results[0].losses,
+          pct_vitorias: tecnicoCasaFull.results[0].win_pct,
+          media_gols_marcados: tecnicoCasaFull.results[0].avg_goals_scored,
+          media_gols_sofridos: tecnicoCasaFull.results[0].avg_goals_conceded,
+          media_gols_marcados_1t: tecnicoCasaFull.results[0].avg_goals_scored_1h,
+          media_gols_sofridos_1t: tecnicoCasaFull.results[0].avg_goals_conceded_1h,
+          media_posse: tecnicoCasaFull.results[0].avg_possession,
+          media_chutes: tecnicoCasaFull.results[0].avg_shots,
+          media_chutes_gol: tecnicoCasaFull.results[0].avg_shots_on_target,
+          media_xg_favor: tecnicoCasaFull.results[0].avg_xg_for,
+          media_xg_contra: tecnicoCasaFull.results[0].avg_xg_against,
+          media_escanteios: tecnicoCasaFull.results[0].avg_corners,
+          media_amarelos: tecnicoCasaFull.results[0].avg_yellow_cards,
+          media_vermelhos: tecnicoCasaFull.results[0].avg_red_cards,
+          media_faltas: tecnicoCasaFull.results[0].avg_fouls,
+          pct_clean_sheet: tecnicoCasaFull.results[0].clean_sheet_pct,
+          pct_btts: tecnicoCasaFull.results[0].btts_pct,
+          pct_over_25: tecnicoCasaFull.results[0].over_25_pct,
+          pct_falha_marcar: tecnicoCasaFull.results[0].fail_to_score_pct,
+        },
+      } : null,
+      tecnico_fora_completo: tecnicoForaFull?.results?.[0] ? {
+        nome: tecnicoForaFull.results[0].name,
+        pais: tecnicoForaFull.results[0].country,
+        time_atual: tecnicoForaFull.results[0].current_team?.name || null,
+        perfil_geral: tecnicoForaFull.results[0].profile || null,
+        estilo_time: tecnicoForaFull.results[0].team_style || null,
+        formacoes_usadas: tecnicoForaFull.results[0].formations_used || [],
+        estatisticas: {
+          jogos_total: tecnicoForaFull.results[0].matches_total,
+          vitorias: tecnicoForaFull.results[0].wins,
+          empates: tecnicoForaFull.results[0].draws,
+          derrotas: tecnicoForaFull.results[0].losses,
+          pct_vitorias: tecnicoForaFull.results[0].win_pct,
+          media_gols_marcados: tecnicoForaFull.results[0].avg_goals_scored,
+          media_gols_sofridos: tecnicoForaFull.results[0].avg_goals_conceded,
+          media_gols_marcados_1t: tecnicoForaFull.results[0].avg_goals_scored_1h,
+          media_gols_sofridos_1t: tecnicoForaFull.results[0].avg_goals_conceded_1h,
+          media_posse: tecnicoForaFull.results[0].avg_possession,
+          media_chutes: tecnicoForaFull.results[0].avg_shots,
+          media_chutes_gol: tecnicoForaFull.results[0].avg_shots_on_target,
+          media_xg_favor: tecnicoForaFull.results[0].avg_xg_for,
+          media_xg_contra: tecnicoForaFull.results[0].avg_xg_against,
+          media_escanteios: tecnicoForaFull.results[0].avg_corners,
+          media_amarelos: tecnicoForaFull.results[0].avg_yellow_cards,
+          media_vermelhos: tecnicoForaFull.results[0].avg_red_cards,
+          media_faltas: tecnicoForaFull.results[0].avg_fouls,
+          pct_clean_sheet: tecnicoForaFull.results[0].clean_sheet_pct,
+          pct_btts: tecnicoForaFull.results[0].btts_pct,
+          pct_over_25: tecnicoForaFull.results[0].over_25_pct,
+          pct_falha_marcar: tecnicoForaFull.results[0].fail_to_score_pct,
+        },
+      } : null,
+      jogadores_casa: jogadoresCasa?.results?.length ? {
+        total: jogadoresCasa.results.length,
+        jogadores: jogadoresCasa.results.map((p: any) => ({
+          id: p.id,
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          disponibilidade: p.availability,
+          tipo_lesao: p.injury_type || null,
+          retorno_previsto: p.injury_expected_return || null,
+          pe_preferido: p.preferred_foot,
+          valor_mercado_eur: p.market_value || null,
+        })),
+      } : null,
+      jogadores_fora: jogadoresFora?.results?.length ? {
+        total: jogadoresFora.results.length,
+        jogadores: jogadoresFora.results.map((p: any) => ({
+          id: p.id,
+          nome: p.name,
+          posicao: p.position,
+          numero: p.jersey_number,
+          disponibilidade: p.availability,
+          tipo_lesao: p.injury_type || null,
+          retorno_previsto: p.injury_expected_return || null,
+          pe_preferido: p.preferred_foot,
+          valor_mercado_eur: p.market_value || null,
+        })),
+      } : null,
     };
 
     return Response.json(resultado, {

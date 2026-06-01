@@ -48,7 +48,7 @@ def main():
         event_id = match.get("id")
         home = match.get("home_team", "")
         away = match.get("away_team", "")
-        league = match.get("league_name", "")
+        league = (match.get("league") or {}).get("name", "")
 
         # Predição básica 1X2 via Poisson com média da liga
         predictions.append({

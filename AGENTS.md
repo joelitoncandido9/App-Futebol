@@ -44,8 +44,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## CI/CD
 - `.github/workflows/daily-predictions.yml` — roda `python ml/src/predict.py` diariamente
 
-## Pendências (14 itens pendentes / 3 concluídos)
-Ver `tarefas pendentes/pendencias.md` para lista completa.
+## Pendências (todas resolvidas — 17 itens concluídos)
+Ver `tarefas pendentes/pendencias.md` para detalhes.
 
 ## Skills instaladas (globais em ~/.agents/skills/)
 - improve-codebase-architecture (mattpocock/skills)
@@ -90,17 +90,17 @@ Lista de jogos com busca, filtro por liga em pills, abas de dia, paginação.
 - Seções: Ao Vivo, Finalizados Hoje, Sem Resultado, Próximos Jogos
 
 ### `components/DashboardJogo.tsx`
-Dashboard completo de um jogo em página única (sem accordion/colapsáveis).
+Dashboard completo de um jogo em página única (sem accordion/colapsáveis). ~1400 linhas com 18 seções e 4 novas seções integradas.
 - **Props:** `eventId: number`
-- **MatchHeader:** Estilo TV broadcast — scores gigantes com glow no vencedor, barra de probabilidade horizontal, informações do estádio/clima
-- **Seções** (sempre abertas, SectionBox sem collapse): MatchAnalytics, IncidentesTimeline, PlayerStatsTabela, Lineups, FormWidgets, StatsTable, H2H, UltimosJogos, StandingsTable, MercadosAgrupados, MarketOdds, Coaches, Referee
+- **MatchHeader:** Estilo TV broadcast — scores gigantes com glow no vencedor, odds O/U e BTTS, barra de probabilidade horizontal, estádio/clima
+- **Seções** (sempre abertas, SectionBox sem collapse): ContextoPartida, Preview & Fatos (IA), MatchAnalytics, IncidentesTimeline, PlayerStatsTabela (18 colunas), Lineups, **ElencoCompleto**, OndeAssistir, FormWidgets (com V/E/D record), **DisponibilidadeJogadores**, StatsTable (avg_red_cards), H2H (gols totais), UltimosJogos, StandingsTable (GP/GC/xGF/xGA), MercadosAgrupados, ComparacaoOdds, **Polymarket**, Coaches (perfil completo), Referee, **DadosBrutosJSON** (colapsável com cópia)
+- **DataRow helper:** componente reutilizável que exibe `—` quando dado não disponível
+- **Nomenclatura:** 100% PT-BR (intensidade_pressao, linha_defensiva, estilos_principais, gols_esperados)
 
 ### `components/ChatInterface.tsx`
-Chat com agente analista via SSE + OpenRouter.
+Chat com agente analista via SSE + OpenRouter (DEPRECATED — será substituído pelos novos agentes).
 - **Props:** `eventId?: number`, `timeCasa?: string`, `timeFora?: string`
 - Modos: Analista (`🔍`) e Validador (`✅`)
-- Streaming de resposta com status de ferramentas
-- **Inline:** Aparece no final do dashboard via botão expansivo (não em aba separada)
 
 ### `components/MercadosAgrupados.tsx`
 Odds justas agrupadas por categoria (Ataque, Defesa, Disciplina, Criação, Mercados).
@@ -139,3 +139,6 @@ Schemas Zod para validação de API:
 
 ### `components/ui/`
 Primitivas shadcn/ui: Badge, Button, Card, Select, Separator, Skeleton, Table, Tabs.
+
+## Removidos
+- `components/LoadingIndicator.tsx` — não utilizado, substituído pelo SkeletonCard

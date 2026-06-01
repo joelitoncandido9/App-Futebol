@@ -30,12 +30,19 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
   const chatRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  // Auto scroll
+  // Auto scroll com ResizeObserver (não força descida se usuário estiver lendo)
   useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }
-  }, [messages, streaming, toolStatus]);
+    const container = chatRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => {
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+      if (isNearBottom) {
+        container.scrollTop = container.scrollHeight;
+      }
+    });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   async function enviar(conteudo: string) {
     if (!conteudo.trim() || loading) return;

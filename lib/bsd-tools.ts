@@ -697,7 +697,75 @@ export async function buscar_elenco(params: { team_id: number }): Promise<string
   return JSON.stringify({ time_id: data.team_id, total: data.count || jogadores.length, jogadores }, null, 2);
 }
 
-// ── TOOL 18 ──
+// ── TOOL 18 (WEB SEARCH) ──
+export async function buscar_na_web(params: { query: string }): Promise<string> {
+  const query = params.query;
+  if (!query || !query.trim()) {
+    return JSON.stringify({ erro: 'Query de busca vazia' });
+  }
+
+  // Tenta Tavily Search API primeiro (melhor para AI agents)
+  const tavilyKey = process.env.TAVILY_API_KEY;
+  if (tavilyKey) {
+    try {
+      const res = await fetch('https://api.tavily.com/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: tavilyKey,
+          query: query,
+          search_depth: 'basic',
+          max_results: 5,
+          include_answer: true,
+        }),
+        signal: AbortSignal.timeout(10000),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return JSON.stringify({
+          fonte: 'Tavily',
+          resultado_principal: data.answer || null,
+          resultados: (data.results || []).map((r: any) => ({
+            titulo: r.title,
+            url: r.url,
+            conteudo: r.content?.slice(0, 500),
+          })),
+        }, null, 2);
+      }
+    } catch {
+      // fallback silencioso
+    }
+  }
+
+  // Fallback: DuckDuckGo Instant Answer API (sem chave)
+  try {
+    const res = await fetch(
+      `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`,
+      { signal: AbortSignal.timeout(8000) }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      const resultados = data.RelatedTopics?.slice(0, 5).map((r: any) => ({
+        texto: r.Text || r.Result,
+        url: r.FirstURL,
+      })) || [];
+      return JSON.stringify({
+        fonte: 'DuckDuckGo',
+        abstract: data.AbstractText || null,
+        resultados,
+      }, null, 2);
+    }
+  } catch {
+    // fallback silencioso
+  }
+
+  return JSON.stringify({
+    erro: 'Web search não disponível. Configure TAVILY_API_KEY no .env.local para habilitar.',
+    dica: 'https://tavily.com/ — free tier: 1000 consultas/mês',
+  });
+}
+
+// ── TOOL 19 ──
 export async function buscar_elenco_copa(params: { team_id: number }): Promise<string> {
   const data = await _get_v2(`/worldcup/squads/${params.team_id}/`);
   if (data.error) return JSON.stringify(data);
@@ -749,6 +817,7 @@ const toolMap: Record<string, ToolFunction> = {
   buscar_metadados,
   buscar_transmissoes,
   buscar_elenco,
+  buscar_na_web,
   buscar_elenco_copa,
 };
 
@@ -1001,6 +1070,20 @@ export const toolDeclarations = [
           team_id: { type: 'number', description: 'ID do time' },
         },
         required: ['team_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'buscar_na_web',
+      description: 'Pesquisa na web sobre times, jogadores, campeonatos, lesões, notícias, clima. Use para contexto atual antes de analisar um jogo.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Pergunta ou termo de busca (ex: "Cruzeiro temporada 2026 lesões")' },
+        },
+        required: ['query'],
       },
     },
   },

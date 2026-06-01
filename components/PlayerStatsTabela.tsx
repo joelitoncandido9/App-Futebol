@@ -72,6 +72,18 @@ export default function PlayerStatsTabela({
   );
 }
 
+function abreviarPosicao(pos?: string): string {
+  if (!pos) return '';
+  const map: Record<string, string> = {
+    'Goalkeeper': 'GOL', 'GK': 'GOL',
+    'Defender': 'ZAG', 'CB': 'ZAG', 'LB': 'LAT', 'RB': 'LAT', 'WB': 'LAT',
+    'Midfielder': 'MEI', 'CM': 'MEI', 'CDM': 'VOL', 'CAM': 'MEI',
+    'Forward': 'ATA', 'ST': 'ATA', 'CF': 'ATA', 'LW': 'PON', 'RW': 'PON',
+    'Substitute': 'SUB',
+  };
+  return map[pos] || pos.slice(0, 3).toUpperCase();
+}
+
 function renderTabela(players: PlayerStat[]) {
   if (players.length === 0) {
     return <p className="text-muted-foreground text-xs py-4 text-center">Sem dados disponíveis</p>;
@@ -90,16 +102,27 @@ function renderTabela(players: PlayerStat[]) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xs">
+      <table className="w-full text-[10px]">
         <thead>
           <tr className="border-b border-border/50">
-            <th className="text-left text-muted-foreground font-medium px-2 py-1.5">Jogador</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">Min</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">⭐</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">G</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">A</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-10">xG</th>
-            <th className="text-center text-muted-foreground font-medium px-1.5 py-1.5 w-8">🟨</th>
+            <th className="text-left text-muted-foreground font-medium px-1.5 py-1 sticky left-0 bg-card z-10">Jogador</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1">Pos</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">Min</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">⭐</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-6">G</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-6">A</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-8">xG</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-8">xA</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">Ch</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">ChG</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-8">Pas</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-8">PasC</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">PC</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">Des</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-7">Int</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-6">🟨</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-6">🟥</th>
+            <th className="text-center text-muted-foreground font-medium px-1 py-1 w-8">Def</th>
           </tr>
         </thead>
         <tbody>
@@ -115,32 +138,66 @@ function renderTabela(players: PlayerStat[]) {
                   isTop ? 'bg-green-900/10' : ''
                 } ${isBottom ? 'bg-red-900/10' : ''}`}
               >
-                <td className="px-2 py-1.5">
-                  <span className={`text-foreground/80 ${isTop ? 'text-green-400 font-medium' : ''} ${isBottom ? 'text-red-400' : ''}`}>
+                <td className="px-1.5 py-1 sticky left-0 bg-card z-10">
+                  <span className={`text-foreground/80 text-[10px] ${isTop ? 'text-green-400 font-medium' : ''} ${isBottom ? 'text-red-400' : ''}`}>
                     {p.nome || `#${p.jogador_id || idx + 1}`}
                   </span>
+                  {p.posicao && <span className="text-muted-foreground ml-1">({p.posicao})</span>}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-muted-foreground">
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {abreviarPosicao(p.posicao) || '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
                   {p.minutos || p.minutes_played || '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono">
+                <td className="text-center px-1 py-1 font-mono">
                   {rating != null ? (
                     <span className={`${rating >= 8 ? 'text-green-400 font-bold' : rating >= 6.5 ? 'text-foreground/80' : 'text-red-400'}`}>
                       {rating.toFixed(1)}
                     </span>
                   ) : '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-green-500">
+                <td className="text-center px-1 py-1 font-mono text-green-500">
                   {p.gols || '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-blue-400">
+                <td className="text-center px-1 py-1 font-mono text-blue-400">
                   {p.assistencias || '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5 font-mono text-muted-foreground">
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
                   {p.xg != null ? p.xg.toFixed(2) : '-'}
                 </td>
-                <td className="text-center px-1.5 py-1.5">
-                  {p.cartao_amarelo ? '🟨' : p.cartao_vermelho ? '🟥' : '-'}
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.xa != null ? p.xa.toFixed(2) : '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.chutes_total ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.chutes_no_gol ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.passes_total ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.passes_certos ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.passes_chave ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.desarmes ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.interceptacoes ?? '-'}
+                </td>
+                <td className="text-center px-1 py-1">
+                  {p.cartao_amarelo ? '🟨' : '-'}
+                </td>
+                <td className="text-center px-1 py-1">
+                  {p.cartao_vermelho ? '🟥' : '-'}
+                </td>
+                <td className="text-center px-1 py-1 font-mono text-muted-foreground">
+                  {p.defesas != null ? p.defesas : '-'}
                 </td>
               </tr>
             );
