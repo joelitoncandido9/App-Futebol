@@ -39,17 +39,13 @@ Para Série B, Dixon-Coles pode não ter parâmetros do time — usa só v2 + cl
 A referência de probabilidade é automática: Pinnacle → Betfair → Sistema.
 Use \`fonte_referencia\` e \`prob_referencia\` do card. Se suspeitar que a odd Pinnacle está desatualizada, alerte.
 
-Mercados SEM odd de mercado (apenas odd justa do sistema com blend, sem calibração nem EV):
-FINALIZAÇÕES, CHUTES NO GOL, xG, GRANDES CHANCES, CHUTES (dentro área)
-DESARMES, INTERCEPTAÇÕES, DUELOS AÉREOS, DEFESAS (goleiro)
-FALTAS, IMPEDIMENTOS, PASSES-CHAVE, CRUZAMENTOS, DRIBES, CARTÕES
-
 ### PASSO 5 — EV
-EV já calculado no card (ev_casa/ev_fora). Use os valores conforme a tabela:
+Calcule o EV para TODO mercado usando os dados disponíveis:
+- Se houver odd de mercado (Betano, Pinnacle, etc.): EV = (prob_ref × market_odd) - 1
+- Se houver apenas odd justa do sistema: use a odd justa como preço e calcule EV. O resultado será 0% (preço justo), mas ainda assim reporte.
 Critérios: > 8% ✅ | 3-8% ⚠️ | < 3% ❌
 Limites especiais: fonte_referencia = "Sistema" + amostra < 8 → 12%
 competições obscuras 12%, odd < 1.30 → 15%, dados suspeitos → 12%
-Sem odds de mercado: reporte apenas odd justa, sem EV
 
 ### PASSO 6 — RANKING
 Ordene mercados por EV decrescente. Inclua apenas EV > 3%.
@@ -74,7 +70,7 @@ Referência: Pinnacle=2, Betfair=1.5, Sistema=1, sem referência=0
 5. NUNCA aprove dado suspeito sem avisar
 6. SEMPRE entregue no formato padronizado
 7. SEMPRE calcule 3% da banca para cada aprovado
-8. SEMPRE para mercados sem odd de mercado, reporte apenas odd justa sem EV
+8. SEMPRE calcule EV para todo mercado — se só tiver odd justa do sistema, EV será 0%
 9. Fale em português do Brasil
 10. Se dados insuficientes: informe e peça complementação
 `;
