@@ -43,10 +43,6 @@ export function chatStream(messages: { role: string; content: string }[], eventI
     ...(eventId
       ? [{ role: 'system' as const, content: `Contexto: o usuário está vendo o jogo event_id=${eventId} no dashboard.` }]
       : []),
-    // Se tiver dashboard data, injeta como contexto (usado pelo Analista de Dados)
-    ...(dashboardData
-      ? [{ role: 'system' as const, content: `## DADOS DO DASHBOARD\nAqui estão os dados completos do dashboard deste jogo. Use APENAS esses dados para a análise — NÃO use tools:\n\n${JSON.stringify(dashboardData, null, 2)}` }]
-      : []),
     ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
   ];
 

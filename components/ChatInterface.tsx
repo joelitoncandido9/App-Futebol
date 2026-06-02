@@ -60,11 +60,7 @@ export default function ChatInterface({ eventId, timeCasa, timeFora, dashboardDa
     abortRef.current = controller;
 
     try {
-      const payload: any = { messages: [{ role: 'user', content: conteudo.trim() }], eventId, mode };
-      if (mode === 'analista-dados' && dashboardData) {
-        const { jogo, forma_casa, forma_fora, odds_consenso, odds_mercado, cards_mercado } = dashboardData;
-        payload.dashboardData = { jogo, forma_casa, forma_fora, odds_consenso, odds_mercado, cards_mercado };
-      }
+      const payload = { messages: [{ role: 'user', content: conteudo.trim() }], eventId, mode };
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
