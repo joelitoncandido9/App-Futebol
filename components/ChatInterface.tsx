@@ -11,6 +11,7 @@ interface ChatInterfaceProps {
   eventId?: number;
   timeCasa?: string;
   timeFora?: string;
+  dashboardData?: any;
 }
 
 const EXEMPLOS = [
@@ -20,7 +21,7 @@ const EXEMPLOS = [
   'Minha banca é R$500. Tem algum palpite?',
 ];
 
-export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInterfaceProps) {
+export default function ChatInterface({ eventId, timeCasa, timeFora, dashboardData }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -59,10 +60,15 @@ export default function ChatInterface({ eventId, timeCasa, timeFora }: ChatInter
     abortRef.current = controller;
 
     try {
+      const payload: any = { messages: [{ role: 'user', content: conteudo.trim() }], eventId, mode };
+      if (mode === 'analista-dados' && dashboardData) {
+        const { jogo, forma_casa, forma_fora, odds_consenso, odds_mercado, cards_mercado } = dashboardData;
+        payload.dashboardData = { jogo, forma_casa, forma_fora, odds_consenso, odds_mercado, cards_mercado };
+      }
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: conteudo.trim() }], eventId, mode }),
+        body: JSON.stringify(payload),
         signal: controller.signal,
       });
 

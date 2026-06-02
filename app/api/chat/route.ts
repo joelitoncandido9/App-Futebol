@@ -12,14 +12,14 @@ export const runtime = 'nodejs';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { messages, eventId, mode } = body;
+    const { messages, eventId, mode, dashboardData } = body;
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return Response.json({ error: 'Mensagens são obrigatórias' }, { status: 400 });
     }
 
     // Cria o stream SSE
-    const stream = chatStream(messages, eventId || undefined, mode);
+    const stream = chatStream(messages, eventId || undefined, mode, dashboardData);
 
     return new Response(stream, {
       headers: {

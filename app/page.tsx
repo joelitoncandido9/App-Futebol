@@ -10,6 +10,7 @@ export default function Home() {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [timeCasa, setTimeCasa] = useState('');
   const [timeFora, setTimeFora] = useState('');
+  const [dashboardData, setDashboardData] = useState<any>(null);
   const [showChat, setShowChat] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
@@ -23,6 +24,7 @@ export default function Home() {
         if (data.jogo) {
           setTimeCasa(data.jogo.time_casa);
           setTimeFora(data.jogo.time_fora);
+          setDashboardData(data);
         }
       })
       .catch(() => {});
@@ -120,6 +122,7 @@ export default function Home() {
                       eventId={selectedEventId}
                       timeCasa={timeCasa}
                       timeFora={timeFora}
+                      dashboardData={dashboardData}
                     />
                   </ErrorBoundary>
                 </div>

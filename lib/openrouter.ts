@@ -32,7 +32,7 @@ interface ToolCall {
  * Faz uma chamada ao OpenRouter com streaming e processa tool calls em loop.
  * Retorna um ReadableStream com eventos SSE.
  */
-export function chatStream(messages: { role: string; content: string }[], eventId?: number, mode?: string) {
+export function chatStream(messages: { role: string; content: string }[], eventId?: number, mode?: string, dashboardData?: any) {
   let systemPrompt = SYSTEM_PROMPT;
   if (mode === "analista-dados") systemPrompt = SYSTEM_PROMPT_ANALISTA_DADOS;
   else if (mode === "analista") systemPrompt = SYSTEM_PROMPT_ANALISTA;
@@ -41,7 +41,11 @@ export function chatStream(messages: { role: string; content: string }[], eventI
     { role: 'system', content: systemPrompt },
     // Se tiver eventId, adiciona contexto do jogo
     ...(eventId
-      ? [{ role: 'system' as const, content: `Contexto: o usuário está vendo o jogo event_id=${eventId} no dashboard. Use as tools BSD se precisar de dados complementares.` }]
+      ? [{ role: 'system' as const, content: `Contexto: o usuário está vendo o jogo event_id=${eventId} no dashboard.` }]
+      : []),
+    // Se tiver dashboard data, injeta como contexto (usado pelo Analista de Dados)
+    ...(dashboardData
+      ? [{ role: 'system' as const, content: `## DADOS DO DASHBOARD\nAqui estão os dados completos do dashboard deste jogo. Use APENAS esses dados para a análise — NÃO use tools:\n\n${JSON.stringify(dashboardData, null, 2)}` }]
       : []),
     ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
   ];
@@ -74,6 +78,8 @@ async function processLoop(
     return;
   }
 
+  const isAnalistaDados = messages.some(m => m.role === 'system' && m.content?.includes('Analista de Dados') === true);
+
   // Faz requisição ao OpenRouter
   const response = await fetch(OPENROUTER_API_URL, {
     method: 'POST',
@@ -95,10 +101,9 @@ async function processLoop(
         }
         return { role: m.role, content: m.content };
       }),
-      tools: toolDeclarations,
-      tool_choice: 'auto',
+      ...(isAnalistaDados ? {} : { tools: toolDeclarations, tool_choice: 'auto' }),
       stream: true,
-      max_tokens: 8000,
+      max_tokens: isAnalistaDados ? 16000 : 8000,
       temperature: 0.7,
     }),
     signal: AbortSignal.timeout(55000),
