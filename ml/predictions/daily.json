@@ -1,46 +1,102 @@
 {
-  "generated_at": "2026-06-02T20:24:02.362463",
-  "match_date": "2026-06-02",
-  "total_matches": 5,
+  "generated_at": "2026-06-03T20:41:39.570193",
+  "match_date": "2026-06-03",
+  "total_matches": 12,
   "predictions": [
     {
-      "event_id": 10277,
-      "home_team": "Wales",
-      "away_team": "Ghana",
+      "event_id": 207512,
+      "home_team": "Raja Club Athletic",
+      "away_team": "RS Berkane",
       "league": "",
-      "match_date": "2026-06-02T18:45:00+00:00",
+      "match_date": "2026-06-03T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9249,
-      "home_team": "Georgia",
-      "away_team": "Romania",
+      "event_id": 205200,
+      "home_team": "Poland",
+      "away_team": "Nigeria",
       "league": "",
-      "match_date": "2026-06-02T17:00:00+00:00",
+      "match_date": "2026-06-03T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207497,
-      "home_team": "Morocco",
-      "away_team": "Madagascar",
+      "event_id": 9094,
+      "home_team": "Netherlands",
+      "away_team": "Algeria",
       "league": "",
-      "match_date": "2026-06-02T17:00:00+00:00",
+      "match_date": "2026-06-03T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9093,
-      "home_team": "Croatia",
-      "away_team": "Belgium",
+      "event_id": 207167,
+      "home_team": "Luxembourg",
+      "away_team": "Italy",
       "league": "",
-      "match_date": "2026-06-02T16:00:00+00:00",
+      "match_date": "2026-06-03T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9092,
-      "home_team": "Canada",
-      "away_team": "Uzbekistan",
+      "event_id": 207425,
+      "home_team": "Albania",
+      "away_team": "Israel",
       "league": "",
-      "match_date": "2026-06-02T01:00:00+00:00",
+      "match_date": "2026-06-03T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207511,
+      "home_team": "Ittihad Tanger",
+      "away_team": "Wydad Casablanca",
+      "league": "",
+      "match_date": "2026-06-03T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 206683,
+      "home_team": "Denmark",
+      "away_team": "DR Congo",
+      "league": "",
+      "match_date": "2026-06-03T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207498,
+      "home_team": "Gibraltar",
+      "away_team": "British Virgin Islands",
+      "league": "",
+      "match_date": "2026-06-03T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207510,
+      "home_team": "Renaissance Zemamra",
+      "away_team": "Union Sportive Yacoub El Mansour",
+      "league": "",
+      "match_date": "2026-06-03T16:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207892,
+      "home_team": "Kyrgyzstan",
+      "away_team": "Kenya",
+      "league": "",
+      "match_date": "2026-06-03T12:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207902,
+      "home_team": "Philippines",
+      "away_team": "Guam",
+      "league": "",
+      "match_date": "2026-06-03T11:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207424,
+      "home_team": "Haiti",
+      "away_team": "New Zealand",
+      "league": "",
+      "match_date": "2026-06-03T00:36:00+00:00",
       "status": "pending"
     }
   ]
