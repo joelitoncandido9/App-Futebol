@@ -1,158 +1,94 @@
 {
-  "generated_at": "2026-06-07T15:12:46.210071",
-  "match_date": "2026-06-07",
-  "total_matches": 19,
+  "generated_at": "2026-06-08T18:15:29.408862",
+  "match_date": "2026-06-08",
+  "total_matches": 11,
   "predictions": [
     {
-      "event_id": 206694,
-      "home_team": "Colombia",
-      "away_team": "Jordan",
+      "event_id": 9973,
+      "home_team": "Vila Nova FC",
+      "away_team": "Botafogo-SP",
       "league": "",
-      "match_date": "2026-06-07T23:00:00+00:00",
+      "match_date": "2026-06-08T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207900,
-      "home_team": "Ecuador",
-      "away_team": "Guatemala",
+      "event_id": 9964,
+      "home_team": "América Mineiro",
+      "away_team": "Atlético Goianiense",
       "league": "",
-      "match_date": "2026-06-07T20:00:00+00:00",
+      "match_date": "2026-06-08T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207438,
-      "home_team": "Greece",
-      "away_team": "Italy",
+      "event_id": 209478,
+      "home_team": "Olympique Dcheira",
+      "away_team": "Hassania d'Agadir",
       "league": "",
-      "match_date": "2026-06-07T19:00:00+00:00",
+      "match_date": "2026-06-08T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9965,
-      "home_team": "Clube De Regatas Brasil",
-      "away_team": "São Bernardo",
+      "event_id": 206695,
+      "home_team": "France",
+      "away_team": "Northern Ireland",
       "league": "",
-      "match_date": "2026-06-07T19:00:00+00:00",
+      "match_date": "2026-06-08T19:10:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 206693,
-      "home_team": "Morocco",
-      "away_team": "Norway",
+      "event_id": 209440,
+      "home_team": "Niger",
+      "away_team": "Mauritania",
       "league": "",
-      "match_date": "2026-06-07T19:00:00+00:00",
+      "match_date": "2026-06-08T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 209454,
-      "home_team": "Las Palmas",
-      "away_team": "Málaga CF",
+      "event_id": 207500,
+      "home_team": "Netherlands",
+      "away_team": "Uzbekistan",
       "league": "",
-      "match_date": "2026-06-07T19:00:00+00:00",
+      "match_date": "2026-06-08T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9098,
-      "home_team": "Croatia",
-      "away_team": "Slovenia",
+      "event_id": 209476,
+      "home_team": "RS Berkane",
+      "away_team": "Ittihad Tanger",
       "league": "",
-      "match_date": "2026-06-07T18:45:00+00:00",
+      "match_date": "2026-06-08T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207899,
-      "home_team": "Kosovo",
-      "away_team": "Andorra",
+      "event_id": 209477,
+      "home_team": "Wydad Casablanca",
+      "away_team": "Olympic Safi",
       "league": "",
-      "match_date": "2026-06-07T18:00:00+00:00",
+      "match_date": "2026-06-08T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 209474,
-      "home_team": "Oman",
-      "away_team": "Mozambique",
+      "event_id": 209475,
+      "home_team": "Fath Union Sport",
+      "away_team": "Difaâ Hassani El-Jadidi",
       "league": "",
-      "match_date": "2026-06-07T17:00:00+00:00",
+      "match_date": "2026-06-08T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207437,
-      "home_team": "Denmark",
-      "away_team": "Ukraine",
+      "event_id": 209487,
+      "home_team": "Sri Lanka",
+      "away_team": "Bhutan",
       "league": "",
-      "match_date": "2026-06-07T16:30:00+00:00",
+      "match_date": "2026-06-08T11:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207954,
-      "home_team": "Maldives",
-      "away_team": "Bangladesh",
+      "event_id": 209466,
+      "home_team": "Uganda",
+      "away_team": "Madagascar",
       "league": "",
-      "match_date": "2026-06-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209465,
-      "home_team": "Maldives",
-      "away_team": "Bangladesh U23",
-      "league": "",
-      "match_date": "2026-06-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209486,
-      "home_team": "Miami United",
-      "away_team": "Jamaica U20",
-      "league": "",
-      "match_date": "2026-06-07T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207455,
-      "home_team": "Liechtenstein",
-      "away_team": "Cyprus",
-      "league": "",
-      "match_date": "2026-06-07T13:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209430,
-      "home_team": "Kenya",
-      "away_team": "Lesotho",
-      "league": "",
-      "match_date": "2026-06-07T13:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209450,
-      "home_team": "Oman",
-      "away_team": "Mozambique",
-      "league": "",
-      "match_date": "2026-06-07T13:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207953,
-      "home_team": "Afghanistan",
-      "away_team": "Pakistan",
-      "league": "",
-      "match_date": "2026-06-07T11:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 206692,
-      "home_team": "Curaçao",
-      "away_team": "Aruba",
-      "league": "",
-      "match_date": "2026-06-07T00:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 206691,
-      "home_team": "Argentina",
-      "away_team": "Honduras",
-      "league": "",
-      "match_date": "2026-06-07T00:00:00+00:00",
+      "match_date": "2026-06-08T10:00:00+00:00",
       "status": "pending"
     }
   ]
