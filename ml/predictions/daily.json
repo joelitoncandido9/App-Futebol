@@ -1,38 +1,54 @@
 {
-  "generated_at": "2026-06-15T20:38:38.553055",
-  "match_date": "2026-06-15",
-  "total_matches": 4,
+  "generated_at": "2026-06-16T20:25:39.204493",
+  "match_date": "2026-06-16",
+  "total_matches": 6,
   "predictions": [
     {
-      "event_id": 8301,
-      "home_team": "Saudi Arabia",
-      "away_team": "Uruguay",
+      "event_id": 9979,
+      "home_team": "Fortaleza",
+      "away_team": "América Mineiro",
       "league": "",
-      "match_date": "2026-06-15T22:00:00+00:00",
+      "match_date": "2026-06-16T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8300,
-      "home_team": "Belgium",
-      "away_team": "Egypt",
+      "event_id": 8305,
+      "home_team": "Iraq",
+      "away_team": "Norway",
       "league": "",
-      "match_date": "2026-06-15T19:00:00+00:00",
+      "match_date": "2026-06-16T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8299,
-      "home_team": "Spain",
-      "away_team": "Cabo Verde",
+      "event_id": 8304,
+      "home_team": "France",
+      "away_team": "Senegal",
       "league": "",
-      "match_date": "2026-06-15T16:00:00+00:00",
+      "match_date": "2026-06-16T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8298,
-      "home_team": "Sweden",
-      "away_team": "Tunisia",
+      "event_id": 8302,
+      "home_team": "Iran",
+      "away_team": "New Zealand",
       "league": "",
-      "match_date": "2026-06-15T02:00:00+00:00",
+      "match_date": "2026-06-16T01:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 9977,
+      "home_team": "Criciúma",
+      "away_team": "Ceará",
+      "league": "",
+      "match_date": "2026-06-16T00:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 9982,
+      "home_team": "Londrina",
+      "away_team": "Avaí",
+      "league": "",
+      "match_date": "2026-06-16T00:00:00+00:00",
       "status": "pending"
     }
   ]
