@@ -1,54 +1,134 @@
 {
-  "generated_at": "2026-06-16T20:25:39.204493",
-  "match_date": "2026-06-16",
-  "total_matches": 6,
+  "generated_at": "2026-06-17T18:04:41.083966",
+  "match_date": "2026-06-17",
+  "total_matches": 16,
   "predictions": [
     {
-      "event_id": 9979,
-      "home_team": "Fortaleza",
-      "away_team": "América Mineiro",
+      "event_id": 8309,
+      "home_team": "Ghana",
+      "away_team": "Panama",
       "league": "",
-      "match_date": "2026-06-16T23:00:00+00:00",
+      "match_date": "2026-06-17T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8305,
-      "home_team": "Iraq",
-      "away_team": "Norway",
+      "event_id": 207666,
+      "home_team": "Indy Eleven",
+      "away_team": "Brooklyn FC",
       "league": "",
-      "match_date": "2026-06-16T22:00:00+00:00",
+      "match_date": "2026-06-17T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8304,
-      "home_team": "France",
-      "away_team": "Senegal",
+      "event_id": 8308,
+      "home_team": "England",
+      "away_team": "Croatia",
       "league": "",
-      "match_date": "2026-06-16T19:00:00+00:00",
+      "match_date": "2026-06-17T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8302,
-      "home_team": "Iran",
-      "away_team": "New Zealand",
+      "event_id": 207665,
+      "home_team": "Oakland Roots SC",
+      "away_team": "Birmingham Legion FC",
       "league": "",
-      "match_date": "2026-06-16T01:00:00+00:00",
+      "match_date": "2026-06-17T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9977,
-      "home_team": "Criciúma",
-      "away_team": "Ceará",
+      "event_id": 207245,
+      "home_team": "SJK",
+      "away_team": "VPS",
       "league": "",
-      "match_date": "2026-06-16T00:00:00+00:00",
+      "match_date": "2026-06-17T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9982,
-      "home_team": "Londrina",
-      "away_team": "Avaí",
+      "event_id": 207246,
+      "home_team": "IF Gnistan",
+      "away_team": "FC Lahti",
       "league": "",
-      "match_date": "2026-06-16T00:00:00+00:00",
+      "match_date": "2026-06-17T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8307,
+      "home_team": "Portugal",
+      "away_team": "DR Congo",
+      "league": "",
+      "match_date": "2026-06-17T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209513,
+      "home_team": "Renaissance Zemamra",
+      "away_team": "Raja Club Athletic",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209512,
+      "home_team": "MAS de Fès",
+      "away_team": "Difaâ Hassani El-Jadidi",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209514,
+      "home_team": "Union Touarga Sport",
+      "away_team": "CODM Meknès",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209511,
+      "home_team": "Kawkab Athletic Club Marrakech",
+      "away_team": "Ittihad Tanger",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207244,
+      "home_team": "Ilves",
+      "away_team": "FF Jaro",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207242,
+      "home_team": "HJK",
+      "away_team": "Inter Turku",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207243,
+      "home_team": "Turun Palloseura",
+      "away_team": "Kuopion Palloseura",
+      "league": "",
+      "match_date": "2026-06-17T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8303,
+      "home_team": "Austria",
+      "away_team": "Jordan",
+      "league": "",
+      "match_date": "2026-06-17T04:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8306,
+      "home_team": "Argentina",
+      "away_team": "Algeria",
+      "league": "",
+      "match_date": "2026-06-17T01:00:00+00:00",
       "status": "pending"
     }
   ]
