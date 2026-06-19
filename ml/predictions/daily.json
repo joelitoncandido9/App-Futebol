@@ -1,94 +1,38 @@
 {
-  "generated_at": "2026-06-18T18:18:13.341575",
-  "match_date": "2026-06-18",
-  "total_matches": 11,
+  "generated_at": "2026-06-19T17:26:23.828961",
+  "match_date": "2026-06-19",
+  "total_matches": 4,
   "predictions": [
     {
-      "event_id": 8313,
-      "home_team": "Canada",
-      "away_team": "Qatar",
+      "event_id": 8317,
+      "home_team": "Scotland",
+      "away_team": "Morocco",
       "league": "",
-      "match_date": "2026-06-18T22:00:00+00:00",
+      "match_date": "2026-06-19T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9988,
-      "home_team": "Goiás",
-      "away_team": "Operário-PR",
+      "event_id": 8316,
+      "home_team": "USA",
+      "away_team": "Australia",
       "league": "",
-      "match_date": "2026-06-18T22:00:00+00:00",
+      "match_date": "2026-06-19T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8312,
-      "home_team": "Switzerland",
-      "away_team": "Bosnia & Herzegovina",
+      "event_id": 8314,
+      "home_team": "Mexico",
+      "away_team": "South Korea",
       "league": "",
-      "match_date": "2026-06-18T19:00:00+00:00",
+      "match_date": "2026-06-19T01:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8311,
-      "home_team": "Czechia",
-      "away_team": "South Africa",
+      "event_id": 9991,
+      "home_team": "Sport Recife",
+      "away_team": "Atlético Goianiense",
       "league": "",
-      "match_date": "2026-06-18T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209518,
-      "home_team": "Union Sportive Yacoub El Mansour",
-      "away_team": "Hassania d'Agadir",
-      "league": "",
-      "match_date": "2026-06-18T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209515,
-      "home_team": "Olympique Dcheira",
-      "away_team": "AS FAR Rabat",
-      "league": "",
-      "match_date": "2026-06-18T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209516,
-      "home_team": "RS Berkane",
-      "away_team": "Olympic Safi",
-      "league": "",
-      "match_date": "2026-06-18T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209517,
-      "home_team": "Wydad Casablanca",
-      "away_team": "Fath Union Sport",
-      "league": "",
-      "match_date": "2026-06-18T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207247,
-      "home_team": "AC Oulu",
-      "away_team": "IFK Mariehamn",
-      "league": "",
-      "match_date": "2026-06-18T09:59:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8310,
-      "home_team": "Uzbekistan",
-      "away_team": "Colombia",
-      "league": "",
-      "match_date": "2026-06-18T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207667,
-      "home_team": "FC Tulsa",
-      "away_team": "Monterey Bay FC",
-      "league": "",
-      "match_date": "2026-06-18T00:30:00+00:00",
+      "match_date": "2026-06-19T00:00:00+00:00",
       "status": "pending"
     }
   ]
