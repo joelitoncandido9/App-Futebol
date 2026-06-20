@@ -1,38 +1,94 @@
 {
-  "generated_at": "2026-06-19T17:26:23.828961",
-  "match_date": "2026-06-19",
-  "total_matches": 4,
+  "generated_at": "2026-06-20T15:24:50.440248",
+  "match_date": "2026-06-20",
+  "total_matches": 11,
   "predictions": [
     {
-      "event_id": 8317,
-      "home_team": "Scotland",
-      "away_team": "Morocco",
+      "event_id": 207670,
+      "home_team": "SC Jacksonville",
+      "away_team": "Charleston Battery",
       "league": "",
-      "match_date": "2026-06-19T22:00:00+00:00",
+      "match_date": "2026-06-20T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8316,
-      "home_team": "USA",
-      "away_team": "Australia",
+      "event_id": 207668,
+      "home_team": "Brooklyn FC",
+      "away_team": "FC Tampa Bay Rowdies",
       "league": "",
-      "match_date": "2026-06-19T19:00:00+00:00",
+      "match_date": "2026-06-20T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8314,
-      "home_team": "Mexico",
-      "away_team": "South Korea",
+      "event_id": 207669,
+      "home_team": "Hartford Athletic",
+      "away_team": "Pittsburgh Riverhounds",
       "league": "",
-      "match_date": "2026-06-19T01:00:00+00:00",
+      "match_date": "2026-06-20T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9991,
-      "home_team": "Sport Recife",
-      "away_team": "Atlético Goianiense",
+      "event_id": 9987,
+      "home_team": "Ceará",
+      "away_team": "Botafogo-SP",
       "league": "",
-      "match_date": "2026-06-19T00:00:00+00:00",
+      "match_date": "2026-06-20T22:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 9993,
+      "home_team": "Vila Nova FC",
+      "away_team": "Náutico",
+      "league": "",
+      "match_date": "2026-06-20T22:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8321,
+      "home_team": "Germany",
+      "away_team": "Côte d'Ivoire",
+      "league": "",
+      "match_date": "2026-06-20T20:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209508,
+      "home_team": "Almería",
+      "away_team": "Málaga CF",
+      "league": "",
+      "match_date": "2026-06-20T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8320,
+      "home_team": "Netherlands",
+      "away_team": "Sweden",
+      "league": "",
+      "match_date": "2026-06-20T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 9989,
+      "home_team": "Londrina",
+      "away_team": "Athletic Club",
+      "league": "",
+      "match_date": "2026-06-20T14:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8315,
+      "home_team": "Türkiye",
+      "away_team": "Paraguay",
+      "league": "",
+      "match_date": "2026-06-20T03:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8318,
+      "home_team": "Brazil",
+      "away_team": "Haiti",
+      "league": "",
+      "match_date": "2026-06-20T00:30:00+00:00",
       "status": "pending"
     }
   ]
