@@ -1,38 +1,110 @@
 {
-  "generated_at": "2026-06-22T14:42:44.712481",
-  "match_date": "2026-06-22",
-  "total_matches": 4,
+  "generated_at": "2026-06-23T12:08:47.714554",
+  "match_date": "2026-06-23",
+  "total_matches": 13,
   "predictions": [
     {
-      "event_id": 9990,
-      "home_team": "Ponte Preta",
-      "away_team": "Grêmio Novorizontino",
+      "event_id": 8333,
+      "home_team": "Panama",
+      "away_team": "Croatia",
       "league": "",
-      "match_date": "2026-06-22T23:00:00+00:00",
+      "match_date": "2026-06-23T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8328,
-      "home_team": "France",
-      "away_team": "Iraq",
+      "event_id": 9984,
+      "home_team": "América Mineiro",
+      "away_team": "Criciúma",
       "league": "",
-      "match_date": "2026-06-22T21:00:00+00:00",
+      "match_date": "2026-06-23T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8327,
-      "home_team": "Argentina",
-      "away_team": "Austria",
+      "event_id": 8332,
+      "home_team": "England",
+      "away_team": "Ghana",
       "league": "",
-      "match_date": "2026-06-22T17:00:00+00:00",
+      "match_date": "2026-06-23T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8326,
-      "home_team": "New Zealand",
-      "away_team": "Egypt",
+      "event_id": 8331,
+      "home_team": "Portugal",
+      "away_team": "Uzbekistan",
       "league": "",
-      "match_date": "2026-06-22T01:00:00+00:00",
+      "match_date": "2026-06-23T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207253,
+      "home_team": "IFK Mariehamn",
+      "away_team": "HJK",
+      "league": "",
+      "match_date": "2026-06-23T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207251,
+      "home_team": "Inter Turku",
+      "away_team": "SJK",
+      "league": "",
+      "match_date": "2026-06-23T16:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207252,
+      "home_team": "FF Jaro",
+      "away_team": "IF Gnistan",
+      "league": "",
+      "match_date": "2026-06-23T16:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207249,
+      "home_team": "FC Lahti",
+      "away_team": "Turun Palloseura",
+      "league": "",
+      "match_date": "2026-06-23T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207248,
+      "home_team": "Kuopion Palloseura",
+      "away_team": "Ilves",
+      "league": "",
+      "match_date": "2026-06-23T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207250,
+      "home_team": "VPS",
+      "away_team": "AC Oulu",
+      "league": "",
+      "match_date": "2026-06-23T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210002,
+      "home_team": "Gold Coast Knights",
+      "away_team": "Eastern Suburbs",
+      "league": "",
+      "match_date": "2026-06-23T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8330,
+      "home_team": "Jordan",
+      "away_team": "Algeria",
+      "league": "",
+      "match_date": "2026-06-23T03:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8329,
+      "home_team": "Norway",
+      "away_team": "Senegal",
+      "league": "",
+      "match_date": "2026-06-23T00:00:00+00:00",
       "status": "pending"
     }
   ]
