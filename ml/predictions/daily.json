@@ -1,166 +1,22 @@
 {
-  "generated_at": "2026-06-28T11:08:39.414848",
-  "match_date": "2026-06-28",
-  "total_matches": 20,
+  "generated_at": "2026-06-29T13:08:25.039998",
+  "match_date": "2026-06-29",
+  "total_matches": 2,
   "predictions": [
     {
-      "event_id": 10002,
-      "home_team": "Náutico",
-      "away_team": "Goiás",
+      "event_id": 8361,
+      "home_team": "Germany",
+      "away_team": "Paraguay",
       "league": "",
-      "match_date": "2026-06-28T21:30:00+00:00",
+      "match_date": "2026-06-29T20:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 9999,
-      "home_team": "Fortaleza",
-      "away_team": "Sport Recife",
+      "event_id": 8360,
+      "home_team": "Brazil",
+      "away_team": "Japan",
       "league": "",
-      "match_date": "2026-06-28T21:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 9995,
-      "home_team": "Atlético Goianiense",
-      "away_team": "Ponte Preta",
-      "league": "",
-      "match_date": "2026-06-28T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8359,
-      "home_team": "South Africa",
-      "away_team": "Canada",
-      "league": "",
-      "match_date": "2026-06-28T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 9994,
-      "home_team": "Athletic Club",
-      "away_team": "Avaí",
-      "league": "",
-      "match_date": "2026-06-28T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10001,
-      "home_team": "Juventude",
-      "away_team": "Ceará",
-      "league": "",
-      "match_date": "2026-06-28T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212774,
-      "home_team": "Difaâ Hassani El-Jadidi",
-      "away_team": "Kawkab Athletic Club Marrakech",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212776,
-      "home_team": "Hassania d'Agadir",
-      "away_team": "Renaissance Zemamra",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212778,
-      "home_team": "MAS de Fès",
-      "away_team": "Union Sportive Yacoub El Mansour",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212780,
-      "home_team": "Wydad Casablanca",
-      "away_team": "Olympique Dcheira",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212779,
-      "home_team": "Olympic Safi",
-      "away_team": "CODM Meknès",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212777,
-      "home_team": "Ittihad Tanger",
-      "away_team": "Raja Club Athletic",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212775,
-      "home_team": "Fath Union Sport",
-      "away_team": "RS Berkane",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212773,
-      "home_team": "AS FAR Rabat",
-      "away_team": "Union Touarga Sport",
-      "league": "",
-      "match_date": "2026-06-28T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205812,
-      "home_team": "Dalian Yingbo FC",
-      "away_team": "Shanghai Shenhua",
-      "league": "",
-      "match_date": "2026-06-28T11:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205811,
-      "home_team": "Qingdao West Coast",
-      "away_team": "Zhejiang",
-      "league": "",
-      "match_date": "2026-06-28T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210020,
-      "home_team": "Queensland Lions FC",
-      "away_team": "Wynnum Wolves FC",
-      "league": "",
-      "match_date": "2026-06-28T07:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210019,
-      "home_team": "Gold Coast United",
-      "away_team": "Moreton City Excelsior FC",
-      "league": "",
-      "match_date": "2026-06-28T05:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8358,
-      "home_team": "Jordan",
-      "away_team": "Argentina",
-      "league": "",
-      "match_date": "2026-06-28T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8357,
-      "home_team": "Algeria",
-      "away_team": "Austria",
-      "league": "",
-      "match_date": "2026-06-28T02:00:00+00:00",
+      "match_date": "2026-06-29T17:00:00+00:00",
       "status": "pending"
     }
   ]
