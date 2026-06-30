@@ -1,22 +1,46 @@
 {
-  "generated_at": "2026-06-29T13:08:25.039998",
-  "match_date": "2026-06-29",
-  "total_matches": 2,
+  "generated_at": "2026-06-30T11:45:37.356684",
+  "match_date": "2026-06-30",
+  "total_matches": 5,
   "predictions": [
     {
-      "event_id": 8361,
-      "home_team": "Germany",
-      "away_team": "Paraguay",
+      "event_id": 9996,
+      "home_team": "Botafogo-SP",
+      "away_team": "Clube De Regatas Brasil",
       "league": "",
-      "match_date": "2026-06-29T20:30:00+00:00",
+      "match_date": "2026-06-30T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8360,
-      "home_team": "Brazil",
-      "away_team": "Japan",
+      "event_id": 8364,
+      "home_team": "France",
+      "away_team": "Sweden",
       "league": "",
-      "match_date": "2026-06-29T17:00:00+00:00",
+      "match_date": "2026-06-30T21:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8363,
+      "home_team": "Côte d'Ivoire",
+      "away_team": "Norway",
+      "league": "",
+      "match_date": "2026-06-30T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 209509,
+      "home_team": "VPS",
+      "away_team": "Inter Turku",
+      "league": "",
+      "match_date": "2026-06-30T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 8362,
+      "home_team": "Netherlands",
+      "away_team": "Morocco",
+      "league": "",
+      "match_date": "2026-06-30T01:00:00+00:00",
       "status": "pending"
     }
   ]
