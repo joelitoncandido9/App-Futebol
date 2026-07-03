@@ -1,110 +1,78 @@
 {
-  "generated_at": "2026-07-02T11:34:50.802857",
-  "match_date": "2026-07-02",
-  "total_matches": 13,
+  "generated_at": "2026-07-03T11:33:26.778808",
+  "match_date": "2026-07-03",
+  "total_matches": 9,
   "predictions": [
     {
-      "event_id": 10007,
-      "home_team": "Cuiabá",
-      "away_team": "América Mineiro",
+      "event_id": 207681,
+      "home_team": "Loudoun United FC",
+      "away_team": "SC Jacksonville",
       "league": "",
-      "match_date": "2026-07-02T23:00:00+00:00",
+      "match_date": "2026-07-03T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8370,
-      "home_team": "Portugal",
-      "away_team": "Croatia",
+      "event_id": 8373,
+      "home_team": "Argentina",
+      "away_team": "Cabo Verde",
       "league": "",
-      "match_date": "2026-07-02T23:00:00+00:00",
+      "match_date": "2026-07-03T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8369,
-      "home_team": "Spain",
-      "away_team": "Austria",
+      "event_id": 8372,
+      "home_team": "Australia",
+      "away_team": "Egypt",
       "league": "",
-      "match_date": "2026-07-02T19:00:00+00:00",
+      "match_date": "2026-07-03T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213033,
-      "home_team": "Union Touarga Sport",
-      "away_team": "Ittihad Tanger",
+      "event_id": 46390,
+      "home_team": "IK Sirius",
+      "away_team": "Mjällby AIF",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
+      "match_date": "2026-07-03T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213029,
-      "home_team": "Olympique Dcheira",
-      "away_team": "Olympic Safi",
+      "event_id": 205813,
+      "home_team": "Yunnan Yukun",
+      "away_team": "Henan FC",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
+      "match_date": "2026-07-03T12:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213028,
-      "home_team": "Kawkab Athletic Club Marrakech",
-      "away_team": "MAS de Fès",
+      "event_id": 210021,
+      "home_team": "Wynnum Wolves FC",
+      "away_team": "Rochedale Rovers",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
+      "match_date": "2026-07-03T09:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213031,
-      "home_team": "Raja Club Athletic",
-      "away_team": "Difaâ Hassani El-Jadidi",
+      "event_id": 8371,
+      "home_team": "Switzerland",
+      "away_team": "Algeria",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
+      "match_date": "2026-07-03T03:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213030,
-      "home_team": "RS Berkane",
-      "away_team": "Wydad Casablanca",
+      "event_id": 10008,
+      "home_team": "Fortaleza",
+      "away_team": "Ponte Preta",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
+      "match_date": "2026-07-03T00:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 213027,
-      "home_team": "CODM Meknès",
-      "away_team": "AS FAR Rabat",
+      "event_id": 207680,
+      "home_team": "Birmingham Legion FC",
+      "away_team": "Detroit City FC",
       "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 213032,
-      "home_team": "Renaissance Zemamra",
-      "away_team": "Fath Union Sport",
-      "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 213035,
-      "home_team": "Union Sportive Yacoub El Mansour",
-      "away_team": "Difaâ Hassani El-Jadidi",
-      "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 213034,
-      "home_team": "Raja Club Athletic",
-      "away_team": "Hassania d'Agadir",
-      "league": "",
-      "match_date": "2026-07-02T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8368,
-      "home_team": "USA",
-      "away_team": "Bosnia & Herzegovina",
-      "league": "",
-      "match_date": "2026-07-02T00:00:00+00:00",
+      "match_date": "2026-07-03T00:00:00+00:00",
       "status": "pending"
     }
   ]
