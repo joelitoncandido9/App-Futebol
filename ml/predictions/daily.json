@@ -1,126 +1,78 @@
 {
-  "generated_at": "2026-07-07T11:51:27.911633",
-  "match_date": "2026-07-07",
-  "total_matches": 15,
+  "generated_at": "2026-07-08T11:05:54.304503",
+  "match_date": "2026-07-08",
+  "total_matches": 9,
   "predictions": [
     {
-      "event_id": 10004,
-      "home_team": "Athletic Club",
-      "away_team": "Operário-PR",
+      "event_id": 10021,
+      "home_team": "Ponte Preta",
+      "away_team": "Criciúma",
       "league": "",
-      "match_date": "2026-07-07T23:00:00+00:00",
+      "match_date": "2026-07-08T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8382,
-      "home_team": "Switzerland",
-      "away_team": "Colombia",
+      "event_id": 207693,
+      "home_team": "Hartford Athletic",
+      "away_team": "Orange County SC",
       "league": "",
-      "match_date": "2026-07-07T20:00:00+00:00",
+      "match_date": "2026-07-08T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210747,
-      "home_team": "Víkingur Reykjavík",
-      "away_team": "ETO FC Győr",
+      "event_id": 215906,
+      "home_team": "Germany U19",
+      "away_team": "Ukraine U19",
       "league": "",
-      "match_date": "2026-07-07T19:00:00+00:00",
+      "match_date": "2026-07-08T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210755,
-      "home_team": "Klaksvíkar Ítróttarfelag",
-      "away_team": "Atert Bissen",
+      "event_id": 210749,
+      "home_team": "ML Vitebsk",
+      "away_team": "Universitatea Craiova",
       "league": "",
-      "match_date": "2026-07-07T18:45:00+00:00",
+      "match_date": "2026-07-08T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210745,
-      "home_team": "FK Borac Banja Luka",
-      "away_team": "Levski Sofia",
+      "event_id": 210756,
+      "home_team": "FC Petrocub Hîncesti",
+      "away_team": "KF Egnatia",
       "league": "",
-      "match_date": "2026-07-07T18:30:00+00:00",
+      "match_date": "2026-07-08T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210753,
-      "home_team": "SP Tre Fiori",
-      "away_team": "Larne FC",
+      "event_id": 210750,
+      "home_team": "Flora Tallinn",
+      "away_team": "FC Iberia 1999",
       "league": "",
-      "match_date": "2026-07-07T18:30:00+00:00",
+      "match_date": "2026-07-08T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210748,
-      "home_team": "Floriana FC",
-      "away_team": "Shamrock Rovers",
+      "event_id": 215905,
+      "home_team": "Spain U19",
+      "away_team": "Croatia U19",
       "league": "",
-      "match_date": "2026-07-07T17:30:00+00:00",
+      "match_date": "2026-07-08T15:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210751,
-      "home_team": "FK Vardar Skopje",
-      "away_team": "Kuopion Palloseura",
+      "event_id": 210743,
+      "home_team": "Kairat Almaty",
+      "away_team": "FK Sutjeska Nikšić",
       "league": "",
-      "match_date": "2026-07-07T17:00:00+00:00",
+      "match_date": "2026-07-08T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8381,
-      "home_team": "Argentina",
-      "away_team": "Egypt",
+      "event_id": 215904,
+      "home_team": "Denmark U19",
+      "away_team": "Italy U19",
       "league": "",
-      "match_date": "2026-07-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210752,
-      "home_team": "FK Kauno Žalgiris",
-      "away_team": "FC Drita",
-      "league": "",
-      "match_date": "2026-07-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210754,
-      "home_team": "Lincoln Red Imps",
-      "away_team": "Inter Club d'Escaldes",
-      "league": "",
-      "match_date": "2026-07-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210746,
-      "home_team": "FC Ararat-Armenia",
-      "away_team": "Riga FC",
-      "league": "",
-      "match_date": "2026-07-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210744,
-      "home_team": "Sabah FK",
-      "away_team": "The New Saints",
-      "league": "",
-      "match_date": "2026-07-07T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 209994,
-      "home_team": "Gold Coast Knights",
-      "away_team": "Queensland Lions FC",
-      "league": "",
-      "match_date": "2026-07-07T09:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8380,
-      "home_team": "USA",
-      "away_team": "Belgium",
-      "league": "",
-      "match_date": "2026-07-07T00:00:00+00:00",
+      "match_date": "2026-07-08T13:00:00+00:00",
       "status": "pending"
     }
   ]
