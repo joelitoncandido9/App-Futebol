@@ -1,70 +1,62 @@
 {
-  "generated_at": "2026-07-09T12:01:59.161175",
-  "match_date": "2026-07-09",
-  "total_matches": 8,
+  "generated_at": "2026-07-10T11:52:30.029370",
+  "match_date": "2026-07-10",
+  "total_matches": 7,
   "predictions": [
     {
-      "event_id": 8383,
-      "home_team": "France",
-      "away_team": "Morocco",
+      "event_id": 10022,
+      "home_team": "Sport Recife",
+      "away_team": "Botafogo-SP",
       "league": "",
-      "match_date": "2026-07-09T20:00:00+00:00",
+      "match_date": "2026-07-10T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210781,
-      "home_team": "FK Vojvodina",
-      "away_team": "Ferencváros TC",
+      "event_id": 10019,
+      "home_team": "Juventude",
+      "away_team": "Vila Nova FC",
       "league": "",
-      "match_date": "2026-07-09T18:00:00+00:00",
+      "match_date": "2026-07-10T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210783,
-      "home_team": "CSKA Sofia",
-      "away_team": "Derry City",
+      "event_id": 8384,
+      "home_team": "Spain",
+      "away_team": "Belgium",
       "league": "",
-      "match_date": "2026-07-09T18:00:00+00:00",
+      "match_date": "2026-07-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210780,
-      "home_team": "HNK Hajduk Split",
-      "away_team": "MŠK Žilina",
+      "event_id": 207264,
+      "home_team": "VPS",
+      "away_team": "SJK",
       "league": "",
-      "match_date": "2026-07-09T18:00:00+00:00",
+      "match_date": "2026-07-10T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210782,
-      "home_team": "Dynamo Kyiv",
-      "away_team": "FC Universitatea Cluj",
+      "event_id": 205821,
+      "home_team": "Shandong Taishan",
+      "away_team": "Yunnan Yukun",
       "league": "",
-      "match_date": "2026-07-09T17:00:00+00:00",
+      "match_date": "2026-07-10T11:35:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210784,
-      "home_team": "Sheriff Tiraspol",
-      "away_team": "NK Aluminij Kidričevo",
+      "event_id": 210028,
+      "home_team": "Brisbane Roar Youth",
+      "away_team": "Rochedale Rovers",
       "league": "",
-      "match_date": "2026-07-09T17:00:00+00:00",
+      "match_date": "2026-07-10T09:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210779,
-      "home_team": "Qarabağ FK",
-      "away_team": "IF Vestri",
+      "event_id": 210030,
+      "home_team": "Peninsula Power",
+      "away_team": "Wynnum Wolves FC",
       "league": "",
-      "match_date": "2026-07-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207694,
-      "home_team": "Sacramento Republic FC",
-      "away_team": "Rhode Island FC",
-      "league": "",
-      "match_date": "2026-07-09T02:30:00+00:00",
+      "match_date": "2026-07-10T09:30:00+00:00",
       "status": "pending"
     }
   ]
