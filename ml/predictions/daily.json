@@ -1,222 +1,30 @@
 {
-  "generated_at": "2026-07-12T10:35:25.159721",
-  "match_date": "2026-07-12",
-  "total_matches": 27,
+  "generated_at": "2026-07-13T12:07:21.384687",
+  "match_date": "2026-07-13",
+  "total_matches": 3,
   "predictions": [
     {
-      "event_id": 216367,
-      "home_team": "Denver Summit FC",
-      "away_team": "Houston Dash",
+      "event_id": 10018,
+      "home_team": "Ceará",
+      "away_team": "Athletic Club",
       "league": "",
-      "match_date": "2026-07-12T23:00:00+00:00",
+      "match_date": "2026-07-13T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10017,
-      "home_team": "Clube De Regatas Brasil",
-      "away_team": "Goiás",
+      "event_id": 10014,
+      "home_team": "América Mineiro",
+      "away_team": "Londrina",
       "league": "",
-      "match_date": "2026-07-12T22:00:00+00:00",
+      "match_date": "2026-07-13T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10015,
-      "home_team": "Atlético Goianiense",
-      "away_team": "Fortaleza",
+      "event_id": 46392,
+      "home_team": "Djurgårdens IF",
+      "away_team": "Halmstads BK",
       "league": "",
-      "match_date": "2026-07-12T21:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 216366,
-      "home_team": "Seattle Reign FC",
-      "away_team": "Portland Thorns FC",
-      "league": "",
-      "match_date": "2026-07-12T20:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10023,
-      "home_team": "São Bernardo",
-      "away_team": "Cuiabá",
-      "league": "",
-      "match_date": "2026-07-12T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10016,
-      "home_team": "Avaí",
-      "away_team": "Náutico",
-      "league": "",
-      "match_date": "2026-07-12T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207010,
-      "home_team": "Sarpsborg 08",
-      "away_team": "Viking FK",
-      "league": "",
-      "match_date": "2026-07-12T17:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207009,
-      "home_team": "Sandefjord Fotball",
-      "away_team": "HamKam",
-      "league": "",
-      "match_date": "2026-07-12T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207008,
-      "home_team": "SK Brann",
-      "away_team": "IK Start",
-      "league": "",
-      "match_date": "2026-07-12T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207007,
-      "home_team": "Rosenborg BK",
-      "away_team": "Kristiansund BK",
-      "league": "",
-      "match_date": "2026-07-12T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46395,
-      "home_team": "IF Brommapojkarna",
-      "away_team": "IK Sirius",
-      "league": "",
-      "match_date": "2026-07-12T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46393,
-      "home_team": "GAIS",
-      "away_team": "IF Elfsborg",
-      "league": "",
-      "match_date": "2026-07-12T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10020,
-      "home_team": "Operário-PR",
-      "away_team": "Grêmio Novorizontino",
-      "league": "",
-      "match_date": "2026-07-12T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207006,
-      "home_team": "KFUM Oslo",
-      "away_team": "Bodø/Glimt",
-      "league": "",
-      "match_date": "2026-07-12T12:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46394,
-      "home_team": "Hammarby IF",
-      "away_team": "Kalmar FF",
-      "league": "",
-      "match_date": "2026-07-12T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46398,
-      "home_team": "Västerås SK",
-      "away_team": "Degerfors IF",
-      "league": "",
-      "match_date": "2026-07-12T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46396,
-      "home_team": "Malmö FF",
-      "away_team": "IFK Göteborg",
-      "league": "",
-      "match_date": "2026-07-12T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205828,
-      "home_team": "Shanghai Port",
-      "away_team": "Dalian Yingbo FC",
-      "league": "",
-      "match_date": "2026-07-12T11:35:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205827,
-      "home_team": "Tianjin Jinmen Tiger",
-      "away_team": "Liaoning Tieren FC",
-      "league": "",
-      "match_date": "2026-07-12T11:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205093,
-      "home_team": "Jeju SK",
-      "away_team": "Daejeon Hana Citizen",
-      "league": "",
-      "match_date": "2026-07-12T10:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205092,
-      "home_team": "Incheon United",
-      "away_team": "FC Anyang",
-      "league": "",
-      "match_date": "2026-07-12T10:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205091,
-      "home_team": "FC Seoul",
-      "away_team": "Gangwon FC",
-      "league": "",
-      "match_date": "2026-07-12T10:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210032,
-      "home_team": "Queensland Lions FC",
-      "away_team": "Eastern Suburbs",
-      "league": "",
-      "match_date": "2026-07-12T07:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210031,
-      "home_team": "Gold Coast Knights",
-      "away_team": "Brisbane City",
-      "league": "",
-      "match_date": "2026-07-12T06:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210029,
-      "home_team": "Gold Coast United",
-      "away_team": "Olympic FC",
-      "league": "",
-      "match_date": "2026-07-12T05:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 8386,
-      "home_team": "Argentina",
-      "away_team": "Switzerland",
-      "league": "",
-      "match_date": "2026-07-12T01:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 216365,
-      "home_team": "San Diego Wave FC",
-      "away_team": "Angel City FC",
-      "league": "",
-      "match_date": "2026-07-12T00:45:00+00:00",
+      "match_date": "2026-07-13T17:00:00+00:00",
       "status": "pending"
     }
   ]
