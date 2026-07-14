@@ -1,30 +1,102 @@
 {
-  "generated_at": "2026-07-13T12:07:21.384687",
-  "match_date": "2026-07-13",
-  "total_matches": 3,
+  "generated_at": "2026-07-14T10:47:32.084854",
+  "match_date": "2026-07-14",
+  "total_matches": 12,
   "predictions": [
     {
-      "event_id": 10018,
-      "home_team": "Ceará",
-      "away_team": "Athletic Club",
+      "event_id": 8387,
+      "home_team": "France",
+      "away_team": "Spain",
       "league": "",
-      "match_date": "2026-07-13T23:30:00+00:00",
+      "match_date": "2026-07-14T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10014,
-      "home_team": "América Mineiro",
-      "away_team": "Londrina",
+      "event_id": 210767,
+      "home_team": "Larne FC",
+      "away_team": "SP Tre Fiori",
       "league": "",
-      "match_date": "2026-07-13T22:00:00+00:00",
+      "match_date": "2026-07-14T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 46392,
-      "home_team": "Djurgårdens IF",
-      "away_team": "Halmstads BK",
+      "event_id": 210762,
+      "home_team": "Shamrock Rovers",
+      "away_team": "Floriana FC",
       "league": "",
-      "match_date": "2026-07-13T17:00:00+00:00",
+      "match_date": "2026-07-14T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210766,
+      "home_team": "FC Drita",
+      "away_team": "FK Kauno Žalgiris",
+      "league": "",
+      "match_date": "2026-07-14T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210758,
+      "home_team": "The New Saints",
+      "away_team": "Sabah FK",
+      "league": "",
+      "match_date": "2026-07-14T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210759,
+      "home_team": "Levski Sofia",
+      "away_team": "FK Borac Banja Luka",
+      "league": "",
+      "match_date": "2026-07-14T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210761,
+      "home_team": "ETO FC Győr",
+      "away_team": "Víkingur Reykjavík",
+      "league": "",
+      "match_date": "2026-07-14T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210760,
+      "home_team": "Riga FC",
+      "away_team": "FC Ararat-Armenia",
+      "league": "",
+      "match_date": "2026-07-14T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210764,
+      "home_team": "FC Iberia 1999",
+      "away_team": "Flora Tallinn",
+      "league": "",
+      "match_date": "2026-07-14T16:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210768,
+      "home_team": "Inter Club d'Escaldes",
+      "away_team": "Lincoln Red Imps",
+      "league": "",
+      "match_date": "2026-07-14T16:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210765,
+      "home_team": "Kuopion Palloseura",
+      "away_team": "FK Vardar Skopje",
+      "league": "",
+      "match_date": "2026-07-14T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 216240,
+      "home_team": "Zhejiang",
+      "away_team": "Qingdao Hainiu",
+      "league": "",
+      "match_date": "2026-07-14T11:35:00+00:00",
       "status": "pending"
     }
   ]
