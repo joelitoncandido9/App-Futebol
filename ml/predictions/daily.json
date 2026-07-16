@@ -1,78 +1,102 @@
 {
-  "generated_at": "2026-07-15T10:50:58.342752",
-  "match_date": "2026-07-15",
-  "total_matches": 9,
+  "generated_at": "2026-07-16T11:01:14.602419",
+  "match_date": "2026-07-16",
+  "total_matches": 12,
   "predictions": [
     {
-      "event_id": 207697,
-      "home_team": "SC Jacksonville",
-      "away_team": "Pittsburgh Riverhounds",
+      "event_id": 5133,
+      "home_team": "CF Montréal",
+      "away_team": "Toronto FC",
       "league": "",
-      "match_date": "2026-07-15T23:30:00+00:00",
+      "match_date": "2026-07-16T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 216368,
-      "home_team": "Orlando Pride",
-      "away_team": "Boston Legacy FC",
+      "event_id": 10026,
+      "home_team": "Clube De Regatas Brasil",
+      "away_team": "Náutico",
       "league": "",
-      "match_date": "2026-07-15T23:00:00+00:00",
+      "match_date": "2026-07-16T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207695,
-      "home_team": "Lexington SC",
-      "away_team": "New Mexico United",
+      "event_id": 7175,
+      "home_team": "Botafogo",
+      "away_team": "Santos",
       "league": "",
-      "match_date": "2026-07-15T23:00:00+00:00",
+      "match_date": "2026-07-16T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207696,
-      "home_team": "Miami FC",
-      "away_team": "Indy Eleven",
+      "event_id": 7183,
+      "home_team": "Vitória",
+      "away_team": "Vasco da Gama",
       "league": "",
-      "match_date": "2026-07-15T23:00:00+00:00",
+      "match_date": "2026-07-16T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210757,
-      "home_team": "FK Sutjeska Nikšić",
-      "away_team": "Kairat Almaty",
+      "event_id": 210785,
+      "home_team": "IF Vestri",
+      "away_team": "Qarabağ FK",
       "league": "",
-      "match_date": "2026-07-15T19:00:00+00:00",
+      "match_date": "2026-07-16T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210770,
-      "home_team": "KF Egnatia",
-      "away_team": "FC Petrocub Hîncesti",
+      "event_id": 210786,
+      "home_team": "MŠK Žilina",
+      "away_team": "HNK Hajduk Split",
       "league": "",
-      "match_date": "2026-07-15T19:00:00+00:00",
+      "match_date": "2026-07-16T18:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 8388,
-      "home_team": "England",
-      "away_team": "Argentina",
+      "event_id": 210787,
+      "home_team": "Ferencváros TC",
+      "away_team": "FK Vojvodina",
       "league": "",
-      "match_date": "2026-07-15T19:00:00+00:00",
+      "match_date": "2026-07-16T18:15:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210769,
-      "home_team": "Atert Bissen",
-      "away_team": "Klaksvíkar Ítróttarfelag",
+      "event_id": 210790,
+      "home_team": "NK Aluminij Kidričevo",
+      "away_team": "Sheriff Tiraspol",
       "league": "",
-      "match_date": "2026-07-15T18:15:00+00:00",
+      "match_date": "2026-07-16T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 210763,
-      "home_team": "Universitatea Craiova",
-      "away_team": "ML Vitebsk",
+      "event_id": 210789,
+      "home_team": "Derry City",
+      "away_team": "CSKA Sofia",
       "league": "",
-      "match_date": "2026-07-15T17:30:00+00:00",
+      "match_date": "2026-07-16T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 210788,
+      "home_team": "FC Universitatea Cluj",
+      "away_team": "Dynamo Kyiv",
+      "league": "",
+      "match_date": "2026-07-16T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207019,
+      "home_team": "Vålerenga IF",
+      "away_team": "Aalesunds FK",
+      "league": "",
+      "match_date": "2026-07-16T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 216369,
+      "home_team": "NJ/NY Gotham FC",
+      "away_team": "Washington Spirit",
+      "league": "",
+      "match_date": "2026-07-16T00:00:00+00:00",
       "status": "pending"
     }
   ]
