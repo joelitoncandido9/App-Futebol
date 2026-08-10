@@ -1,846 +1,150 @@
 {
-  "generated_at": "2026-08-09T09:40:04.674066",
-  "match_date": "2026-08-09",
-  "total_matches": 105,
+  "generated_at": "2026-08-10T10:16:56.332613",
+  "match_date": "2026-08-10",
+  "total_matches": 18,
   "predictions": [
     {
-      "event_id": 223535,
-      "home_team": "Argentinos Juniors",
-      "away_team": "Racing Club",
+      "event_id": 220022,
+      "home_team": "Independiente Medellín",
+      "away_team": "Millonarios",
       "league": "",
-      "match_date": "2026-08-09T23:15:00+00:00",
+      "match_date": "2026-08-10T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 220018,
-      "home_team": "Jaguares de Córdoba",
-      "away_team": "Once Caldas",
+      "event_id": 10059,
+      "home_team": "Goiás",
+      "away_team": "Londrina",
       "league": "",
-      "match_date": "2026-08-09T23:10:00+00:00",
+      "match_date": "2026-08-10T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 216404,
-      "home_team": "Chicago Stars FC",
-      "away_team": "Bay FC",
+      "event_id": 223537,
+      "home_team": "Banfield",
+      "away_team": "Club Atlético Belgrano",
       "league": "",
-      "match_date": "2026-08-09T23:00:00+00:00",
+      "match_date": "2026-08-10T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 7208,
-      "home_team": "Flamengo",
-      "away_team": "Vitória",
+      "event_id": 220017,
+      "home_team": "Rionegro Águilas Doradas",
+      "away_team": "Llaneros FC",
       "league": "",
-      "match_date": "2026-08-09T22:30:00+00:00",
+      "match_date": "2026-08-10T21:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 7213,
-      "home_team": "Santos",
-      "away_team": "Athletico",
+      "event_id": 215498,
+      "home_team": "Santa Clara",
+      "away_team": "CD Nacional",
       "league": "",
-      "match_date": "2026-08-09T21:30:00+00:00",
+      "match_date": "2026-08-10T19:15:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 7211,
-      "home_team": "Red Bull Bragantino",
-      "away_team": "Corinthians",
+      "event_id": 212760,
+      "home_team": "Plymouth Argyle",
+      "away_team": "Exeter City",
       "league": "",
-      "match_date": "2026-08-09T21:30:00+00:00",
+      "match_date": "2026-08-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 220020,
-      "home_team": "Alianza Valledupar FC",
-      "away_team": "Atlético Bucaramanga",
+      "event_id": 214555,
+      "home_team": "Sepsi OSK Sfântu Gheorghe",
+      "away_team": "FCSB",
       "league": "",
-      "match_date": "2026-08-09T21:05:00+00:00",
+      "match_date": "2026-08-10T18:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207748,
-      "home_team": "Indy Eleven",
-      "away_team": "Hartford Athletic",
+      "event_id": 214550,
+      "home_team": "CFR 1907 Cluj",
+      "away_team": "FC Universitatea Cluj",
       "league": "",
-      "match_date": "2026-08-09T21:00:00+00:00",
+      "match_date": "2026-08-10T18:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10058,
-      "home_team": "Cuiabá",
-      "away_team": "Fortaleza",
+      "event_id": 211672,
+      "home_team": "Botev Plovdiv",
+      "away_team": "FK Spartak Varna",
       "league": "",
-      "match_date": "2026-08-09T21:00:00+00:00",
+      "match_date": "2026-08-10T18:15:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223544,
-      "home_team": "Gimnasia y Esgrima",
-      "away_team": "Barracas Central",
+      "event_id": 374738,
+      "home_team": "SL Benfica B U21",
+      "away_team": "Leixões SC",
       "league": "",
-      "match_date": "2026-08-09T20:45:00+00:00",
+      "match_date": "2026-08-10T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223542,
-      "home_team": "Defensa y Justicia",
-      "away_team": "Newell's Old Boys",
+      "event_id": 374737,
+      "home_team": "Lusitânia Lourosa",
+      "away_team": "FC Porto B",
       "league": "",
-      "match_date": "2026-08-09T20:45:00+00:00",
+      "match_date": "2026-08-10T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 216403,
-      "home_team": "Boston Legacy FC",
-      "away_team": "Portland Thorns FC",
+      "event_id": 221489,
+      "home_team": "Silkeborg IF",
+      "away_team": "Odense Boldklub",
       "league": "",
-      "match_date": "2026-08-09T20:00:00+00:00",
+      "match_date": "2026-08-10T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 215497,
-      "home_team": "Moreirense",
-      "away_team": "Sporting Braga",
+      "event_id": 46430,
+      "home_team": "Västerås SK",
+      "away_team": "Djurgårdens IF",
       "league": "",
-      "match_date": "2026-08-09T19:30:00+00:00",
+      "match_date": "2026-08-10T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 215496,
-      "home_team": "Gil Vicente",
-      "away_team": "Rio Ave",
+      "event_id": 46427,
+      "home_team": "IK Sirius",
+      "away_team": "IF Brommapojkarna",
       "league": "",
-      "match_date": "2026-08-09T19:30:00+00:00",
+      "match_date": "2026-08-10T17:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 215491,
-      "home_team": "Benfica",
-      "away_team": "Académico Viseu FC",
+      "event_id": 211673,
+      "home_team": "Botev Vratsa",
+      "away_team": "Slavia Sofia",
       "league": "",
-      "match_date": "2026-08-09T19:30:00+00:00",
+      "match_date": "2026-08-10T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 587635,
-      "home_team": "UE Olot",
-      "away_team": "CE Sabadell",
+      "event_id": 214551,
+      "home_team": "FC Botoșani",
+      "away_team": "FC Corvinul Hunedoara",
       "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
+      "match_date": "2026-08-10T15:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 580468,
-      "home_team": "UE Olot",
-      "away_team": "CE Sabadell",
+      "event_id": 220015,
+      "home_team": "América de Cali",
+      "away_team": "Atlético Nacional",
       "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
+      "match_date": "2026-08-10T01:15:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 215469,
-      "home_team": "Benevento",
-      "away_team": "Ravenna",
+      "event_id": 216405,
+      "home_team": "Seattle Reign FC",
+      "away_team": "Angel City FC",
       "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10061,
-      "home_team": "Náutico",
-      "away_team": "Atlético Goianiense",
-      "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10060,
-      "home_team": "Grêmio Novorizontino",
-      "away_team": "Juventude",
-      "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 7210,
-      "home_team": "Palmeiras",
-      "away_team": "Internacional",
-      "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 7204,
-      "home_team": "Bahia",
-      "away_team": "Vasco da Gama",
-      "league": "",
-      "match_date": "2026-08-09T19:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 219690,
-      "home_team": "Frosinone",
-      "away_team": "Lazio",
-      "league": "",
-      "match_date": "2026-08-09T18:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580467,
-      "home_team": "Mantova",
-      "away_team": "Carpi",
-      "league": "",
-      "match_date": "2026-08-09T18:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 214557,
-      "home_team": "Universitatea Craiova",
-      "away_team": "FC Argeș Pitești",
-      "league": "",
-      "match_date": "2026-08-09T18:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211852,
-      "home_team": "Jagiellonia Białystok",
-      "away_team": "Widzew Łódź",
-      "league": "",
-      "match_date": "2026-08-09T18:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211676,
-      "home_team": "FK Septemvri Sofia",
-      "away_team": "CSKA Sofia",
-      "league": "",
-      "match_date": "2026-08-09T18:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 223548,
-      "home_team": "San Lorenzo",
-      "away_team": "Huracán",
-      "league": "",
-      "match_date": "2026-08-09T18:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 219689,
-      "home_team": "Parma",
-      "away_team": "Sampdoria",
-      "league": "",
-      "match_date": "2026-08-09T18:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 215470,
-      "home_team": "Arezzo",
-      "away_team": "Union Brescia",
-      "league": "",
-      "match_date": "2026-08-09T17:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211311,
-      "home_team": "Royal Antwerp FC",
-      "away_team": "SK Beveren",
-      "league": "",
-      "match_date": "2026-08-09T17:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207039,
-      "home_team": "Kristiansund BK",
-      "away_team": "Molde FK",
-      "league": "",
-      "match_date": "2026-08-09T17:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 215495,
-      "home_team": "FC Porto",
-      "away_team": "FC Alverca",
-      "league": "",
-      "match_date": "2026-08-09T17:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220820,
-      "home_team": "Leça FC",
-      "away_team": "SC São João Ver",
-      "league": "",
-      "match_date": "2026-08-09T16:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211310,
-      "home_team": "RSC Anderlecht",
-      "away_team": "RAAL La Louvière",
-      "league": "",
-      "match_date": "2026-08-09T16:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 587634,
-      "home_team": "CS Sfaxien",
-      "away_team": "FC San Pedro",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580466,
-      "home_team": "Modena",
-      "away_team": "A.S.D. Cittadella Vis Modena",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 221488,
-      "home_team": "AC Horsens",
-      "away_team": "Brøndby IF",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220819,
-      "home_team": "CD Trofense",
-      "away_team": "Varzim SC",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220817,
-      "home_team": "AD Fafe",
-      "away_team": "SC Vianense",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211674,
-      "home_team": "Cherno More Varna",
-      "away_team": "Ludogorets",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207287,
-      "home_team": "AC Oulu",
-      "away_team": "HJK",
-      "league": "",
-      "match_date": "2026-08-09T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580790,
-      "home_team": "Juve Stabia",
-      "away_team": "Campobasso FC",
-      "league": "",
-      "match_date": "2026-08-09T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580465,
-      "home_team": "Lecce",
-      "away_team": "Monopoli",
-      "league": "",
-      "match_date": "2026-08-09T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220439,
-      "home_team": "Olympique de Marseille",
-      "away_team": "Athletic Club",
-      "league": "",
-      "match_date": "2026-08-09T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 214554,
-      "home_team": "FC Petrolul Ploiești",
-      "away_team": "SC Oțelul Galați",
-      "league": "",
-      "match_date": "2026-08-09T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211853,
-      "home_team": "Lech Poznań",
-      "away_team": "Piast Gliwice",
-      "league": "",
-      "match_date": "2026-08-09T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580464,
-      "home_team": "Reggiana",
-      "away_team": "Alcione Milano",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580463,
-      "home_team": "1. FC Union Berlin",
-      "away_team": "Aris Limassol",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212746,
-      "home_team": "Mansfield Town",
-      "away_team": "Sheffield United",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211116,
-      "home_team": "Rangers",
-      "away_team": "Hibernian",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207290,
-      "home_team": "Ilves",
-      "away_team": "IFK Mariehamn",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207037,
-      "home_team": "HamKam",
-      "away_team": "Aalesunds FK",
-      "league": "",
-      "match_date": "2026-08-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210807,
-      "home_team": "SC Heerenveen",
-      "away_team": "FC Twente",
-      "league": "",
-      "match_date": "2026-08-09T14:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 374736,
-      "home_team": "Feirense",
-      "away_team": "Felgueiras",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 374735,
-      "home_team": "AVS - Futebol SAD",
-      "away_team": "Sporting CP B U21",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211383,
-      "home_team": "FC St. Gallen 1879",
-      "away_team": "FC Luzern",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211382,
-      "home_team": "FC Sion",
-      "away_team": "FC Vaduz",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211378,
-      "home_team": "Basel",
-      "away_team": "FC Thun",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46426,
-      "home_team": "IFK Göteborg",
-      "away_team": "Kalmar FF",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46424,
-      "home_team": "Halmstads BK",
-      "away_team": "GAIS",
-      "league": "",
-      "match_date": "2026-08-09T14:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 221487,
-      "home_team": "Randers FC",
-      "away_team": "Lyngby",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211309,
-      "home_team": "SV Zulte Waregem",
-      "away_team": "KRC Genk",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211304,
-      "home_team": "RC Sporting Charleroi",
-      "away_team": "Oud-Heverlee Leuven",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211113,
-      "home_team": "Motherwell",
-      "away_team": "Falkirk FC",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211112,
-      "home_team": "Heart of Midlothian",
-      "away_team": "Dundee United",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207289,
-      "home_team": "Inter Turku",
-      "away_team": "FC Lahti",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 10054,
-      "home_team": "Athletic Club",
-      "away_team": "Criciúma",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 7207,
-      "home_team": "Cruzeiro",
-      "away_team": "Mirassol",
-      "league": "",
-      "match_date": "2026-08-09T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 219688,
-      "home_team": "Liverpool FC",
-      "away_team": "AS Monaco",
-      "league": "",
-      "match_date": "2026-08-09T13:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 374734,
-      "home_team": "Vizela",
-      "away_team": "União de Leiria",
-      "league": "",
-      "match_date": "2026-08-09T13:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211859,
-      "home_team": "Śląsk Wrocław",
-      "away_team": "KS Cracovia",
-      "league": "",
-      "match_date": "2026-08-09T12:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211857,
-      "home_team": "Raków Częstochowa",
-      "away_team": "Zagłębie Lubin",
-      "league": "",
-      "match_date": "2026-08-09T12:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211115,
-      "home_team": "Kilmarnock",
-      "away_team": "Celtic",
-      "league": "",
-      "match_date": "2026-08-09T12:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210806,
-      "home_team": "PEC Zwolle",
-      "away_team": "AFC Ajax",
-      "league": "",
-      "match_date": "2026-08-09T12:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210805,
-      "home_team": "FC Groningen",
-      "away_team": "FC Utrecht",
-      "league": "",
-      "match_date": "2026-08-09T12:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207040,
-      "home_team": "Lillestrøm SK",
-      "away_team": "Rosenborg BK",
-      "league": "",
-      "match_date": "2026-08-09T12:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 219686,
-      "home_team": "Johor Darul Ta'zim",
-      "away_team": "Chelsea",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211381,
-      "home_team": "FC Lugano",
-      "away_team": "FC Zürich",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207288,
-      "home_team": "Kuopion Palloseura",
-      "away_team": "Turun Palloseura",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205860,
-      "home_team": "Shandong Taishan",
-      "away_team": "Tianjin Jinmen Tiger",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46428,
-      "home_team": "Malmö FF",
-      "away_team": "Degerfors IF",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 46425,
-      "home_team": "Hammarby IF",
-      "away_team": "BK Häcken",
-      "league": "",
-      "match_date": "2026-08-09T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205859,
-      "home_team": "Chongqing Tonglianglong FC",
-      "away_team": "Shanghai Port",
-      "league": "",
-      "match_date": "2026-08-09T11:35:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211308,
-      "home_team": "KAA Gent",
-      "away_team": "KV Mechelen",
-      "league": "",
-      "match_date": "2026-08-09T11:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 219685,
-      "home_team": "Manchester City",
-      "away_team": "Atlético Madrid",
-      "league": "",
-      "match_date": "2026-08-09T11:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 205858,
-      "home_team": "Henan FC",
-      "away_team": "Qingdao West Coast",
-      "league": "",
-      "match_date": "2026-08-09T11:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 210804,
-      "home_team": "Sparta Rotterdam",
-      "away_team": "Feyenoord",
-      "league": "",
-      "match_date": "2026-08-09T10:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580789,
-      "home_team": "Club Haro Deportivo",
-      "away_team": "UD Logroñés",
-      "league": "",
-      "match_date": "2026-08-09T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 580462,
-      "home_team": "Radomiak Radom",
-      "away_team": "AEL Limassol",
-      "league": "",
-      "match_date": "2026-08-09T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 374733,
-      "home_team": "SC Farense",
-      "away_team": "Torreense",
-      "league": "",
-      "match_date": "2026-08-09T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220818,
-      "home_team": "AD Marco 09",
-      "away_team": "Paços de Ferreira",
-      "league": "",
-      "match_date": "2026-08-09T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212192,
-      "home_team": "V-Varen Nagasaki",
-      "away_team": "Kyoto Sanga FC",
-      "league": "",
-      "match_date": "2026-08-09T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 212191,
-      "home_team": "Tokyo Verdy",
-      "away_team": "Kawasaki Frontale",
-      "league": "",
-      "match_date": "2026-08-09T09:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 216400,
-      "home_team": "Denver Summit FC",
-      "away_team": "Utah Royals FC",
-      "league": "",
-      "match_date": "2026-08-09T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207747,
-      "home_team": "Orange County SC",
-      "away_team": "FC Tampa Bay Rowdies",
-      "league": "",
-      "match_date": "2026-08-09T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207746,
-      "home_team": "Monterey Bay FC",
-      "away_team": "New Mexico United",
-      "league": "",
-      "match_date": "2026-08-09T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 220019,
-      "home_team": "Deportivo Pasto",
-      "away_team": "Deportivo Cali",
-      "league": "",
-      "match_date": "2026-08-09T01:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207745,
-      "home_team": "El Paso Locomotive FC",
-      "away_team": "Oakland Roots SC",
-      "league": "",
-      "match_date": "2026-08-09T01:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 216402,
-      "home_team": "Houston Dash",
-      "away_team": "Kansas City Current",
-      "league": "",
-      "match_date": "2026-08-09T00:45:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 223546,
-      "home_team": "Instituto De Córdoba",
-      "away_team": "Gimnasia y Esgrima Mendoza",
-      "league": "",
-      "match_date": "2026-08-09T00:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 223539,
-      "home_team": "CA Independiente",
-      "away_team": "Club Atlético Platense",
-      "league": "",
-      "match_date": "2026-08-09T00:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207744,
-      "home_team": "FC Tulsa",
-      "away_team": "Detroit City FC",
-      "league": "",
-      "match_date": "2026-08-09T00:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 207743,
-      "home_team": "Louisville City FC",
-      "away_team": "San Antonio FC",
-      "league": "",
-      "match_date": "2026-08-09T00:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 7205,
-      "home_team": "Botafogo",
-      "away_team": "Fluminense",
-      "league": "",
-      "match_date": "2026-08-09T00:00:00+00:00",
+      "match_date": "2026-08-10T01:00:00+00:00",
       "status": "pending"
     }
   ]
