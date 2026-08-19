@@ -1,126 +1,590 @@
 {
-  "generated_at": "2026-08-18T09:34:13.286068",
-  "match_date": "2026-08-18",
-  "total_matches": 15,
+  "generated_at": "2026-08-19T09:34:44.152676",
+  "match_date": "2026-08-19",
+  "total_matches": 73,
   "predictions": [
     {
-      "event_id": 10081,
-      "home_team": "Londrina",
-      "away_team": "Atlético Goianiense",
+      "event_id": 10083,
+      "home_team": "Vila Nova FC",
+      "away_team": "Ponte Preta",
       "league": "",
-      "match_date": "2026-08-18T22:30:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223426,
-      "home_team": "Recoleta FC",
-      "away_team": "Boca Juniors",
+      "event_id": 10077,
+      "home_team": "Cuiabá",
+      "away_team": "Operário-PR",
       "league": "",
-      "match_date": "2026-08-18T22:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 207966,
-      "home_team": "Independiente Rivadavia",
-      "away_team": "Fluminense",
+      "event_id": 5205,
+      "home_team": "DC United",
+      "away_team": "New England Revolution",
       "league": "",
-      "match_date": "2026-08-18T22:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 587701,
-      "home_team": "Fenerbahçe",
-      "away_team": "Olympique Lyonnais",
+      "event_id": 5204,
+      "home_team": "Toronto FC",
+      "away_team": "Charlotte FC",
       "league": "",
-      "match_date": "2026-08-18T19:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 587700,
-      "home_team": "GNK Dinamo Zagreb",
-      "away_team": "Viking FK",
+      "event_id": 5203,
+      "home_team": "Orlando City SC",
+      "away_team": "Chicago Fire",
       "league": "",
-      "match_date": "2026-08-18T19:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 587699,
-      "home_team": "Levski Sofia",
-      "away_team": "AEK Athens",
+      "event_id": 5202,
+      "home_team": "New York Red Bulls",
+      "away_team": "Nashville SC",
       "league": "",
-      "match_date": "2026-08-18T19:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 587951,
-      "home_team": "CD Marchamalo",
-      "away_team": "Guadalajara",
+      "event_id": 5201,
+      "home_team": "Columbus Crew",
+      "away_team": "CF Montréal",
       "league": "",
-      "match_date": "2026-08-18T18:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 588029,
-      "home_team": "Mutilvera",
-      "away_team": "Peña Sport FC",
+      "event_id": 5200,
+      "home_team": "FC Cincinnati",
+      "away_team": "New York City FC",
       "league": "",
-      "match_date": "2026-08-18T17:30:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 588028,
-      "home_team": "Atlético Tordesillas",
-      "away_team": "Villa de Simancas",
+      "event_id": 5199,
+      "home_team": "Philadelphia Union",
+      "away_team": "Inter Miami CF",
       "league": "",
-      "match_date": "2026-08-18T17:00:00+00:00",
+      "match_date": "2026-08-19T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 588013,
-      "home_team": "SC Spelle-Venhaus",
-      "away_team": "VfL Osnabrück",
+      "event_id": 219981,
+      "home_team": "Cúcuta Deportivo",
+      "away_team": "Internacional de Bogotá",
       "league": "",
-      "match_date": "2026-08-18T17:00:00+00:00",
+      "match_date": "2026-08-19T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 588012,
-      "home_team": "1. FC Heidenheim",
-      "away_team": "FC Bayern München",
+      "event_id": 216414,
+      "home_team": "Racing Louisville",
+      "away_team": "Seattle Reign FC",
       "league": "",
-      "match_date": "2026-08-18T16:00:00+00:00",
+      "match_date": "2026-08-19T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 588026,
-      "home_team": "Shanghai Shenhua",
-      "away_team": "Beijing Guoan",
+      "event_id": 10078,
+      "home_team": "Fortaleza",
+      "away_team": "São Bernardo",
       "league": "",
-      "match_date": "2026-08-18T11:35:00+00:00",
+      "match_date": "2026-08-19T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 211533,
-      "home_team": "CF Pachuca",
-      "away_team": "Club Puebla",
+      "event_id": 10075,
+      "home_team": "Avaí",
+      "away_team": "Sport Recife",
       "league": "",
-      "match_date": "2026-08-18T03:05:00+00:00",
+      "match_date": "2026-08-19T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 211532,
-      "home_team": "Club Necaxa",
-      "away_team": "Club León",
+      "event_id": 223327,
+      "home_team": "Atlético Mineiro",
+      "away_team": "Red Bull Bragantino",
       "league": "",
-      "match_date": "2026-08-18T01:00:00+00:00",
+      "match_date": "2026-08-19T22:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223573,
-      "home_team": "Gimnasia y Esgrima Mendoza",
-      "away_team": "CA Talleres",
+      "event_id": 207970,
+      "home_team": "Coquimbo Unido",
+      "away_team": "Club Atlético Platense",
       "league": "",
-      "match_date": "2026-08-18T00:30:00+00:00",
+      "match_date": "2026-08-19T22:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207964,
+      "home_team": "Cerro Porteño",
+      "away_team": "Palmeiras",
+      "league": "",
+      "match_date": "2026-08-19T22:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587946,
+      "home_team": "Rionegro Águilas Doradas",
+      "away_team": "Llaneros FC",
+      "league": "",
+      "match_date": "2026-08-19T21:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587704,
+      "home_team": "ŠK Slovan Bratislava",
+      "away_team": "NK Celje",
+      "league": "",
+      "match_date": "2026-08-19T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587703,
+      "home_team": "NEC Nijmegen",
+      "away_team": "Bodø/Glimt",
+      "league": "",
+      "match_date": "2026-08-19T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587702,
+      "home_team": "Hapoel Be'er Sheva",
+      "away_team": "Sabah FK",
+      "league": "",
+      "match_date": "2026-08-19T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 224834,
+      "home_team": "Celtic",
+      "away_team": "LASK",
+      "league": "",
+      "match_date": "2026-08-19T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 213520,
+      "home_team": "Atlético Madrid",
+      "away_team": "Málaga CF",
+      "league": "",
+      "match_date": "2026-08-19T19:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588053,
+      "home_team": "CF Talavera",
+      "away_team": "Getafe B",
+      "league": "",
+      "match_date": "2026-08-19T18:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588020,
+      "home_team": "Unión Deportiva Ourense",
+      "away_team": "CD Barco",
+      "league": "",
+      "match_date": "2026-08-19T18:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588017,
+      "home_team": "Xerez CD",
+      "away_team": "Real Jaén",
+      "league": "",
+      "match_date": "2026-08-19T18:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588037,
+      "home_team": "S.S. Reyes",
+      "away_team": "Rayo Majadahonda",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588036,
+      "home_team": "SD Ponferradina",
+      "away_team": "Real Madrid Castilla U21",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588019,
+      "home_team": "CD Cieza",
+      "away_team": "Athletic Torrellano",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588018,
+      "home_team": "Torrent CF",
+      "away_team": "UD Castellonense",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588016,
+      "home_team": "Villarreal B U23",
+      "away_team": "Gimnàstic de Tarragona",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587952,
+      "home_team": "Coruxo FC",
+      "away_team": "Pontevedra CF",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 224876,
+      "home_team": "FC Barcelona",
+      "away_team": "Al Ahly FC",
+      "league": "",
+      "match_date": "2026-08-19T18:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588035,
+      "home_team": "CD Izarra",
+      "away_team": "SD Logroñés",
+      "league": "",
+      "match_date": "2026-08-19T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588015,
+      "home_team": "SD Leioa",
+      "away_team": "Club Portugalete",
+      "league": "",
+      "match_date": "2026-08-19T17:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588052,
+      "home_team": "CE Manresa",
+      "away_team": "UE Sant Andreu",
+      "league": "",
+      "match_date": "2026-08-19T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588034,
+      "home_team": "CDFC La Calzada",
+      "away_team": "Mirandés",
+      "league": "",
+      "match_date": "2026-08-19T17:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588033,
+      "home_team": "UE Sant Andreu",
+      "away_team": "CE Manresa",
+      "league": "",
+      "match_date": "2026-08-19T12:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588032,
+      "home_team": "Getafe B",
+      "away_team": "CF Talavera",
+      "league": "",
+      "match_date": "2026-08-19T12:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588027,
+      "home_team": "Shanghai Port",
+      "away_team": "Dalian Yingbo FC",
+      "league": "",
+      "match_date": "2026-08-19T11:35:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587650,
+      "home_team": "Kanazawa Seiryo University",
+      "away_team": "Kyoto Sangyo University",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587649,
+      "home_team": "Senshu University",
+      "away_team": "Tsukuba University",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587648,
+      "home_team": "Tohoku Gakuin University",
+      "away_team": "Thespa Gunma",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587647,
+      "home_team": "Veroskronos Tsuno",
+      "away_team": "Kamatamare Sanuki",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587646,
+      "home_team": "Reilac Shiga FC",
+      "away_team": "Japan Soccer College",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587645,
+      "home_team": "AC Nagano Parceiro",
+      "away_team": "Fukui United FC",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587644,
+      "home_team": "Verspah Oita",
+      "away_team": "Kochi United SC",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587643,
+      "home_team": "Fukushima United FC",
+      "away_team": "Oyama SC",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587642,
+      "home_team": "Giravanz Kitakyushu",
+      "away_team": "Okinawa SV",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587641,
+      "home_team": "Ehime FC",
+      "away_team": "Pacific University",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587640,
+      "home_team": "Gainare Tottori",
+      "away_team": "Roasso Kumamoto",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587639,
+      "home_team": "Kagoshima United",
+      "away_team": "Renofa Yamaguchi FC",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587638,
+      "home_team": "Nara Club",
+      "away_team": "FC Osaka",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212737,
+      "home_team": "Tochigi SC",
+      "away_team": "Briobecca Urayasu-Ichikawa",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212572,
+      "home_team": "Yamanashi Gakuin University Orions",
+      "away_team": "Tokyo International University",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212571,
+      "home_team": "Ryutsu Keizai University",
+      "away_team": "Criacao Shinjuku",
+      "league": "",
+      "match_date": "2026-08-19T10:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588031,
+      "home_team": "RSD Alcalá",
+      "away_team": "Gimnástica Segoviana",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587637,
+      "home_team": "FC Gifu",
+      "away_team": "Toyama Shinjo Club",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212570,
+      "home_team": "FC Tokushima",
+      "away_team": "Kawasoe Club",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212569,
+      "home_team": "SRC Hiroshima",
+      "away_team": "FC Maruyasu Okazaki",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212568,
+      "home_team": "Atletico Suzuka Club",
+      "away_team": "FC Basara Hyogo",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212567,
+      "home_team": "Iwate Grulla Morioka",
+      "away_team": "Sapporo University",
+      "league": "",
+      "match_date": "2026-08-19T09:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212566,
+      "home_team": "Belugarosso Iwami",
+      "away_team": "Nagasaki International University",
+      "league": "",
+      "match_date": "2026-08-19T09:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212565,
+      "home_team": "ReinMeer Aomori FC",
+      "away_team": "Akita University",
+      "league": "",
+      "match_date": "2026-08-19T09:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588030,
+      "home_team": "Elche Ilicitano",
+      "away_team": "FC Cartagena",
+      "league": "",
+      "match_date": "2026-08-19T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588014,
+      "home_team": "Arenas Club",
+      "away_team": "UD Ibiza",
+      "league": "",
+      "match_date": "2026-08-19T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 212564,
+      "home_team": "Arterivo Wakayama",
+      "away_team": "Azul Claro Numazu",
+      "league": "",
+      "match_date": "2026-08-19T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 588051,
+      "home_team": "Leganés B",
+      "away_team": "CD Toledo",
+      "league": "",
+      "match_date": "2026-08-19T07:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 10079,
+      "home_team": "Goiás",
+      "away_team": "Juventude",
+      "league": "",
+      "match_date": "2026-08-19T00:35:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 587779,
+      "home_team": "Deportes Tolima",
+      "away_team": "Independiente del Valle",
+      "league": "",
+      "match_date": "2026-08-19T00:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 223427,
+      "home_team": "São Paulo",
+      "away_team": "Bolívar",
+      "league": "",
+      "match_date": "2026-08-19T00:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 207969,
+      "home_team": "Universidad Católica",
+      "away_team": "Estudiantes de La Plata",
+      "league": "",
+      "match_date": "2026-08-19T00:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 10082,
+      "home_team": "Náutico",
+      "away_team": "Ceará",
+      "league": "",
+      "match_date": "2026-08-19T00:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 223987,
+      "home_team": "Llaneros FC",
+      "away_team": "Deportes Quindío",
+      "league": "",
+      "match_date": "2026-08-19T00:00:00+00:00",
       "status": "pending"
     }
   ]
