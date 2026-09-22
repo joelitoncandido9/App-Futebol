@@ -1,94 +1,142 @@
 {
-  "generated_at": "2026-09-21T15:42:47.985893",
-  "match_date": "2026-09-21",
-  "total_matches": 11,
+  "generated_at": "2026-09-22T13:55:46.755879",
+  "match_date": "2026-09-22",
+  "total_matches": 17,
   "predictions": [
+    {
+      "event_id": 604405,
+      "home_team": "Independiente Medellín",
+      "away_team": "Jaguares de Córdoba",
+      "league": "",
+      "match_date": "2026-09-22T23:00:00+00:00",
+      "status": "pending"
+    },
     {
       "event_id": 10136,
       "home_team": "Criciúma",
       "away_team": "Operário-PR",
       "league": "",
-      "match_date": "2026-09-21T22:30:00+00:00",
+      "match_date": "2026-09-22T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223724,
-      "home_team": "Barracas Central",
-      "away_team": "Independiente Rivadavia",
+      "event_id": 604544,
+      "home_team": "Dorking Wanderers",
+      "away_team": "Southall FC",
       "league": "",
-      "match_date": "2026-09-21T22:00:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 214600,
-      "home_team": "FC Petrolul Ploiești",
-      "away_team": "FK Csíkszereda Miercurea Ciuc",
+      "event_id": 604542,
+      "home_team": "Crowborough Athletic",
+      "away_team": "Hampton & Richmond Borough",
       "league": "",
-      "match_date": "2026-09-21T18:00:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223723,
-      "home_team": "Aldosivi",
-      "away_team": "Atlético Tucumán",
+      "event_id": 604541,
+      "home_team": "Farnborough",
+      "away_team": "Uxbridge",
       "league": "",
-      "match_date": "2026-09-21T17:30:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 214603,
-      "home_team": "SC Oțelul Galați",
-      "away_team": "FC Corvinul Hunedoara",
+      "event_id": 604540,
+      "home_team": "Farnham Town",
+      "away_team": "Cirencester Town",
       "league": "",
-      "match_date": "2026-09-21T15:00:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604197,
-      "home_team": "1º de Maio de Benguela",
-      "away_team": "CD Lunda Sul",
+      "event_id": 604539,
+      "home_team": "Wingate & Finchley",
+      "away_team": "Hemel Hempstead",
       "league": "",
-      "match_date": "2026-09-21T14:30:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 211578,
-      "home_team": "Querétaro FC",
-      "away_team": "Club León",
+      "event_id": 604538,
+      "home_team": "Chippenham Town",
+      "away_team": "Yate Town",
       "league": "",
-      "match_date": "2026-09-21T02:10:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 220171,
-      "home_team": "Llaneros FC",
-      "away_team": "Atlético Nacional",
+      "event_id": 604537,
+      "home_team": "Gainsborough Trinity",
+      "away_team": "Leamington",
       "league": "",
-      "match_date": "2026-09-21T01:15:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223737,
-      "home_team": "Vélez Sarsfield",
-      "away_team": "Tigre",
+      "event_id": 604536,
+      "home_team": "Wimborne Town",
+      "away_team": "Weston Super Mare",
       "league": "",
-      "match_date": "2026-09-21T00:30:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 211577,
-      "home_team": "CF Pachuca",
-      "away_team": "Club Tijuana",
+      "event_id": 604535,
+      "home_team": "Maidstone United",
+      "away_team": "Cray Wanderers",
       "league": "",
-      "match_date": "2026-09-21T00:00:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 211576,
-      "home_team": "CD Toluca",
-      "away_team": "Santos Laguna",
+      "event_id": 604534,
+      "home_team": "Braintree Town",
+      "away_team": "Needham Market FC",
       "league": "",
-      "match_date": "2026-09-21T00:00:00+00:00",
+      "match_date": "2026-09-22T18:45:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 604533,
+      "home_team": "Dagenham & Redbridge",
+      "away_team": "Waltham Abbey",
+      "league": "",
+      "match_date": "2026-09-22T18:45:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 604532,
+      "home_team": "Truro City",
+      "away_team": "Merthyr Town",
+      "league": "",
+      "match_date": "2026-09-22T18:45:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 604528,
+      "home_team": "Worksop Town FC",
+      "away_team": "Telford United",
+      "league": "",
+      "match_date": "2026-09-22T18:45:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 10137,
+      "home_team": "Cuiabá",
+      "away_team": "Náutico",
+      "league": "",
+      "match_date": "2026-09-22T00:30:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 223725,
+      "home_team": "CA Lanús",
+      "away_team": "Estudiantes de La Plata",
+      "league": "",
+      "match_date": "2026-09-22T00:15:00+00:00",
       "status": "pending"
     }
   ]
