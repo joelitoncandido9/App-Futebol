@@ -1,142 +1,214 @@
 {
-  "generated_at": "2026-09-22T13:55:46.755879",
-  "match_date": "2026-09-22",
-  "total_matches": 17,
+  "generated_at": "2026-09-23T14:06:26.264047",
+  "match_date": "2026-09-23",
+  "total_matches": 26,
   "predictions": [
     {
-      "event_id": 604405,
-      "home_team": "Independiente Medellín",
-      "away_team": "Jaguares de Córdoba",
+      "event_id": 223069,
+      "home_team": "Aruba",
+      "away_team": "Antigua and Barbuda",
       "league": "",
-      "match_date": "2026-09-22T23:00:00+00:00",
+      "match_date": "2026-09-23T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10136,
-      "home_team": "Criciúma",
-      "away_team": "Operário-PR",
+      "event_id": 223070,
+      "home_team": "Bahamas",
+      "away_team": "Saint Martin",
       "league": "",
-      "match_date": "2026-09-22T22:30:00+00:00",
+      "match_date": "2026-09-23T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604544,
-      "home_team": "Dorking Wanderers",
-      "away_team": "Southall FC",
+      "event_id": 223068,
+      "home_team": "Turks and Caicos Islands",
+      "away_team": "Montserrat",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604542,
-      "home_team": "Crowborough Athletic",
-      "away_team": "Hampton & Richmond Borough",
+      "event_id": 604543,
+      "home_team": "Thame United",
+      "away_team": "Exmouth Town",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T18:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604541,
-      "home_team": "Farnborough",
-      "away_team": "Uxbridge",
+      "event_id": 604492,
+      "home_team": "SC Wiedenbrück",
+      "away_team": "VfL Osnabrück",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604540,
-      "home_team": "Farnham Town",
-      "away_team": "Cirencester Town",
+      "event_id": 604447,
+      "home_team": "Gibraltar",
+      "away_team": "São Tomé and Príncipe",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604539,
-      "home_team": "Wingate & Finchley",
-      "away_team": "Hemel Hempstead",
+      "event_id": 604446,
+      "home_team": "Azerbaijan",
+      "away_team": "Tajikistan",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604538,
-      "home_team": "Chippenham Town",
-      "away_team": "Yate Town",
+      "event_id": 207825,
+      "home_team": "Birmingham Legion FC",
+      "away_team": "Brooklyn FC",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T16:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604537,
-      "home_team": "Gainsborough Trinity",
-      "away_team": "Leamington",
+      "event_id": 604548,
+      "home_team": "Doma United FC",
+      "away_team": "Plateau United",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604536,
-      "home_team": "Wimborne Town",
-      "away_team": "Weston Super Mare",
+      "event_id": 604547,
+      "home_team": "Inter Lagos FC",
+      "away_team": "Kano Pillars",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604535,
-      "home_team": "Maidstone United",
-      "away_team": "Cray Wanderers",
+      "event_id": 604546,
+      "home_team": "Barau FC",
+      "away_team": "Abia Warriors",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604534,
-      "home_team": "Braintree Town",
-      "away_team": "Needham Market FC",
+      "event_id": 604545,
+      "home_team": "Bendel Insurance FC",
+      "away_team": "Ikorodu City",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604533,
-      "home_team": "Dagenham & Redbridge",
-      "away_team": "Waltham Abbey",
+      "event_id": 604521,
+      "home_team": "Niger Tornadoes",
+      "away_team": "Warri Wolves FC",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604532,
-      "home_team": "Truro City",
-      "away_team": "Merthyr Town",
+      "event_id": 604520,
+      "home_team": "Enugu Rangers International",
+      "away_team": "Ranchers Bees",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 604528,
-      "home_team": "Worksop Town FC",
-      "away_team": "Telford United",
+      "event_id": 604519,
+      "home_team": "Kwara United",
+      "away_team": "Nasarawa United",
       "league": "",
-      "match_date": "2026-09-22T18:45:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 10137,
-      "home_team": "Cuiabá",
-      "away_team": "Náutico",
+      "event_id": 604518,
+      "home_team": "Enyimba",
+      "away_team": "Sporting Lagos FC",
       "league": "",
-      "match_date": "2026-09-22T00:30:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 223725,
-      "home_team": "CA Lanús",
-      "away_team": "Estudiantes de La Plata",
+      "event_id": 604517,
+      "home_team": "Shooting Stars",
+      "away_team": "Katsina United",
       "league": "",
-      "match_date": "2026-09-22T00:15:00+00:00",
+      "match_date": "2026-09-23T15:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 604187,
+      "home_team": "Sagrada Esperança",
+      "away_team": "Kabuscorp SCP",
+      "league": "",
+      "match_date": "2026-09-23T14:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 604929,
+      "home_team": "Pogoń II Szczecin",
+      "away_team": "Świt Skolwin Szczecin",
+      "league": "",
+      "match_date": "2026-09-23T11:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602305,
+      "home_team": "Kyoto Sanga FC",
+      "away_team": "Fujieda MYFC",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602304,
+      "home_team": "Kashiwa Reysol",
+      "away_team": "FC Imabari",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602303,
+      "home_team": "Machida Zelvia",
+      "away_team": "Tochigi City FC",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602302,
+      "home_team": "Gamba Osaka",
+      "away_team": "Tokushima Vortis",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602301,
+      "home_team": "Kashima Antlers",
+      "away_team": "Ventforet Kofu",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 602300,
+      "home_team": "Vissel Kobe",
+      "away_team": "Sagan Tosu",
+      "league": "",
+      "match_date": "2026-09-23T08:00:00+00:00",
+      "status": "pending"
+    },
+    {
+      "event_id": 220182,
+      "home_team": "Independiente Santa Fe",
+      "away_team": "Deportivo Cali",
+      "league": "",
+      "match_date": "2026-09-23T01:00:00+00:00",
       "status": "pending"
     }
   ]
