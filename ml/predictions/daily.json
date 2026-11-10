@@ -1,134 +1,86 @@
 {
-  "generated_at": "2026-11-09T19:33:23.911802",
-  "match_date": "2026-11-09",
-  "total_matches": 16,
+  "generated_at": "2026-11-10T16:49:51.567941",
+  "match_date": "2026-11-10",
+  "total_matches": 10,
   "predictions": [
     {
-      "event_id": 375082,
-      "home_team": "Torreense",
-      "away_team": "União de Leiria",
+      "event_id": 649944,
+      "home_team": "Internacional de Bogotá",
+      "away_team": "América de Cali",
       "league": "",
-      "match_date": "2026-11-09T20:15:00+00:00",
+      "match_date": "2026-11-10T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 215306,
-      "home_team": "Real Club Deportivo de A Coruña",
+      "event_id": 643206,
+      "home_team": "UE Tavernes",
       "away_team": "Valencia",
       "league": "",
-      "match_date": "2026-11-09T20:00:00+00:00",
+      "match_date": "2026-11-10T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606771,
-      "home_team": "AZ Picerno",
-      "away_team": "Bari",
+      "event_id": 653963,
+      "home_team": "SD Amorebieta",
+      "away_team": "UD Logroñés",
       "league": "",
-      "match_date": "2026-11-09T19:45:00+00:00",
+      "match_date": "2026-11-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 642942,
-      "home_team": "Plymouth Parkway",
-      "away_team": "Berkhamsted Town",
+      "event_id": 649913,
+      "home_team": "CD Badajoz",
+      "away_team": "CD Tenerife",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 607155,
-      "home_team": "Pineto",
-      "away_team": "Vis Pesaro",
+      "event_id": 649894,
+      "home_team": "Cp Mijas-Las Lagunas",
+      "away_team": "Real Jaén",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606773,
-      "home_team": "Team Altamura",
-      "away_team": "Cavese",
+      "event_id": 643204,
+      "home_team": "Trival Valderas Alcorcón",
+      "away_team": "Leganés",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606772,
-      "home_team": "Foggia",
-      "away_team": "Barletta",
+      "event_id": 653962,
+      "home_team": "Pamplona",
+      "away_team": "Eibar",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 214906,
-      "home_team": "UD Las Palmas",
-      "away_team": "CD Eldense",
+      "event_id": 653961,
+      "home_team": "CD Anaitasuna FT",
+      "away_team": "Deportivo Alavés",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 214900,
-      "home_team": "CE Sabadell",
-      "away_team": "Real Sociedad B",
+      "event_id": 654298,
+      "home_team": "SC Paderborn 07",
+      "away_team": "Eintracht Braunschweig",
       "league": "",
-      "match_date": "2026-11-09T19:30:00+00:00",
+      "match_date": "2026-11-10T12:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 654033,
-      "home_team": "Kristiansund BK",
-      "away_team": "Vålerenga IF",
+      "event_id": 643032,
+      "home_team": "Junior Barranquilla",
+      "away_team": "Cúcuta Deportivo",
       "league": "",
-      "match_date": "2026-11-09T18:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 215301,
-      "home_team": "Club Atlético de Madrid",
-      "away_team": "FC Badalona Women",
-      "league": "",
-      "match_date": "2026-11-09T18:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 214640,
-      "home_team": "FC Botoșani",
-      "away_team": "SC Oțelul Galați",
-      "league": "",
-      "match_date": "2026-11-09T18:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 604610,
-      "home_team": "Ikorodu City",
-      "away_team": "Inter Lagos FC",
-      "league": "",
-      "match_date": "2026-11-09T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211641,
-      "home_team": "Club León",
-      "away_team": "CD Guadalajara",
-      "league": "",
-      "match_date": "2026-11-09T02:10:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 643033,
-      "home_team": "Alianza Valledupar FC",
-      "away_team": "Llaneros FC",
-      "league": "",
-      "match_date": "2026-11-09T01:15:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 211640,
-      "home_team": "Querétaro FC",
-      "away_team": "Club Puebla",
-      "league": "",
-      "match_date": "2026-11-09T00:00:00+00:00",
+      "match_date": "2026-11-10T00:00:00+00:00",
       "status": "pending"
     }
   ]
