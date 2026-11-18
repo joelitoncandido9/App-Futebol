@@ -1,294 +1,166 @@
 {
-  "generated_at": "2026-11-17T18:13:55.925996",
-  "match_date": "2026-11-17",
-  "total_matches": 36,
+  "generated_at": "2026-11-18T17:51:03.936910",
+  "match_date": "2026-11-18",
+  "total_matches": 20,
   "predictions": [
     {
-      "event_id": 654420,
-      "home_team": "Ecuador",
-      "away_team": "Bolivia",
+      "event_id": 7337,
+      "home_team": "Flamengo",
+      "away_team": "Athletico",
       "league": "",
-      "match_date": "2026-11-17T23:30:00+00:00",
+      "match_date": "2026-11-18T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 654044,
-      "home_team": "Atlético Nacional",
-      "away_team": "Once Caldas",
+      "event_id": 7336,
+      "home_team": "Cruzeiro",
+      "away_team": "Palmeiras",
       "league": "",
-      "match_date": "2026-11-17T23:30:00+00:00",
+      "match_date": "2026-11-18T23:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 654038,
-      "home_team": "Uruguay",
-      "away_team": "Dominican Republic",
+      "event_id": 7340,
+      "home_team": "Remo",
+      "away_team": "Chapecoense",
       "league": "",
-      "match_date": "2026-11-17T23:30:00+00:00",
+      "match_date": "2026-11-18T23:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 654057,
-      "home_team": "Chile",
-      "away_team": "Colombia",
+      "event_id": 7335,
+      "home_team": "Coritiba",
+      "away_team": "Santos",
       "league": "",
-      "match_date": "2026-11-17T23:00:00+00:00",
+      "match_date": "2026-11-18T22:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 649938,
-      "home_team": "Argentina",
-      "away_team": "Costa Rica",
+      "event_id": 655107,
+      "home_team": "Alianza Atlético de Sullana",
+      "away_team": "Melgar",
       "league": "",
-      "match_date": "2026-11-17T23:00:00+00:00",
+      "match_date": "2026-11-18T20:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 655427,
-      "home_team": "Dulwich Hamlet",
-      "away_team": "Stanway Rovers",
+      "event_id": 654043,
+      "home_team": "Reus FC Reddis",
+      "away_team": "Barakaldo CF",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T19:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 655426,
-      "home_team": "Cheshunt FC",
-      "away_team": "Aveley FC",
+      "event_id": 654042,
+      "home_team": "Deportiva Minera",
+      "away_team": "FC Cartagena",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T19:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212736,
-      "home_team": "Poland",
-      "away_team": "Sweden",
+      "event_id": 654058,
+      "home_team": "CD Badajoz",
+      "away_team": "CD Tenerife",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212735,
-      "home_team": "Bosnia & Herzegovina",
-      "away_team": "Romania",
+      "event_id": 654041,
+      "home_team": "CD Alcoyano",
+      "away_team": "Mallorca",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T19:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212734,
-      "home_team": "Israel",
-      "away_team": "Austria",
+      "event_id": 654320,
+      "home_team": "Utebo FC",
+      "away_team": "CE Sabadell",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212733,
-      "home_team": "Ireland",
-      "away_team": "Kosovo",
+      "event_id": 653964,
+      "home_team": "Club Portugalete",
+      "away_team": "Real Unión Club",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T18:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212732,
-      "home_team": "Ukraine",
-      "away_team": "Georgia",
+      "event_id": 654184,
+      "home_team": "Sporting Lagos FC",
+      "away_team": "Rivers United",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212731,
-      "home_team": "Hungary",
-      "away_team": "Northern Ireland",
+      "event_id": 643009,
+      "home_team": "Ranchers Bees",
+      "away_team": "Doma United FC",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T15:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212730,
-      "home_team": "Wales",
-      "away_team": "Portugal",
+      "event_id": 655439,
+      "home_team": "St. George Willawong FC",
+      "away_team": "Logan Roos FC",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T09:45:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 212729,
-      "home_team": "Denmark",
-      "away_team": "Norway",
+      "event_id": 606247,
+      "home_team": "Nicaragua",
+      "away_team": "Montserrat",
       "league": "",
-      "match_date": "2026-11-17T19:45:00+00:00",
+      "match_date": "2026-11-18T03:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606216,
-      "home_team": "Saint Kitts and Nevis",
-      "away_team": "Bonaire",
+      "event_id": 606201,
+      "home_team": "Mexico",
+      "away_team": "Jamaica",
       "league": "",
-      "match_date": "2026-11-17T19:00:00+00:00",
+      "match_date": "2026-11-18T02:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606215,
-      "home_team": "Belize",
-      "away_team": "Sint Maarten",
+      "event_id": 654045,
+      "home_team": "América de Cali",
+      "away_team": "Internacional de Bogotá",
       "league": "",
-      "match_date": "2026-11-17T19:00:00+00:00",
+      "match_date": "2026-11-18T01:30:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606214,
-      "home_team": "Dominica",
-      "away_team": "Cayman Islands",
+      "event_id": 606246,
+      "home_team": "El Salvador",
+      "away_team": "Saint Martin",
       "league": "",
-      "match_date": "2026-11-17T19:00:00+00:00",
+      "match_date": "2026-11-18T01:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 606199,
-      "home_team": "Saint Lucia",
-      "away_team": "Barbados",
+      "event_id": 606217,
+      "home_team": "French Guiana",
+      "away_team": "Saint Vincent and the Grenadines",
       "league": "",
-      "match_date": "2026-11-17T19:00:00+00:00",
+      "match_date": "2026-11-18T00:00:00+00:00",
       "status": "pending"
     },
     {
-      "event_id": 654419,
-      "home_team": "Kuwait",
-      "away_team": "Honduras",
+      "event_id": 606200,
+      "home_team": "USA",
+      "away_team": "Haiti",
       "league": "",
-      "match_date": "2026-11-17T16:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655369,
-      "home_team": "Jordan",
-      "away_team": "Australia",
-      "league": "",
-      "match_date": "2026-11-17T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 643008,
-      "home_team": "Russia",
-      "away_team": "Venezuela",
-      "league": "",
-      "match_date": "2026-11-17T16:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655422,
-      "home_team": "Saudi Arabia",
-      "away_team": "Uzbekistan",
-      "league": "",
-      "match_date": "2026-11-17T15:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 604620,
-      "home_team": "Plateau United",
-      "away_team": "Kun Khalifat FC",
-      "league": "",
-      "match_date": "2026-11-17T15:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655438,
-      "home_team": "United Arab Emirates",
-      "away_team": "Syria",
-      "league": "",
-      "match_date": "2026-11-17T14:10:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655366,
-      "home_team": "Qatar",
-      "away_team": "South Korea",
-      "league": "",
-      "match_date": "2026-11-17T14:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 654055,
-      "home_team": "Japan",
-      "away_team": "Paraguay",
-      "league": "",
-      "match_date": "2026-11-17T13:10:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 654435,
-      "home_team": "China",
-      "away_team": "Bahrain",
-      "league": "",
-      "match_date": "2026-11-17T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 649936,
-      "home_team": "Kyrgyzstan",
-      "away_team": "Vietnam",
-      "league": "",
-      "match_date": "2026-11-17T12:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655325,
-      "home_team": "Singapore",
-      "away_team": "Brazil",
-      "league": "",
-      "match_date": "2026-11-17T10:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655425,
-      "home_team": "Yemen",
-      "away_team": "Malaysia",
-      "league": "",
-      "match_date": "2026-11-17T06:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 655424,
-      "home_team": "Tahiti",
-      "away_team": "Cook Islands",
-      "league": "",
-      "match_date": "2026-11-17T05:30:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 654280,
-      "home_team": "New Mexico United",
-      "away_team": "Sacramento Republic FC",
-      "league": "",
-      "match_date": "2026-11-17T02:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 606198,
-      "home_team": "Canada",
-      "away_team": "Guatemala",
-      "league": "",
-      "match_date": "2026-11-17T01:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 606231,
-      "home_team": "Martinique",
-      "away_team": "Aruba",
-      "league": "",
-      "match_date": "2026-11-17T00:00:00+00:00",
-      "status": "pending"
-    },
-    {
-      "event_id": 606230,
-      "home_team": "Trinidad and Tobago",
-      "away_team": "Antigua and Barbuda",
-      "league": "",
-      "match_date": "2026-11-17T00:00:00+00:00",
+      "match_date": "2026-11-18T00:00:00+00:00",
       "status": "pending"
     }
   ]
